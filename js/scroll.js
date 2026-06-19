@@ -33,6 +33,7 @@
     initScrollReveals();
     initNewsGrid();
     initParallaxOrbs();
+    initLogoShine();
 
     ScrollTrigger.refresh();
   }
@@ -54,6 +55,9 @@
       ScrollTrigger.update();
       if (typeof window.onLenisHeaderRoll === "function") {
         window.onLenisHeaderRoll(e);
+      }
+      if (typeof window.onLenisLogoShine === "function") {
+        window.onLenisLogoShine(e);
       }
     });
 
@@ -91,6 +95,12 @@
   function revealAll() {
     gsap.set("[data-animate-item]", { opacity: 1, y: 0, scale: 1, clearProps: "transform" });
     gsap.set(".scroll-bg__orb", { opacity: 1 });
+    gsap.set(".section-header__title", {
+      opacity: 1,
+      y: 0,
+      "--title-underline-scale": 1,
+      clearProps: "transform",
+    });
     gsap.set(".section-visual__photo, .section-visual__geo", {
       opacity: 1,
       scale: 1,
@@ -372,7 +382,8 @@
       if (
         el.closest("#hero") ||
         el.closest(".business-card") ||
-        el.closest(".news-card")
+        el.closest(".news-card") ||
+        el.classList.contains("section-header__title")
       ) {
         return;
       }
@@ -389,7 +400,29 @@
       }
 
       if (title) {
-        fadeUp(title, { y: 24, start: "top 86%", duration: 1 });
+        gsap.fromTo(
+          title,
+          {
+            opacity: 0,
+            y: 36,
+            "--title-underline-scale": 0,
+            force3D: true,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            "--title-underline-scale": 1,
+            ease: "none",
+            force3D: true,
+            scrollTrigger: {
+              trigger: header,
+              start: "top 86%",
+              end: "top 58%",
+              scrub: 1.4,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
       }
 
       if (line) {
@@ -441,6 +474,140 @@
         once: true,
       },
     });
+  }
+
+  function initLogoShine() {
+    var mark = document.querySelector(".site-logo__mark");
+    if (!mark) return;
+
+    mark.classList.add("site-logo__mark--shine");
+
+    var SCROLL_PER_PASS = 620;
+    var REST_POS = 130;
+    var END_POS = -35;
+    var RANGE = REST_POS - END_POS;
+    var IDLE_DELAY = 2000;
+    var SHINE_SMOOTHING = 0.07;
+
+    var state = {
+      mark: mark,
+      virtualScroll: 0,
+      lastScroll: 0,
+      idleTimer: null,
+      settleTween: null,
+    };
+
+    function readScroll(e) {
+      if (typeof e === "number") return e;
+      if (e && typeof e.scroll === "number") return e.scroll;
+      if (e && typeof e.animatedScroll === "number") return e.animatedScroll;
+      return window.scrollY || document.documentElement.scrollTop || 0;
+    }
+
+    function getCurrentPos() {
+      var raw = gsap.getProperty(state.mark, "--logo-shine-pos");
+      if (raw == null) return REST_POS;
+      return parseFloat(String(raw).replace("%", "")) || REST_POS;
+    }
+
+    function syncVirtualFromPos() {
+      state.virtualScroll =
+        ((REST_POS - getCurrentPos()) / RANGE) * SCROLL_PER_PASS;
+    }
+
+    function targetPos() {
+      return REST_POS - (state.virtualScroll / SCROLL_PER_PASS) * RANGE;
+    }
+
+    function targetBright(pos) {
+      var progress = (REST_POS - pos) / RANGE;
+      var peak = 1 - Math.abs(progress - 0.5) * 2;
+      return 0.55 + Math.max(0, peak) * 0.45;
+    }
+
+    function applyShine() {
+      var target = targetPos();
+      var current = getCurrentPos();
+      var pos = current + (target - current) * SHINE_SMOOTHING;
+      var bright = targetBright(pos);
+
+      gsap.set(state.mark, {
+        "--logo-shine-pos": pos + "%",
+        "--logo-shine-bright": bright,
+      });
+    }
+
+    function resetShine() {
+      clearTimeout(state.idleTimer);
+      state.idleTimer = null;
+
+      if (state.settleTween) {
+        state.settleTween.kill();
+        state.settleTween = null;
+      }
+
+      gsap.set(state.mark, {
+        "--logo-shine-pos": REST_POS + "%",
+        "--logo-shine-bright": 0.55,
+      });
+      state.virtualScroll = 0;
+    }
+
+    function settleShine() {
+      if (state.settleTween) return;
+
+      state.settleTween = gsap.to(state.mark, {
+        "--logo-shine-pos": REST_POS + "%",
+        "--logo-shine-bright": 0.55,
+        duration: 2,
+        ease: "power2.out",
+        onComplete: function () {
+          state.virtualScroll = 0;
+          state.settleTween = null;
+        },
+      });
+    }
+
+    function scheduleSettle() {
+      clearTimeout(state.idleTimer);
+      state.idleTimer = setTimeout(settleShine, IDLE_DELAY);
+    }
+
+    function handleScrollDelta(delta) {
+      if (!delta) return;
+
+      if (state.settleTween) {
+        state.settleTween.kill();
+        state.settleTween = null;
+        syncVirtualFromPos();
+      }
+
+      state.virtualScroll += delta;
+      applyShine();
+      scheduleSettle();
+    }
+
+    resetShine();
+
+    window.onLenisLogoShine = function (e) {
+      var current = readScroll(e);
+      var delta = current - state.lastScroll;
+      state.lastScroll = current;
+      if (Math.abs(delta) < 0.5) return;
+      handleScrollDelta(delta);
+    };
+
+    state.lastScroll = readScroll();
+
+    if (typeof Lenis === "undefined") {
+      window.addEventListener(
+        "scroll",
+        function () {
+          window.onLenisLogoShine({ scroll: readScroll() });
+        },
+        { passive: true }
+      );
+    }
   }
 
   function initParallaxOrbs() {

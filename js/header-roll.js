@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var ROLL_SELECTOR = ".site-logo__mark, .site-nav__list a[data-i18n]";
+  var ROLL_SELECTOR = ".site-nav__list a[data-i18n]";
 
   /* px で 360° ＝ 1 回転（大きいほど緩やか） */
   var SCROLL_PER_ROTATION = 200;
@@ -217,8 +217,18 @@
     }
   }
 
+  function restoreLogoMark() {
+    document.querySelectorAll(".site-logo__mark.roll-text").forEach(function (el) {
+      var label = el.getAttribute("aria-label") || el.textContent.trim() || "NIKKA";
+      el.classList.remove("roll-text");
+      el.removeAttribute("aria-label");
+      el.textContent = label;
+    });
+  }
+
   function initHeaderRoll() {
     killHeaderRollScroll();
+    restoreLogoMark();
 
     document.querySelectorAll(ROLL_SELECTOR).forEach(function (el) {
       if (prefersReduced()) {
