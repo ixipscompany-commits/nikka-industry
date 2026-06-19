@@ -1,0 +1,461 @@
+(function () {
+  "use strict";
+
+  var SCRUB = 3.2;
+  var lenis = null;
+
+  var prefersReduced =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function initScroll() {
+    if (prefersReduced || typeof gsap === "undefined") {
+      document.documentElement.classList.add("motion-reduced");
+      revealAll();
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.ticker.lagSmoothing(0);
+
+    ScrollTrigger.config({
+      limitCallbacks: true,
+      syncInterval: 150,
+    });
+
+    initLenis();
+    if (typeof window.initHeaderRollScroll === "function") {
+      window.initHeaderRollScroll();
+    }
+    initSectionVisuals();
+    initHeader();
+    initHeroEntrance();
+    initScrollReveals();
+    initNewsGrid();
+    initParallaxOrbs();
+
+    ScrollTrigger.refresh();
+  }
+
+  function initLenis() {
+    if (typeof Lenis === "undefined") return;
+
+    lenis = new Lenis({
+      duration: 1.35,
+      easing: function (t) {
+        return Math.min(1, 1.001 - Math.pow(2, -10 * t));
+      },
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.1,
+    });
+
+    lenis.on("scroll", function (e) {
+      ScrollTrigger.update();
+      if (typeof window.onLenisHeaderRoll === "function") {
+        window.onLenisHeaderRoll(e);
+      }
+    });
+
+    gsap.ticker.add(function (time) {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  function revealAll() {
+    gsap.set("[data-animate-item]", { opacity: 1, y: 0, scale: 1, clearProps: "transform" });
+    gsap.set(".scroll-bg__orb", { opacity: 1 });
+    gsap.set(".section-visual__photo, .section-visual__geo", {
+      opacity: 1,
+      scale: 1,
+      x: 0,
+      y: 0,
+      rotate: 0,
+      clearProps: "transform",
+    });
+  }
+
+  function scrubTrigger(trigger, end, scrubValue) {
+    return {
+      trigger: trigger,
+      start: "top bottom",
+      end: end || "bottom top",
+      scrub: scrubValue != null ? scrubValue : SCRUB,
+      invalidateOnRefresh: true,
+    };
+  }
+
+  function initSectionVisuals() {
+    initHeroVisual();
+    initAboutVisual();
+    initBusinessesVisual();
+    initNewsVisual();
+  }
+
+  function initHeroVisual() {
+    var section = document.getElementById("hero");
+    if (!section) return;
+
+    var photo = section.querySelector(".section-visual__photo");
+    var geoA = section.querySelector(".section-visual__geo--a");
+    var geoB = section.querySelector(".section-visual__geo--b");
+    var frame = section.querySelector(".section-visual__frame");
+
+    if (photo) {
+      gsap.fromTo(
+        photo,
+        { scale: 1.12, yPercent: 6, opacity: 0.3, force3D: true },
+        {
+          scale: 1.02,
+          yPercent: -12,
+          opacity: 0.5,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB),
+        }
+      );
+    }
+
+    if (geoA) {
+      gsap.fromTo(
+        geoA,
+        { x: -20, y: 30, rotate: -4, scale: 0.95, force3D: true },
+        {
+          x: 35,
+          y: -50,
+          rotate: 6,
+          scale: 1.04,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 0.6),
+        }
+      );
+    }
+
+    if (geoB) {
+      gsap.fromTo(
+        geoB,
+        { x: 15, y: -15, rotate: 3, opacity: 0.2, force3D: true },
+        {
+          x: -25,
+          y: 40,
+          rotate: -5,
+          opacity: 0.35,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB - 0.4),
+        }
+      );
+    }
+
+    if (frame) {
+      gsap.to(frame, {
+        yPercent: 8,
+        ease: "none",
+        force3D: true,
+        scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 1),
+      });
+    }
+  }
+
+  function initAboutVisual() {
+    var section = document.getElementById("about");
+    if (!section) return;
+
+    var photo = section.querySelector(".section-visual__photo");
+    var geo = section.querySelector(".section-visual__geo--a");
+    var st = scrubTrigger(section, "bottom top", SCRUB);
+
+    if (photo) {
+      gsap.fromTo(
+        photo,
+        { xPercent: -8, scale: 1.08, opacity: 0.18, force3D: true },
+        {
+          xPercent: 10,
+          scale: 1,
+          opacity: 0.38,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: st,
+        }
+      );
+    }
+
+    if (geo) {
+      gsap.fromTo(
+        geo,
+        { xPercent: 6, yPercent: 4, scale: 0.94, rotate: 0, force3D: true },
+        {
+          xPercent: -5,
+          yPercent: -8,
+          scale: 1.06,
+          rotate: 4,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 0.5),
+        }
+      );
+    }
+  }
+
+  function initBusinessesVisual() {
+    var section = document.getElementById("businesses");
+    if (!section) return;
+
+    var geoA = section.querySelector(".section-visual__geo--a");
+    var geoB = section.querySelector(".section-visual__geo--b");
+
+    if (geoA) {
+      gsap.fromTo(
+        geoA,
+        { xPercent: -5, scale: 0.94, yPercent: 4, force3D: true },
+        {
+          xPercent: 5,
+          scale: 1.03,
+          yPercent: -5,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB),
+        }
+      );
+    }
+
+    if (geoB) {
+      gsap.fromTo(
+        geoB,
+        { xPercent: 10, yPercent: 6, opacity: 0.12, force3D: true },
+        {
+          xPercent: -12,
+          yPercent: -10,
+          opacity: 0.28,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB - 0.3),
+        }
+      );
+    }
+  }
+
+  function initNewsVisual() {
+    var section = document.getElementById("news");
+    if (!section) return;
+
+    var geoA = section.querySelector(".section-visual__geo--a");
+    var geoB = section.querySelector(".section-visual__geo--b");
+
+    if (geoA) {
+      gsap.fromTo(
+        geoA,
+        { x: 25, y: 20, rotate: -3, scale: 0.97, force3D: true },
+        {
+          x: -35,
+          y: -30,
+          rotate: 5,
+          scale: 1.05,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB),
+        }
+      );
+    }
+
+    if (geoB) {
+      gsap.fromTo(
+        geoB,
+        { x: -20, y: -15, opacity: 0.15, force3D: true },
+        {
+          x: 30,
+          y: 25,
+          opacity: 0.3,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 0.4),
+        }
+      );
+    }
+  }
+
+  function initHeader() {
+    var header = document.querySelector(".site-header");
+    if (!header) return;
+
+    ScrollTrigger.create({
+      start: "top -80",
+      onUpdate: function (self) {
+        header.classList.toggle("is-scrolled", self.scroll() > 40);
+      },
+    });
+  }
+
+  function initHeroEntrance() {
+    var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    tl.from(".scroll-bg__orb", {
+      opacity: 0,
+      scale: 0.92,
+      duration: 1.2,
+      stagger: 0.1,
+    })
+      .from(
+        "#hero .section-visual__photo",
+        { opacity: 0, scale: 1.05, duration: 1.4 },
+        "-=0.9"
+      )
+      .from(
+        "#hero .section-visual__geo",
+        { opacity: 0, scale: 0.94, duration: 1, stagger: 0.1 },
+        "-=1"
+      )
+      .from(".hero__eyebrow", { opacity: 0, y: 20, duration: 0.8 }, "-=0.7")
+      .from(".hero__logo", { opacity: 0, y: 28, duration: 1 }, "-=0.6")
+      .from(".hero__catchcopy", { opacity: 0, y: 22, duration: 0.8 }, "-=0.5")
+      .from(".hero__lead", { opacity: 0, y: 18, duration: 0.75 }, "-=0.4")
+      .from(
+        ".hero__actions .btn",
+        { opacity: 0, y: 16, duration: 0.65, stagger: 0.1 },
+        "-=0.3"
+      )
+      .from(".scroll-hint", { opacity: 0, y: 8, duration: 0.6 }, "-=0.2");
+
+    gsap.to(".hero .container", {
+      y: -32,
+      opacity: 0.5,
+      ease: "none",
+      force3D: true,
+      scrollTrigger: scrubTrigger(document.getElementById("hero"), "bottom top", SCRUB),
+    });
+  }
+
+  function fadeUp(el, opts) {
+    gsap.from(el, {
+      opacity: 0,
+      y: opts.y || 40,
+      duration: opts.duration || 1.2,
+      ease: "power2.out",
+      force3D: true,
+      scrollTrigger: {
+        trigger: el,
+        start: opts.start || "top 88%",
+        once: true,
+      },
+    });
+  }
+
+  function initScrollReveals() {
+    gsap.utils.toArray("[data-animate-item]").forEach(function (el) {
+      if (
+        el.closest("#hero") ||
+        el.closest(".business-card") ||
+        el.closest(".news-card")
+      ) {
+        return;
+      }
+      fadeUp(el, { y: 36 });
+    });
+
+    gsap.utils.toArray(".section-header").forEach(function (header) {
+      var label = header.querySelector(".section-header__label");
+      var line = header.querySelector(".section-header__line");
+      var title = header.querySelector(".section-header__title");
+
+      if (label) {
+        fadeUp(label, { y: 16, start: "top 86%" });
+      }
+
+      if (title) {
+        fadeUp(title, { y: 24, start: "top 86%", duration: 1 });
+      }
+
+      if (line) {
+        gsap.from(line, {
+          scaleX: 0,
+          duration: 1.4,
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: header,
+            start: "top 84%",
+            once: true,
+          },
+        });
+      }
+    });
+
+    gsap.utils.toArray(".business-card").forEach(function (card, i) {
+      gsap.from(card, {
+        opacity: 0,
+        y: 48,
+        duration: 1.1,
+        delay: (i % 2) * 0.06,
+        ease: "power2.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: card,
+          start: "top 92%",
+          once: true,
+        },
+      });
+    });
+  }
+
+  function initNewsGrid() {
+    var cards = gsap.utils.toArray(".news-card");
+    if (!cards.length) return;
+
+    gsap.from(cards, {
+      opacity: 0,
+      scale: 0.97,
+      y: 24,
+      duration: 1,
+      stagger: 0.06,
+      ease: "power2.out",
+      force3D: true,
+      scrollTrigger: {
+        trigger: ".news-grid",
+        start: "top 86%",
+        once: true,
+      },
+    });
+  }
+
+  function initParallaxOrbs() {
+    var mainSt = {
+      trigger: "main",
+      start: "top top",
+      end: "bottom bottom",
+      scrub: SCRUB + 0.8,
+      invalidateOnRefresh: true,
+    };
+
+    gsap.to(".scroll-bg__orb--1", {
+      y: 120,
+      x: -25,
+      ease: "none",
+      force3D: true,
+      scrollTrigger: mainSt,
+    });
+
+    gsap.to(".scroll-bg__orb--2", {
+      y: -80,
+      x: 40,
+      ease: "none",
+      force3D: true,
+      scrollTrigger: mainSt,
+    });
+
+    gsap.to(".scroll-bg__orb--3", {
+      y: 140,
+      x: 20,
+      ease: "none",
+      force3D: true,
+      scrollTrigger: mainSt,
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initScroll);
+  } else {
+    initScroll();
+  }
+})();
