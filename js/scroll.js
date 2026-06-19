@@ -57,6 +57,30 @@
       }
     });
 
+    ScrollTrigger.scrollerProxy(document.documentElement, {
+      scrollTop: function (value) {
+        if (arguments.length) {
+          lenis.scrollTo(value, { immediate: true });
+        }
+        return lenis.scroll;
+      },
+      getBoundingClientRect: function () {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+      },
+      pinType: document.documentElement.style.transform ? "transform" : "fixed",
+    });
+
+    ScrollTrigger.defaults({ scroller: document.documentElement });
+
+    ScrollTrigger.addEventListener("refresh", function () {
+      lenis.resize();
+    });
+
     gsap.ticker.add(function (time) {
       lenis.raf(time * 1000);
     });
@@ -428,28 +452,46 @@
       invalidateOnRefresh: true,
     };
 
-    gsap.to(".scroll-bg__orb--1", {
-      y: 120,
-      x: -25,
+    gsap.to(".scroll-bg__wash", {
+      y: 80,
+      opacity: 0.94,
       ease: "none",
       force3D: true,
       scrollTrigger: mainSt,
+    });
+
+    gsap.to(".scroll-bg__orb--1", {
+      y: 140,
+      x: -40,
+      scale: 1.12,
+      ease: "none",
+      force3D: true,
+      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 1.1 }),
     });
 
     gsap.to(".scroll-bg__orb--2", {
-      y: -80,
-      x: 40,
+      y: -110,
+      x: 55,
+      scale: 1.08,
       ease: "none",
       force3D: true,
-      scrollTrigger: mainSt,
+      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 0.4 }),
     });
 
     gsap.to(".scroll-bg__orb--3", {
-      y: 140,
-      x: 20,
+      y: 160,
+      x: 30,
+      scale: 1.1,
       ease: "none",
       force3D: true,
-      scrollTrigger: mainSt,
+      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 1.4 }),
+    });
+
+    gsap.to(".scroll-bg__grain", {
+      y: 40,
+      ease: "none",
+      force3D: true,
+      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 2 }),
     });
   }
 
