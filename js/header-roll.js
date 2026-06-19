@@ -4,15 +4,15 @@
   var ROLL_SELECTOR = ".site-logo__mark, .site-nav__list a[data-i18n]";
 
   /* px で 360° ＝ 1 回転（大きいほど緩やか） */
-  var SCROLL_PER_ROTATION = 320;
+  var SCROLL_PER_ROTATION = 200;
   /* 文字ごとのスクロール遅延（大きいほどスタッガーが長い） */
-  var CHAR_STAGGER_PX = 28;
+  var CHAR_STAGGER_PX = 15;
   /* スクロール追従のなめらかさ（0〜1、小さいほどキビキビ） */
-  var CHAR_SMOOTHING = 0.38;
+  var CHAR_SMOOTHING = 0.1;
   /* スクロール停止後に正面へ戻すまでの待機 */
   var IDLE_DELAY = 200;
   /* 停止時の文字リセット間隔 */
-  var SNAP_STAGGER = 0.12;
+  var SNAP_STAGGER = 0.01;
 
   var idleTimer = null;
   var settleTween = null;
