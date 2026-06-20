@@ -189,7 +189,7 @@
         vision: "Build a sustainable future where technology and design work in harmony.",
         business:
           "Web & Shop Design / Beauty Wholesale & Retail / Real Estate Management / AI-Powered Store Systems",
-        philosophy: "Amplify with AI. Refine by hand. Keep only what matters.",
+        philosophy: "See what matters. Simplify the complex. Connect hearts—and choose happiness.",
       },
       businesses: {
         label: "Our Businesses",
@@ -329,7 +329,7 @@
         mission: "创造让未来更幸福的事业。",
         vision: "创造科技与设计和谐共存的可持续事业未来。",
         business: "Web及门店设计 / 美容批发及门店事业 / 不动产管理 / AI联动门店系统",
-        philosophy: "以AI拓展，以人手打磨。珍视留白，只留本质。",
+        philosophy: "见本质，化繁为简，以心相通，追求幸福。",
       },
       businesses: {
         label: "Our Businesses",
