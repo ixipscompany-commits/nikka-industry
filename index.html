@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/nikka-hero-photo.jpg">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -50,7 +51,10 @@
     <section class="section section--hero" id="hero" data-section="hero" data-section-visual="hero">
       <div class="section-visual section-visual--hero" aria-hidden="true">
         <div class="section-visual__frame">
-          <img class="section-visual__photo" src="assets/nikka-hero-photo.png" alt="" width="1920" height="1080" decoding="async">
+          <picture>
+            <source srcset="assets/nikka-hero-photo.jpg" type="image/jpeg">
+            <img class="section-visual__photo" src="assets/nikka-hero-photo.png" alt="" width="1536" height="1024" fetchpriority="high" decoding="async">
+          </picture>
           <img class="section-visual__geo section-visual__geo--a" src="assets/visual-hero.svg" alt="" width="1200" height="1200">
           <img class="section-visual__geo section-visual__geo--b" src="assets/visual-hero.svg" alt="" width="1200" height="1200">
         </div>
@@ -88,7 +92,10 @@
     <section class="section section--about" id="about" data-section="about" data-section-visual="about">
       <div class="section-visual section-visual--about" aria-hidden="true">
         <div class="section-visual__frame">
-          <img class="section-visual__photo" src="assets/nikka-texture-photo.png" alt="" width="1920" height="1080" decoding="async">
+          <picture>
+            <source srcset="assets/nikka-texture-photo.jpg" type="image/jpeg">
+            <img class="section-visual__photo" src="assets/nikka-texture-photo.png" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+          </picture>
           <img class="section-visual__geo section-visual__geo--a" src="assets/visual-about.svg" alt="" width="1000" height="1000">
         </div>
         <div class="section-visual__veil"></div>
@@ -339,12 +346,12 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="js/header-roll.js"></script>
-  <script src="js/scroll.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/header-roll.js" defer></script>
+  <script src="js/scroll.js" defer></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
