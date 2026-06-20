@@ -12,6 +12,7 @@
           "有限会社NIKKA公式サイト。AIを駆使したWeb・デザインクリエイティブを核に、美容・不動産・店舗システムなど多様な事業を展開。",
       },
       logo: { ariaHome: "有限会社NIKKA ホーム", tagline: "Designing Happy Futures" },
+      lang: { switcher: "言語を選択" },
       nav: {
         main: "メインナビゲーション",
         about: "About",
@@ -441,6 +442,73 @@
     return "ja";
   }
 
+  var LANG_LABELS = { ja: "JA", en: "EN", zh: "中文" };
+
+  function closeLangMenu() {
+    var menu = document.querySelector(".lang-switcher__menu");
+    var toggle = document.querySelector(".lang-switcher__toggle");
+    if (menu) menu.hidden = true;
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function openLangMenu() {
+    var menu = document.querySelector(".lang-switcher__menu");
+    var toggle = document.querySelector(".lang-switcher__toggle");
+    if (menu) menu.hidden = false;
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
+  }
+
+  function toggleLangMenu() {
+    var menu = document.querySelector(".lang-switcher__menu");
+    if (!menu) return;
+    if (menu.hidden) openLangMenu();
+    else closeLangMenu();
+  }
+
+  function updateLangSwitcherUI(lang) {
+    var current = document.querySelector(".lang-switcher__current");
+    if (current) current.textContent = LANG_LABELS[lang] || lang.toUpperCase();
+
+    document.querySelectorAll(".lang-switcher__option").forEach(function (btn) {
+      var isActive = btn.getAttribute("data-lang") === lang;
+      btn.classList.toggle("is-active", isActive);
+      btn.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+
+    closeLangMenu();
+  }
+
+  function initLangSwitcher() {
+    var toggle = document.querySelector(".lang-switcher__toggle");
+    var switcher = document.querySelector(".lang-switcher");
+
+    if (toggle) {
+      toggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        toggleLangMenu();
+      });
+    }
+
+    document.querySelectorAll(".lang-switcher__option").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var next = btn.getAttribute("data-lang");
+        if (SUPPORTED.indexOf(next) !== -1) applyLang(next);
+      });
+    });
+
+    if (switcher) {
+      switcher.addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+    }
+
+    document.addEventListener("click", closeLangMenu);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeLangMenu();
+    });
+  }
+
   function applyLang(lang) {
     var strings = t[lang];
     if (!strings) return;
@@ -482,11 +550,7 @@
         });
     });
 
-    document.querySelectorAll(".lang-switcher__btn").forEach(function (btn) {
-      var isActive = btn.getAttribute("data-lang") === lang;
-      btn.classList.toggle("is-active", isActive);
-      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
-    });
+    updateLangSwitcherUI(lang);
 
     localStorage.setItem(STORAGE_KEY, lang);
 
@@ -500,13 +564,7 @@
   function init() {
     var lang = detectLang();
     applyLang(lang);
-
-    document.querySelectorAll(".lang-switcher__btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var next = btn.getAttribute("data-lang");
-        if (SUPPORTED.indexOf(next) !== -1) applyLang(next);
-      });
-    });
+    initLangSwitcher();
   }
 
   /* defer スクリプトは interactive の段階で順次実行されるため、

@@ -36,10 +36,22 @@
     </nav>
     <div class="site-header__aside">
       <div class="site-header__rabbit" aria-hidden="true"></div>
-      <div class="lang-switcher" role="group" data-i18n-attr="aria-label:lang.switcher">
-        <button type="button" class="lang-switcher__btn is-active" data-lang="ja" aria-pressed="true">JA</button>
-        <button type="button" class="lang-switcher__btn" data-lang="en" aria-pressed="false">EN</button>
-        <button type="button" class="lang-switcher__btn" data-lang="zh" aria-pressed="false">中文</button>
+      <div class="lang-switcher" data-i18n-attr="aria-label:lang.switcher">
+        <button type="button" class="lang-switcher__toggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-switcher-menu">
+          <span class="lang-switcher__current">JA</span>
+          <span class="lang-switcher__chevron" aria-hidden="true"></span>
+        </button>
+        <ul class="lang-switcher__menu" id="lang-switcher-menu" role="listbox" hidden>
+          <li role="presentation">
+            <button type="button" class="lang-switcher__option is-active" data-lang="ja" role="option" aria-selected="true">JA</button>
+          </li>
+          <li role="presentation">
+            <button type="button" class="lang-switcher__option" data-lang="en" role="option" aria-selected="false">EN</button>
+          </li>
+          <li role="presentation">
+            <button type="button" class="lang-switcher__option" data-lang="zh" role="option" aria-selected="false">中文</button>
+          </li>
+        </ul>
       </div>
     </div>
   </header>
