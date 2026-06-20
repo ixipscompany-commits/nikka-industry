@@ -438,6 +438,13 @@ ul {
 
 .site-nav {
   flex-shrink: 0;
+  margin-left: auto;
+}
+
+.site-nav__list {
+  display: flex;
+  justify-content: flex-end;
+  gap: clamp(1.5rem, 4vw, 2.75rem);
 }
 
 .site-logo {
@@ -489,11 +496,6 @@ ul {
   font-size: 0.625rem;
   letter-spacing: 0.18em;
   color: var(--color-text-muted);
-}
-
-.site-nav__list {
-  display: flex;
-  gap: clamp(1.5rem, 4vw, 2.75rem);
 }
 
 .site-nav__list a {
@@ -1182,6 +1184,9 @@ ul {
 
   .site-nav {
     width: 100%;
+    margin-left: 0;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .lang-switcher__btn {
