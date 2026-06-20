@@ -47,7 +47,7 @@
         mission: "未来を幸せにするための事業を創造する。",
         vision: "テクノロジーとデザインが調和した、持続可能な事業の未来をつくる。",
         business:
-          "Web・デザインクリエイティブ / 美容事業 / 不動産管理 / AI連携店舗システム",
+          "Web及びショップのデザイン/美容卸及び店舗事業/不動産管理/AI連携店舗システム",
         philosophy: "AIで広げ、人の手で仕上げる。余白を大切に、本質だけを残す。",
       },
       businesses: {
@@ -185,7 +185,7 @@
         dtPhilosophy: "Philosophy",
         companyName: "NIKKA Inc.",
         englishName: "NIKKA Inc.",
-        mission: "Expand what business and experience can become — with AI.",
+        mission: "Creating businesses that make the future happier.",
         vision: "Build a sustainable future where technology and design work in harmony.",
         business:
           "Web & Creative / Beauty / Real Estate / AI-Powered Store Systems",
@@ -326,7 +326,7 @@
         dtPhilosophy: "理念",
         companyName: "有限会社日华",
         englishName: "NIKKA Inc.",
-        mission: "以AI之力，拓展事业与体验的可能性。",
+        mission: "创造让未来更幸福的事业。",
         vision: "创造科技与设计和谐共存的可持续事业未来。",
         business: "Web·设计创意 / 美容事业 / 不动产管理 / AI联动门店系统",
         philosophy: "以AI拓展，以人手打磨。珍视留白，只留本质。",
