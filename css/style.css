@@ -427,9 +427,9 @@ ul {
 }
 
 .site-header__inner {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
   min-height: 4.5rem;
   padding-block: 0.75rem;
@@ -437,13 +437,16 @@ ul {
 }
 
 .site-nav {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
   flex-shrink: 0;
-  margin-left: auto;
 }
 
 .site-nav__list {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: clamp(1.5rem, 4vw, 2.75rem);
 }
 
@@ -1183,10 +1186,11 @@ ul {
   }
 
   .site-nav {
+    position: static;
+    transform: none;
     width: 100%;
-    margin-left: 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   .lang-switcher__btn {

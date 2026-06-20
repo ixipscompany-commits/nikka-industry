@@ -662,9 +662,9 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initScroll);
-  } else {
+  if (document.readyState === "complete") {
     initScroll();
+  } else {
+    document.addEventListener("DOMContentLoaded", initScroll);
   }
 })();
