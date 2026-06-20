@@ -163,43 +163,46 @@
 
     /* ----- フェーズ1: 黎明（浮遊して画面を満たす） ----- */
     if (!reduced && floats.length) {
-      tl.to(aura, { autoAlpha: 0.5, scale: 0.7, duration: 1.6 }, 0);
+      tl.to(aura, { autoAlpha: 0.45, scale: 0.7, duration: 1.8 }, 0);
 
+      var n = floats.length;
       floats.forEach(function (el, i) {
-        var driftX = rand(-26, 26);
-        var driftY = rand(-30, 30);
-        var inAt = rand(0, 1.5);
+        var driftX = rand(-16, 16);
+        var driftY = rand(-20, 20);
+        /* 順次フィル: 画面を満たしていく */
+        var inAt = (i / n) * 1.5 + rand(0, 0.18);
 
-        /* 個別に: ふわっと現れ → 漂い → 消える/残る */
-        gsap.set(el, { xPercent: -50, yPercent: -50, scale: 0.86 });
+        gsap.set(el, { xPercent: -50, yPercent: -50, scale: 0.82, x: 0, y: 0 });
 
+        /* ふわっと出現 */
         tl.to(
           el,
           {
-            autoAlpha: i % 4 === 0 ? 0.55 : 0.92,
+            autoAlpha: i % 4 === 0 ? 0.62 : 0.95,
             scale: 1,
-            duration: rand(0.9, 1.4),
+            duration: 0.9,
             ease: "power2.out"
           },
           inAt
         );
 
-        /* 漂い（消えるものは autoAlpha を落として「浮かんでは消え」） */
+        /* 心地よい漂い */
         tl.to(
           el,
           {
-            x: "+=" + driftX,
-            y: "+=" + driftY,
-            autoAlpha: i % 3 === 0 ? 0.2 : "+=0",
-            duration: rand(1.4, 2.2),
+            x: driftX,
+            y: driftY,
+            duration: 1.5,
             ease: "sine.inOut"
           },
-          inAt + 0.6
+          inAt + 0.45
         );
       });
 
       /* ----- フェーズ2: 引力と太陽（中央へ凝縮） ----- */
-      var convergeAt = 2.7;
+      /* 全要素が出そろう時刻に集約ラベルを置く */
+      tl.addLabel("converge", 2.5);
+
       floats.forEach(function (el, i) {
         var rect = el.getBoundingClientRect();
         var ex = rect.left + rect.width / 2;
@@ -207,26 +210,28 @@
         var dx = cx - ex;
         var dy = cy - ey;
 
+        /* overwrite:auto で漂いトゥイーンを確実に引き継ぎ、中央へ吸い込む */
         tl.to(
           el,
           {
-            x: "+=" + dx,
-            y: "+=" + dy,
-            scale: 0.12,
-            rotation: rand(-50, 50),
+            x: dx,
+            y: dy,
+            scale: 0.1,
+            rotation: rand(-60, 60),
             autoAlpha: 0,
-            duration: rand(0.85, 1.15),
-            ease: "power3.in"
+            duration: rand(0.9, 1.2),
+            ease: "power3.in",
+            overwrite: "auto"
           },
-          convergeAt + i * 0.018
+          "converge+=" + (i * 0.02)
         );
       });
 
       /* 引力の中心：オーラが収束し脈動 */
       tl.to(
         aura,
-        { scale: 0.32, autoAlpha: 0.85, duration: 0.9, ease: "power3.in" },
-        convergeAt + 0.2
+        { scale: 0.3, autoAlpha: 0.9, duration: 1.0, ease: "power3.in" },
+        "converge+=0.15"
       );
     }
 
