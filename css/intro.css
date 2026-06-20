@@ -1,0 +1,331 @@
+/* ==========================================================================
+   NIKKA — Opening Intro (黎明 → 引力 → 誕生 → 昇華)
+   完全独立スタイル。既存サイトの CSS には一切依存・干渉しない。
+   すべてのクラスは .nk-intro 名前空間。
+   ========================================================================== */
+
+.nk-intro {
+  /* Self-contained palette (Nordic modern minimalism) */
+  --nk-bg: #f6f3ef;
+  --nk-bg-deep: #efeae3;
+  --nk-ink: #1c1b19;
+  --nk-charcoal: #3a3835;
+  --nk-muted: #8c857c;
+  --nk-line: rgba(58, 56, 53, 0.12);
+  --nk-teal: #1a7f8c;
+  --nk-teal-soft: #4aa7b1;
+  --nk-gold: #d8b271;
+  --nk-gold-soft: #f0dcb6;
+  --nk-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --nk-sans: "Noto Sans JP", "Hiragino Sans", sans-serif;
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      120% 120% at 50% 42%,
+      var(--nk-bg) 0%,
+      var(--nk-bg-deep) 100%
+    );
+  -webkit-font-smoothing: antialiased;
+  contain: layout style paint;
+  will-change: opacity;
+}
+
+/* スクロールロック（イントロ再生中） */
+html.nk-intro-lock,
+html.nk-intro-lock body {
+  overflow: hidden !important;
+  height: 100% !important;
+}
+
+/* 一瞬の素のHTML露出を防ぐ初期状態（JS未実行でも背景でカバー） */
+.nk-intro[hidden] {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   背景の質感（極薄ノイズ＋ほのかな光）
+   -------------------------------------------------------------------------- */
+.nk-intro__grain {
+  position: absolute;
+  inset: -10%;
+  opacity: 0.06;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.nk-intro__aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80vmin;
+  height: 80vmin;
+  transform: translate(-50%, -50%) scale(0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(240, 220, 182, 0.55) 0%,
+    rgba(216, 178, 113, 0.18) 38%,
+    rgba(246, 243, 239, 0) 70%
+  );
+  filter: blur(6px);
+  will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   フェーズ1: 浮遊するコンセプトワード & 写真ダミー
+   -------------------------------------------------------------------------- */
+.nk-intro__stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nk-intro__float {
+  position: absolute;
+  opacity: 0;
+  will-change: transform, opacity;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+.nk-intro__word {
+  font-family: var(--nk-serif);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--nk-charcoal);
+  white-space: nowrap;
+}
+
+.nk-intro__word--accent {
+  color: var(--nk-teal);
+  font-style: italic;
+}
+
+.nk-intro__word-sub {
+  display: block;
+  margin-top: 0.35em;
+  font-family: var(--nk-sans);
+  font-size: 0.34em;
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--nk-muted);
+}
+
+.nk-intro__photo {
+  border: 1px solid var(--nk-line);
+  background:
+    linear-gradient(
+      135deg,
+      var(--nk-bg-deep) 0%,
+      #e6ddd0 48%,
+      #d9cdbb 100%
+    );
+  box-shadow: 0 18px 40px rgba(28, 27, 25, 0.06);
+}
+
+.nk-intro__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transform: translateX(-110%);
+}
+
+/* --------------------------------------------------------------------------
+   フェーズ3: 太陽シンボル & ロゴタイプ
+   -------------------------------------------------------------------------- */
+.nk-intro__logo {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2.25rem);
+  opacity: 1;
+}
+
+/* 本物のロゴ画像 */
+.nk-intro__logo-img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: clamp(260px, 54vw, 600px);
+  max-width: 86vw;
+  height: auto;
+  /* 初期は左→右ワイプ用にクリップ（JSで展開） */
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path, transform, opacity;
+}
+
+/* フォールバック（画像未配置/読込失敗時のみ表示） */
+.nk-intro__fallback {
+  display: none;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.25rem);
+}
+
+.nk-intro__logo.is-fallback .nk-intro__logo-img {
+  display: none;
+}
+
+.nk-intro__logo.is-fallback .nk-intro__fallback {
+  display: flex;
+}
+
+.nk-intro__symbol {
+  position: relative;
+  width: clamp(74px, 12vw, 132px);
+  height: clamp(74px, 12vw, 132px);
+  flex-shrink: 0;
+}
+
+.nk-intro__glow {
+  position: absolute;
+  top: 50%;
+  left: 38%;
+  width: 70%;
+  height: 220%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(246, 235, 210, 0.92) 0%,
+    rgba(216, 178, 113, 0.32) 42%,
+    rgba(246, 243, 239, 0) 72%
+  );
+  will-change: transform, opacity;
+}
+
+.nk-intro__emblem {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/* ゴールドの輪（上部が開いた弧） */
+.nk-intro__arc {
+  fill: none;
+  stroke: url(#nkGold);
+  stroke-width: 13;
+  stroke-linecap: round;
+  stroke-dasharray: 76 24;
+  stroke-dashoffset: 12;
+  transform: rotate(-90deg);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* 立ち上る炎 */
+.nk-intro__flame {
+  fill: url(#nkFlame);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.nk-intro__flame--c {
+  filter: drop-shadow(0 2px 6px rgba(168, 22, 26, 0.28));
+}
+
+.nk-intro__iixii {
+  fill: #fff7e8;
+  font-family: var(--nk-sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-anchor: middle;
+}
+
+.nk-intro__wordmark {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow: hidden;
+}
+
+.nk-intro__kanji {
+  font-family: var(--nk-serif);
+  font-size: clamp(2.1rem, 5.2vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  color: var(--nk-ink);
+  opacity: 0;
+}
+
+.nk-intro__latin {
+  font-family: var(--nk-sans);
+  font-size: clamp(0.62rem, 1.4vw, 0.8rem);
+  font-weight: 300;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--nk-muted);
+  opacity: 0;
+  padding-left: 0.12em;
+}
+
+.nk-intro__divider {
+  width: 1px;
+  height: clamp(2.6rem, 6vw, 4.2rem);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--nk-line) 30%,
+    var(--nk-line) 70%,
+    transparent 100%
+  );
+  transform: scaleY(0);
+  transform-origin: center;
+}
+
+/* --------------------------------------------------------------------------
+   フェーズ4: 光の昇華フラッシュ
+   -------------------------------------------------------------------------- */
+.nk-intro__flash {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 252, 245, 1) 0%,
+    rgba(246, 235, 210, 0.85) 45%,
+    rgba(246, 243, 239, 0) 78%
+  );
+  will-change: opacity;
+}
+
+/* スキップ用（保険）: 強制非表示 */
+.nk-intro.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* reduced motion / 低スペック配慮 */
+@media (prefers-reduced-motion: reduce) {
+  .nk-intro__grain {
+    display: none;
+  }
+}
