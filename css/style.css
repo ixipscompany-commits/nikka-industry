@@ -512,8 +512,9 @@ ul {
 }
 
 .site-logo__sub {
-  font-size: 0.625rem;
-  letter-spacing: 0.18em;
+  font-size: 0.5625rem;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
   color: var(--color-text-muted);
 }
 
