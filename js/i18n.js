@@ -44,7 +44,7 @@
         dtPhilosophy: "理念",
         companyName: "有限会社NIKKA",
         englishName: "NIKKA Inc.",
-        mission: "AIの力で、事業と体験の可能性を広げる。",
+        mission: "未来を幸せにするための事業を創造する。",
         vision: "テクノロジーとデザインが調和した、持続可能な事業の未来をつくる。",
         business:
           "Web・デザインクリエイティブ / 美容事業 / 不動産管理 / AI連携店舗システム",
