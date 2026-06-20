@@ -59,35 +59,6 @@
     } catch (e) {}
   }
 
-  function buildSunRays(group) {
-    if (!group) return [];
-    var rays = [];
-    var cx = 100;
-    var cy = 100;
-    var inner = 50;
-    var outer = 78;
-    var count = 12;
-    var svgNS = "http://www.w3.org/2000/svg";
-
-    for (var i = 0; i < count; i++) {
-      var angle = (i / count) * Math.PI * 2 - Math.PI / 2;
-      var x1 = cx + Math.cos(angle) * inner;
-      var y1 = cy + Math.sin(angle) * inner;
-      var x2 = cx + Math.cos(angle) * outer;
-      var y2 = cy + Math.sin(angle) * outer;
-
-      var line = document.createElementNS(svgNS, "line");
-      line.setAttribute("x1", x1.toFixed(2));
-      line.setAttribute("y1", y1.toFixed(2));
-      line.setAttribute("x2", x2.toFixed(2));
-      line.setAttribute("y2", y2.toFixed(2));
-      line.setAttribute("class", "nk-intro__ray");
-      group.appendChild(line);
-      rays.push(line);
-    }
-    return rays;
-  }
-
   function buildFloats(stage) {
     var floats = [];
     if (!stage) return floats;
@@ -152,21 +123,22 @@
     var aura = root.querySelector(".nk-intro__aura");
     var glow = root.querySelector(".nk-intro__glow");
     var flash = root.querySelector(".nk-intro__flash");
-    var raysGroup = root.querySelector(".nk-intro__rays");
-    var coreRing = root.querySelector(".nk-intro__core-ring");
-    var coreFill = root.querySelector(".nk-intro__core-fill");
+    var arc = root.querySelector(".nk-intro__arc");
+    var flames = Array.prototype.slice.call(
+      root.querySelectorAll(".nk-intro__flame")
+    );
+    var iixii = root.querySelector(".nk-intro__iixii");
     var kanji = root.querySelector(".nk-intro__kanji");
     var latin = root.querySelector(".nk-intro__latin");
     var divider = root.querySelector(".nk-intro__divider");
     var logo = root.querySelector(".nk-intro__logo");
     var logoImg = root.querySelector(".nk-intro__logo-img");
 
-    /* 実ロゴ画像を使うか、SVGフォールバックを使うか */
+    /* 実ロゴ画像を使うか、再現SVGエンブレムを使うか */
     if (!useImage) {
       logo.classList.add("is-fallback");
     }
 
-    var rays = useImage ? [] : buildSunRays(raysGroup);
     var floats = reduced ? [] : buildFloats(stage);
 
     var cx = window.innerWidth / 2;
@@ -177,10 +149,9 @@
     if (useImage) {
       gsap.set(logoImg, { clipPath: "inset(0 100% 0 0)", scale: 0.92, autoAlpha: 1 });
     } else {
-      gsap.set(rays, { scale: 0, autoAlpha: 0 });
-      gsap.set([coreRing], { scale: 0, autoAlpha: 0 });
-      gsap.set([coreFill], { scale: 0, autoAlpha: 0 });
-      gsap.set([kanji, latin], { autoAlpha: 0 });
+      gsap.set(arc, { scale: 0.7, autoAlpha: 0, rotate: -110 });
+      gsap.set(flames, { scaleY: 0, autoAlpha: 0 });
+      gsap.set([iixii, kanji, latin], { autoAlpha: 0 });
     }
 
     var tl = gsap.timeline({
@@ -301,29 +272,35 @@
       /* グローを落ち着かせる */
       tl.to(glow, { autoAlpha: 0.55, scale: 0.95, duration: 0.8 }, ">-0.35");
     } else {
-      /* フォールバック（SVG太陽）: コア→リング→光線→ロゴタイプ */
+      /* 再現エンブレム: ゴールドの輪 → 炎が立ち上る → iixii → 日華/NIKKA CO.JP */
       tl.to(
-        coreFill,
-        { scale: 1, autoAlpha: 1, duration: 0.55, ease: "back.out(1.7)" },
-        "<0.05"
-      );
-      tl.to(
-        coreRing,
-        { scale: 1, autoAlpha: 1, duration: 0.55, ease: "back.out(1.6)" },
-        "<0.04"
-      );
-      tl.to(
-        rays,
+        arc,
         {
           scale: 1,
           autoAlpha: 1,
-          duration: 0.6,
-          ease: "back.out(2)",
-          stagger: { each: 0.035, from: "random" }
+          rotate: -90,
+          duration: 0.7,
+          ease: "back.out(1.5)"
         },
         "<0.05"
       );
-      tl.to(glow, { autoAlpha: 0.5, scale: 0.92, duration: 0.8 }, ">-0.1");
+      tl.to(
+        flames,
+        {
+          scaleY: 1,
+          autoAlpha: 1,
+          duration: 0.6,
+          ease: "back.out(1.8)",
+          stagger: 0.08
+        },
+        "<0.12"
+      );
+      tl.to(
+        iixii,
+        { autoAlpha: 1, duration: 0.5, ease: "power2.out" },
+        ">-0.1"
+      );
+      tl.to(glow, { autoAlpha: 0.5, scale: 0.92, duration: 0.8 }, "<");
 
       if (divider) {
         tl.to(divider, { scaleY: 1, duration: 0.5, ease: "power2.out" }, "<0.1");

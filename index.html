@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/nikka-hero-photo.jpg">
-  <link rel="preload" as="image" href="assets/logo-nikka.png">
   <link rel="stylesheet" href="css/intro.css">
   <link rel="stylesheet" href="css/style.css">
   <noscript><style>#nk-intro{display:none!important;}</style></noscript>
@@ -33,13 +32,29 @@
         decoding="async"
       />
 
-      <!-- フォールバック: SVG太陽シンボル＋ロゴタイプ -->
+      <!-- ロゴ再現版（炎＋ゴールドの輪＋iixii）／実PNG未配置時に自動使用 -->
       <div class="nk-intro__fallback" aria-hidden="true">
         <div class="nk-intro__symbol">
-          <svg class="nk-intro__sun" viewBox="0 0 200 200" aria-hidden="true">
-            <g class="nk-intro__rays"></g>
-            <circle class="nk-intro__core-fill" cx="100" cy="100" r="30"></circle>
-            <circle class="nk-intro__core-ring" cx="100" cy="100" r="38"></circle>
+          <svg class="nk-intro__emblem" viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+              <linearGradient id="nkGold" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#e39a1f"></stop>
+                <stop offset="0.55" stop-color="#f1c14b"></stop>
+                <stop offset="1" stop-color="#f6d77a"></stop>
+              </linearGradient>
+              <linearGradient id="nkFlame" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#a8161a"></stop>
+                <stop offset="0.5" stop-color="#d62b27"></stop>
+                <stop offset="1" stop-color="#ef5135"></stop>
+              </linearGradient>
+            </defs>
+            <circle class="nk-intro__arc" cx="100" cy="98" r="66" pathLength="100"></circle>
+            <g class="nk-intro__flames">
+              <path class="nk-intro__flame nk-intro__flame--l" d="M82,60 C95,92 96,114 89,130 C86,136 84,140 84,140 C84,140 81,136 78,130 C71,114 73,92 82,60 Z"></path>
+              <path class="nk-intro__flame nk-intro__flame--r" d="M118,60 C105,92 104,114 111,130 C114,136 116,140 116,140 C116,140 119,136 122,130 C129,114 127,92 118,60 Z"></path>
+              <path class="nk-intro__flame nk-intro__flame--c" d="M100,34 C118,76 122,104 110,126 C105,135 100,140 100,140 C100,140 95,135 90,126 C78,104 82,76 100,34 Z"></path>
+            </g>
+            <text class="nk-intro__iixii" x="100" y="150">iixii</text>
           </svg>
         </div>
         <span class="nk-intro__divider" aria-hidden="true"></span>
