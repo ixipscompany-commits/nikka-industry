@@ -509,9 +509,11 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
+  /* defer スクリプトは interactive の段階で順次実行されるため、
+     後続の header-roll.js より先に init するとロール演出が初期化されない */
+  if (document.readyState === "complete") {
     init();
+  } else {
+    document.addEventListener("DOMContentLoaded", init);
   }
 })();
