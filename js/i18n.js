@@ -7,11 +7,11 @@
   var t = {
     ja: {
       meta: {
-        title: "有限会社日華 | NIKKA",
+        title: "有限会社NIKKA",
         description:
-          "有限会社日華（NIKKA）公式サイト。AIを駆使したWeb・デザインクリエイティブを核に、美容・不動産・店舗システムなど多様な事業を展開。",
+          "有限会社NIKKA公式サイト。AIを駆使したWeb・デザインクリエイティブを核に、美容・不動産・店舗システムなど多様な事業を展開。",
       },
-      logo: { ariaHome: "有限会社日華 ホーム" },
+      logo: { ariaHome: "有限会社NIKKA ホーム" },
       nav: {
         main: "メインナビゲーション",
         about: "About",
@@ -20,7 +20,7 @@
         contact: "Contact",
       },
       hero: {
-        eyebrow: "有限会社日華",
+        eyebrow: "有限会社NIKKA",
         catchcopy:
           'AIと感性で、<br class="u-sp-only">次の価値を設計する。',
         lead:
@@ -32,7 +32,7 @@
         label: "About Us",
         title: "会社概要",
         lead:
-          "有限会社日華（NIKKA）は、AIを核とした事業創造カンパニーです。Web・デザイン・店舗体験まで、テクノロジーの力でブランドと暮らしに新しい価値を届けます。",
+          "有限会社NIKKAは、AIを核とした事業創造カンパニーです。Web・デザイン・店舗体験まで、テクノロジーの力でブランドと暮らしに新しい価値を届けます。",
         text:
           "美容、クリエイティブ制作、不動産管理、次世代店舗プラットフォーム——異なる領域を横断しながら事業を育てています。AIは効率と発想の両方を高め、人が向き合うべき本質的な仕事に集中できる環境をつくるパートナーです。北欧的な美学を骨格に、すべてのプロジェクトに一貫した品質を求めます。",
         dtCompany: "会社名",
@@ -41,7 +41,7 @@
         dtVision: "ビジョン",
         dtBusiness: "事業内容",
         dtPhilosophy: "理念",
-        companyName: "有限会社日華",
+        companyName: "有限会社NIKKA",
         englishName: "NIKKA Co., Ltd.",
         mission: "AIの力で、事業と体験の可能性を広げる。",
         vision: "テクノロジーとデザインが調和した、持続可能な事業の未来をつくる。",
@@ -87,14 +87,14 @@
       },
       footer: {
         groupSites: "グループサイト",
-        copyright: "有限会社日華 All Rights Reserved.",
+        copyright: "有限会社NIKKA All Rights Reserved.",
       },
-      common: { companyName: "有限会社日華" },
+      common: { companyName: "有限会社NIKKA" },
       contact: {
         meta: {
-          title: "お問い合わせ | 有限会社日華",
+          title: "お問い合わせ | 有限会社NIKKA",
           description:
-            "有限会社日華（NIKKA）へのお問い合わせ。Web・デザイン・事業提携など、お気軽にご連絡ください。",
+            "有限会社NIKKAへのお問い合わせ。Web・デザイン・事業提携など、お気軽にご連絡ください。",
         },
         label: "Contact",
         title: "お問い合わせ",
@@ -106,7 +106,7 @@
           email: "メールアドレス",
           emailPlaceholder: "example@email.com",
           company: "会社名・団体名",
-          companyPlaceholder: "有限会社日華",
+          companyPlaceholder: "有限会社NIKKA",
           category: "お問い合わせ種別",
           categoryDefault: "選択してください",
           catGeneral: "一般的なお問い合わせ",
@@ -134,8 +134,8 @@
       },
       error404: {
         meta: {
-          title: "404 Not Found | 有限会社日華",
-          description: "ページが見つかりませんでした。有限会社日華（NIKKA）公式サイト",
+          title: "404 Not Found | 有限会社NIKKA",
+          description: "ページが見つかりませんでした。有限会社NIKKA公式サイト",
         },
         code: "404",
         title: "ページが見つかりません",
