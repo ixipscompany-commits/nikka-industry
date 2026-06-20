@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/nikka-hero-photo.jpg">
+  <link rel="preload" as="image" href="public/logo-nikka.png">
   <link rel="stylesheet" href="css/intro.css">
   <link rel="stylesheet" href="css/style.css">
   <noscript><style>#nk-intro{display:none!important;}</style></noscript>
@@ -29,7 +30,8 @@
         class="nk-intro__logo-img"
         src="public/logo-nikka.png"
         alt="日華 NIKKA CO.JP"
-        decoding="async"
+        decoding="sync"
+        fetchpriority="high"
       />
 
       <!-- ロゴ再現版（炎＋ゴールドの輪＋iixii）／実PNG未配置時に自動使用 -->

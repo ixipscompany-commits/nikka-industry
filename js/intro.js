@@ -374,18 +374,20 @@
       return;
     }
 
-    var settle = function (ok) {
-      return function () {
-        begin(ok);
-      };
-    };
-    img.addEventListener("load", settle(true));
-    img.addEventListener("error", settle(false));
-
-    /* 取得が遅い場合の保険（800ms でフォールバック開始） */
-    setTimeout(function () {
-      begin(img.complete && img.naturalWidth > 0);
-    }, 800);
+    img.addEventListener(
+      "load",
+      function () {
+        begin(img.naturalWidth > 0);
+      },
+      { once: true }
+    );
+    img.addEventListener(
+      "error",
+      function () {
+        begin(false);
+      },
+      { once: true }
+    );
   }
 
   function initIntro() {
