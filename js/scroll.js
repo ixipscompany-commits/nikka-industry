@@ -476,6 +476,28 @@
     });
   }
 
+  /* Instagram フィードで .news-card が差し替わった後に再演出 */
+  window.refreshNewsGridReveal = function () {
+    if (typeof gsap === "undefined") return;
+    var cards = gsap.utils.toArray(".news-card");
+    if (!cards.length) return;
+
+    gsap.set(cards, { clearProps: "all" });
+    gsap.from(cards, {
+      opacity: 0,
+      scale: 0.97,
+      y: 24,
+      duration: 0.9,
+      stagger: 0.06,
+      ease: "power2.out",
+      force3D: true,
+    });
+
+    if (typeof ScrollTrigger !== "undefined") {
+      ScrollTrigger.refresh();
+    }
+  };
+
   function initLogoShine() {
     var mark = document.querySelector(".site-logo__mark");
     if (!mark) return;
@@ -662,9 +684,9 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initScroll);
-  } else {
+  if (document.readyState === "complete") {
     initScroll();
+  } else {
+    document.addEventListener("DOMContentLoaded", initScroll);
   }
 })();

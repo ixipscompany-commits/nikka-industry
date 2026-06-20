@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="有限会社日華（NIKKA）公式サイト。AIを駆使したWeb・デザインクリエイティブを核に、美容・不動産・店舗システムなど多様な事業を展開。">
-  <title>有限会社日華 | NIKKA</title>
+  <meta name="description" content="有限会社NIKKA公式サイト。AIを駆使したWeb・デザインクリエイティブを核に、美容・不動産・店舗システムなど多様な事業を展開。">
+  <title>有限会社NIKKA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
@@ -25,22 +25,35 @@
     <div class="container site-header__inner">
       <a href="index.html" class="site-logo" data-i18n-attr="aria-label:logo.ariaHome">
         <span class="site-logo__mark">NIKKA</span>
-        <span class="site-logo__sub" data-i18n="common.companyName">有限会社日華</span>
+        <span class="site-logo__sub" data-i18n="logo.tagline">Designing Happy Futures</span>
       </a>
-      <div class="site-header__right">
-        <div class="lang-switcher" role="group" data-i18n-attr="aria-label:lang.switcher">
-          <button type="button" class="lang-switcher__btn is-active" data-lang="ja" aria-pressed="true">JA</button>
-          <button type="button" class="lang-switcher__btn" data-lang="en" aria-pressed="false">EN</button>
-          <button type="button" class="lang-switcher__btn" data-lang="zh" aria-pressed="false">中文</button>
-        </div>
-        <nav class="site-nav" data-i18n-attr="aria-label:nav.main">
-          <ul class="site-nav__list">
-            <li><a href="#about" data-i18n="nav.about">About</a></li>
-            <li><a href="#businesses" data-i18n="nav.businesses">Businesses</a></li>
-            <li><a href="#news" data-i18n="nav.news">News</a></li>
-            <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
-          </ul>
-        </nav>
+    </div>
+    <nav class="site-nav" data-i18n-attr="aria-label:nav.main">
+      <ul class="site-nav__list">
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#businesses" data-i18n="nav.businesses">Businesses</a></li>
+        <li><a href="#news" data-i18n="nav.news">News</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="site-header__aside">
+      <div class="site-header__rabbit" aria-hidden="true"></div>
+      <div class="lang-switcher" data-i18n-attr="aria-label:lang.switcher">
+        <button type="button" class="lang-switcher__toggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-switcher-menu">
+          <span class="lang-switcher__current">JA</span>
+          <span class="lang-switcher__chevron" aria-hidden="true"></span>
+        </button>
+        <ul class="lang-switcher__menu" id="lang-switcher-menu" role="listbox" hidden>
+          <li role="presentation">
+            <button type="button" class="lang-switcher__option is-active" data-lang="ja" role="option" aria-selected="true">JA</button>
+          </li>
+          <li role="presentation">
+            <button type="button" class="lang-switcher__option" data-lang="en" role="option" aria-selected="false">EN</button>
+          </li>
+          <li role="presentation">
+            <button type="button" class="lang-switcher__option" data-lang="zh" role="option" aria-selected="false">中文</button>
+          </li>
+        </ul>
       </div>
     </div>
   </header>
@@ -62,7 +75,7 @@
       </div>
       <div class="container hero">
         <div class="hero__logo-area" data-animate-item>
-          <p class="hero__eyebrow" data-i18n="hero.eyebrow">有限会社日華</p>
+          <p class="hero__eyebrow" data-i18n="hero.eyebrow">有限会社NIKKA</p>
           <h1 class="hero__logo">NIKKA</h1>
         </div>
         <p class="hero__catchcopy" data-animate-item data-i18n-html="hero.catchcopy">
@@ -103,16 +116,16 @@
       <div class="container">
         <header class="section-header">
           <span class="section-header__label" data-animate-item data-i18n="about.label">About Us</span>
+          <p class="section-header__message" data-animate-item data-i18n="about.lead">
+            有限会社NIKKAは、AIを核とした事業創造カンパニーです。
+            Web・デザイン・店舗体験まで、テクノロジーの力でブランドと暮らしに新しい価値を届けます。
+          </p>
           <span class="section-header__line" aria-hidden="true"></span>
           <h2 class="section-header__title" data-animate-item data-i18n="about.title">会社概要</h2>
         </header>
 
         <div class="about-grid">
           <div class="about-grid__intro" data-animate-item>
-            <p class="about-grid__lead" data-i18n="about.lead">
-              有限会社日華（NIKKA）は、AIを核とした事業創造カンパニーです。
-              Web・デザイン・店舗体験まで、テクノロジーの力でブランドと暮らしに新しい価値を届けます。
-            </p>
             <p class="about-grid__text" data-i18n="about.text">
               美容、クリエイティブ制作、不動産管理、次世代店舗プラットフォーム——
               異なる領域を横断しながら事業を育てています。AIは効率と発想の両方を高め、
@@ -124,15 +137,11 @@
           <dl class="about-table" data-animate-item>
             <div class="about-table__row">
               <dt data-i18n="about.dtCompany">会社名</dt>
-              <dd data-i18n="about.companyName">有限会社日華</dd>
-            </div>
-            <div class="about-table__row">
-              <dt data-i18n="about.dtEnglish">英文名</dt>
-              <dd data-i18n="about.englishName">NIKKA Co., Ltd.</dd>
+              <dd data-i18n="about.companyName">有限会社NIKKA</dd>
             </div>
             <div class="about-table__row">
               <dt data-i18n="about.dtMission">ミッション</dt>
-              <dd data-i18n="about.mission">AIの力で、事業と体験の可能性を広げる。</dd>
+              <dd data-i18n="about.mission">未来を幸せにするための事業を創造する。</dd>
             </div>
             <div class="about-table__row">
               <dt data-i18n="about.dtVision">ビジョン</dt>
@@ -140,11 +149,11 @@
             </div>
             <div class="about-table__row">
               <dt data-i18n="about.dtBusiness">事業内容</dt>
-              <dd data-i18n="about.business">Web・デザインクリエイティブ / 美容事業 / 不動産管理 / AI連携店舗システム</dd>
+              <dd data-i18n="about.business">Web及びショップのデザイン/美容卸及び店舗事業/不動産管理/AI連携店舗システム</dd>
             </div>
             <div class="about-table__row">
               <dt data-i18n="about.dtPhilosophy">理念</dt>
-              <dd data-i18n="about.philosophy">AIで広げ、人の手で仕上げる。余白を大切に、本質だけを残す。</dd>
+              <dd data-i18n="about.philosophy">本質を見極め、複雑をシンプルに、人と心を通わせ幸せであること。</dd>
             </div>
           </dl>
         </div>
@@ -276,7 +285,7 @@
           </p>
         </header>
 
-        <div class="news-grid" data-instagram-feed data-hashtag="#nikka_official_news" data-i18n-attr="aria-label:news.feedAria">
+        <div class="news-grid" data-instagram-feed data-hashtag="#nikka_official_news" data-ig-limit="6" data-ig-profile="nikka_official" data-i18n-attr="aria-label:news.feedAria">
 
           <article class="news-card">
             <div class="news-card__media">
@@ -325,6 +334,13 @@
         <p class="news-grid__caption" data-animate-item data-i18n="news.caption">
           写真と日付が整然と並ぶミニマルグリッド。API 連携後はここに Instagram 投稿が自動表示されます。
         </p>
+
+        <div class="news-grid__cta" data-animate-item>
+          <a class="btn btn--ghost news-grid__follow" href="https://www.instagram.com/nikka_official/" target="_blank" rel="noopener noreferrer">
+            <span class="news-grid__follow-icon" aria-hidden="true"></span>
+            <span data-i18n="news.follow">Instagram でフォロー</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -342,7 +358,7 @@
           <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
         </ul>
       </nav>
-      <p class="site-footer__copy">&copy; <span id="year"></span> <span data-i18n="footer.copyright">有限会社日華 All Rights Reserved.</span></p>
+      <p class="site-footer__copy">&copy; <span id="year"></span> <span data-i18n="footer.copyright">有限会社NIKKA All Rights Reserved.</span></p>
     </div>
   </footer>
 
@@ -352,6 +368,7 @@
   <script src="js/i18n.js" defer></script>
   <script src="js/header-roll.js" defer></script>
   <script src="js/scroll.js" defer></script>
+  <script src="js/instagram.js" defer></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
