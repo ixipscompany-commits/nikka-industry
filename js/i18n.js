@@ -43,7 +43,7 @@
         dtBusiness: "事業内容",
         dtPhilosophy: "理念",
         companyName: "有限会社NIKKA",
-        englishName: "NIKKA Industry Co., Ltd.",
+        englishName: "NIKKA Inc.",
         mission: "AIの力で、事業と体験の可能性を広げる。",
         vision: "テクノロジーとデザインが調和した、持続可能な事業の未来をつくる。",
         business:
@@ -184,7 +184,7 @@
         dtBusiness: "Services",
         dtPhilosophy: "Philosophy",
         companyName: "NIKKA Co., Ltd.",
-        englishName: "NIKKA Industry Co., Ltd.",
+        englishName: "NIKKA Inc.",
         mission: "Expand what business and experience can become — with AI.",
         vision: "Build a sustainable future where technology and design work in harmony.",
         business:
@@ -325,7 +325,7 @@
         dtBusiness: "业务范围",
         dtPhilosophy: "理念",
         companyName: "有限会社日华",
-        englishName: "NIKKA Industry Co., Ltd.",
+        englishName: "NIKKA Inc.",
         mission: "以AI之力，拓展事业与体验的可能性。",
         vision: "创造科技与设计和谐共存的可持续事业未来。",
         business: "Web·设计创意 / 美容事业 / 不动产管理 / AI联动门店系统",
