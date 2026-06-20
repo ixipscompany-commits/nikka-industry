@@ -285,7 +285,7 @@
           </p>
         </header>
 
-        <div class="news-grid" data-instagram-feed data-hashtag="#nikka_official_news" data-i18n-attr="aria-label:news.feedAria">
+        <div class="news-grid" data-instagram-feed data-hashtag="#nikka_official_news" data-ig-limit="6" data-ig-profile="nikka_official" data-i18n-attr="aria-label:news.feedAria">
 
           <article class="news-card">
             <div class="news-card__media">
@@ -334,6 +334,13 @@
         <p class="news-grid__caption" data-animate-item data-i18n="news.caption">
           写真と日付が整然と並ぶミニマルグリッド。API 連携後はここに Instagram 投稿が自動表示されます。
         </p>
+
+        <div class="news-grid__cta" data-animate-item>
+          <a class="btn btn--ghost news-grid__follow" href="https://www.instagram.com/nikka_official/" target="_blank" rel="noopener noreferrer">
+            <span class="news-grid__follow-icon" aria-hidden="true"></span>
+            <span data-i18n="news.follow">Instagram でフォロー</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -361,6 +368,7 @@
   <script src="js/i18n.js" defer></script>
   <script src="js/header-roll.js" defer></script>
   <script src="js/scroll.js" defer></script>
+  <script src="js/instagram.js" defer></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>

@@ -81,10 +81,11 @@
       news: {
         label: "News & Press",
         title: "最新情報",
-        note: 'Instagram <span class="hashtag">#nikka_official_news</span> から自動取得予定',
-        feedAria: "Instagram ニュースフィード（プレースホルダー）",
+        note: 'Instagram <span class="hashtag">@nikka_official</span> の投稿を自動表示',
+        feedAria: "Instagram ニュースフィード",
         caption:
-          "写真と日付が整然と並ぶミニマルグリッド。API 連携後はここに Instagram 投稿が自動表示されます。",
+          "最新の投稿は Instagram から自動で表示されます。タップすると投稿ページが開きます。",
+        follow: "Instagram でフォロー",
       },
       footer: {
         groupSites: "グループサイト",
@@ -222,10 +223,11 @@
       news: {
         label: "News & Press",
         title: "Latest Updates",
-        note: 'Auto-import from Instagram <span class="hashtag">#nikka_official_news</span> planned',
-        feedAria: "Instagram news feed (placeholder)",
+        note: 'Live posts from Instagram <span class="hashtag">@nikka_official</span>',
+        feedAria: "Instagram news feed",
         caption:
-          "A minimal grid of photos and dates. Instagram posts will appear here after API integration.",
+          "The latest posts are pulled automatically from Instagram. Tap any post to open it.",
+        follow: "Follow on Instagram",
       },
       footer: {
         groupSites: "Group Sites",
@@ -362,10 +364,11 @@
       news: {
         label: "News & Press",
         title: "最新资讯",
-        note: '计划从 Instagram <span class="hashtag">#nikka_official_news</span> 自动获取',
-        feedAria: "Instagram 资讯动态（占位）",
+        note: '自动展示 Instagram <span class="hashtag">@nikka_official</span> 的投稿',
+        feedAria: "Instagram 资讯动态",
         caption:
-          "照片与日期整齐排列的极简网格。API 对接后将在此自动显示 Instagram 投稿。",
+          "最新投稿将自动从 Instagram 同步显示。点击任意投稿即可打开。",
+        follow: "关注 Instagram",
       },
       footer: {
         groupSites: "集团网站",
