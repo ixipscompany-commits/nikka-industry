@@ -912,98 +912,303 @@ ul {
    Businesses
    -------------------------------------------------------------------------- */
 
-.business-grid {
+/* Two-column layout: pinned AI guide (left) + scroll-synced boxes (right) */
+.biz {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
 }
 
-.business-card {
-  position: relative;
+/* --- Left: AI Navigation Guide (sticky / pinned) --- */
+.biz__aside {
+  position: sticky;
+  top: clamp(6rem, 16vh, 9rem);
 }
 
-.business-card__inner {
+.ai-guide {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding: clamp(2rem, 4vw, 2.75rem);
-  background-color: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(26, 127, 140, 0.1);
-  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
 }
 
-.business-card:hover .business-card__inner {
-  border-color: rgba(26, 127, 140, 0.22);
-  box-shadow: 0 16px 48px rgba(26, 127, 140, 0.08);
-  transform: translateY(-4px);
-}
-
-.business-card__index {
-  display: block;
-  font-family: var(--font-serif);
-  font-size: 0.875rem;
-  letter-spacing: 0.12em;
+.ai-guide__eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
   color: var(--color-trust-teal);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.85rem;
 }
 
-.business-card__title {
+.ai-guide__title {
   font-family: var(--font-serif);
-  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
   font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--color-matte-black);
   line-height: 1.3;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.9rem;
 }
 
-.business-card__subtitle {
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  color: var(--color-text-muted);
-  margin-bottom: 1.25rem;
-}
-
-.business-card__desc {
+.ai-guide__lead {
   font-size: 0.8125rem;
-  color: var(--color-text-muted);
   line-height: 1.95;
-  margin-bottom: 1.75rem;
+  color: var(--color-text-muted);
+  max-width: 24em;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
 }
 
-.business-card__links {
+/* Progress ring — geometric AI object */
+.ai-guide__viz {
+  position: relative;
+  width: clamp(98px, 9vw, 128px);
+  height: clamp(98px, 9vw, 128px);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.ai-guide__ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.ai-guide__ring-track {
+  fill: none;
+  stroke: var(--color-warm-gray-100);
+  stroke-width: 1.5;
+}
+
+.ai-guide__ring-progress {
+  fill: none;
+  stroke: var(--color-trust-teal);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  filter: drop-shadow(0 0 6px rgba(26, 127, 140, 0.45));
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.ai-guide__readout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  font-family: var(--font-serif);
+  color: var(--color-matte-black);
+}
+
+.ai-guide__percent {
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ai-guide__percent-unit {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-left: 0.15em;
+}
+
+/* Vertical track with travelling light point + step list */
+.ai-guide__track {
+  position: relative;
+  padding-left: 1.75rem;
+}
+
+.ai-guide__track-rail,
+.ai-guide__track-fill {
+  position: absolute;
+  left: 4px;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 1px;
+}
+
+.ai-guide__track-rail {
+  background: var(--color-warm-gray-100);
+}
+
+.ai-guide__track-fill {
+  bottom: auto;
+  height: 0%;
+  background: linear-gradient(180deg, rgba(26, 127, 140, 0.2), var(--color-trust-teal));
+}
+
+.ai-guide__dot {
+  position: absolute;
+  left: 5px;
+  top: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-trust-teal);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px rgba(26, 127, 140, 0.14), 0 0 14px rgba(26, 127, 140, 0.55);
+}
+
+.ai-guide__steps {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-top: auto;
-  padding-top: 0.25rem;
+  gap: clamp(1rem, 2.2vw, 1.6rem);
 }
 
-/* Featured card — ShopCrew */
-.business-card--featured .business-card__inner {
-  background-color: rgba(230, 244, 246, 0.65);
+.ai-guide__step {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  opacity: 0.4;
+  transition: opacity var(--transition-base), color var(--transition-base);
+}
+
+.ai-guide__step.is-active {
+  opacity: 1;
+}
+
+.ai-guide__step-num {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--color-trust-teal);
+  font-variant-numeric: tabular-nums;
+}
+
+.ai-guide__step-label {
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--color-charcoal);
+  line-height: 1.5;
+}
+
+.ai-guide__step.is-current .ai-guide__step-label {
+  color: var(--color-matte-black);
+}
+
+/* --- Right: business boxes grid --- */
+.business-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 1.6vw, 1.4rem);
+}
+
+.business-box {
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(220px, 23vw, 290px);
+  padding: clamp(1.5rem, 2.4vw, 2.1rem);
+  background-color: var(--color-off-white-deep);
+  border: 1px solid var(--color-border-subtle);
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform var(--transition-base),
+    border-color var(--transition-base),
+    background-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+/* thin top accent line that draws on hover */
+.business-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--color-trust-teal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+a.business-box:hover {
+  opacity: 1;
+  transform: translateY(-5px);
+  background-color: #fffdfb;
+  border-color: rgba(26, 127, 140, 0.22);
+  box-shadow: 0 18px 48px rgba(26, 127, 140, 0.09);
+}
+
+a.business-box:hover::before {
+  transform: scaleX(1);
+}
+
+.business-box__index {
+  font-family: var(--font-serif);
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  color: var(--color-trust-teal);
+  margin-bottom: 1.1rem;
+}
+
+.business-box__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--color-matte-black);
+  line-height: 1.3;
+  margin-bottom: 0.3rem;
+}
+
+.business-box__subtitle {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.business-box__desc {
+  font-size: 0.78125rem;
+  color: var(--color-text-muted);
+  line-height: 1.9;
+  margin-bottom: 1.5rem;
+}
+
+.business-box__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: auto;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--color-trust-teal);
+}
+
+.business-box__arrow {
+  display: inline-block;
+  transition: transform var(--transition-base);
+}
+
+a.business-box:hover .business-box__arrow {
+  transform: translateX(5px);
+}
+
+.business-box__link--disabled {
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+}
+
+/* Featured box — ShopCrew */
+.business-box--featured {
+  background-color: var(--color-trust-teal-light);
   border-color: rgba(26, 127, 140, 0.18);
 }
 
-.business-card__badge {
-  display: inline-block;
-  font-size: 0.625rem;
+.business-box__badge {
+  align-self: flex-start;
+  font-size: 0.5625rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-sand-beige);
   border: 1px solid var(--color-sand-beige-light);
-  padding: 0.35rem 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.business-card__status {
-  display: inline-block;
-  font-size: 0.6875rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-text-light);
+  padding: 0.3rem 0.65rem;
+  margin-bottom: 0.9rem;
 }
 
 /* --------------------------------------------------------------------------
@@ -1159,8 +1364,17 @@ ul {
     gap: 2.5rem;
   }
 
-  .business-grid {
+  .biz {
     grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .biz__aside {
+    display: none;
+  }
+
+  .business-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .news-grid {
@@ -1217,6 +1431,10 @@ ul {
   .about-table__row {
     grid-template-columns: 1fr;
     gap: 0.35rem;
+  }
+
+  .business-grid {
+    grid-template-columns: 1fr;
   }
 
   .news-grid {

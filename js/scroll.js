@@ -31,6 +31,7 @@
     initHeader();
     initHeroEntrance();
     initScrollReveals();
+    initBusinessShowcase();
     initNewsGrid();
     initParallaxOrbs();
     initLogoShine();
@@ -381,7 +382,7 @@
     gsap.utils.toArray("[data-animate-item]").forEach(function (el) {
       if (
         el.closest("#hero") ||
-        el.closest(".business-card") ||
+        el.closest(".business-box") ||
         el.closest(".news-card") ||
         el.classList.contains("section-header__title")
       ) {
@@ -439,20 +440,139 @@
       }
     });
 
-    gsap.utils.toArray(".business-card").forEach(function (card, i) {
-      gsap.from(card, {
-        opacity: 0,
-        y: 48,
-        duration: 1.1,
-        delay: (i % 2) * 0.06,
-        ease: "power2.out",
-        force3D: true,
-        scrollTrigger: {
-          trigger: card,
-          start: "top 92%",
-          once: true,
-        },
+  }
+
+  /* ==========================================================================
+     Our Businesses — scroll-synced interactive grid + AI navigation guide.
+     拡張性: .business-box を増やすだけで自動整列＆アニメ適用（コード変更不要）。
+     ========================================================================== */
+  function initBusinessShowcase() {
+    var section = document.getElementById("businesses");
+    if (!section) return;
+
+    /* 動的検知ループ: 現在の .business-box を全取得（増減に自動追従） */
+    var boxes = Array.prototype.slice.call(
+      section.querySelectorAll("[data-biz-box]")
+    );
+    if (!boxes.length) return;
+
+    /* ボックス数に応じて AI ガイドのステップを動的生成 */
+    buildGuideSteps(section, boxes);
+
+    var steps = Array.prototype.slice.call(
+      section.querySelectorAll("[data-ai-step]")
+    );
+    var fill = section.querySelector("[data-ai-fill]");
+    var dot = section.querySelector("[data-ai-dot]");
+    var ring = section.querySelector(".ai-guide__ring-progress");
+    var percentEl = section.querySelector("[data-ai-percent]");
+    var stack = section.querySelector(".biz__stack");
+
+    function updateGuide(progress) {
+      var p = Math.max(0, Math.min(1, progress));
+      var pct = Math.round(p * 100);
+      if (percentEl) percentEl.textContent = pct;
+      if (ring) ring.style.strokeDashoffset = String(100 - pct);
+      if (fill) fill.style.height = pct + "%";
+      if (dot) dot.style.top = pct + "%";
+      if (steps.length) {
+        var current = Math.min(steps.length - 1, Math.floor(p * steps.length));
+        steps.forEach(function (s, i) {
+          s.classList.toggle("is-active", i <= current);
+          s.classList.toggle("is-current", i === current);
+        });
+      }
+    }
+
+    var mm = gsap.matchMedia();
+
+    /* --- PC: 2カラム・スクロール100%連動（scrub）でカチッと積み上がる --- */
+    mm.add("(min-width: 901px)", function () {
+      boxes.forEach(function (box) {
+        gsap.set(box, { autoAlpha: 0, y: 64, scale: 0.96, force3D: true });
+        gsap.to(box, {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          ease: "power2.out",
+          force3D: true,
+          scrollTrigger: {
+            trigger: box,
+            start: "top 94%",
+            end: "top 62%",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
       });
+
+      /* AIガイド: 右スタックの進捗とスクロール量を完全シンク */
+      if (stack) {
+        ScrollTrigger.create({
+          trigger: stack,
+          start: "top 75%",
+          end: "bottom 70%",
+          scrub: true,
+          invalidateOnRefresh: true,
+          onUpdate: function (self) {
+            updateGuide(self.progress);
+          },
+        });
+      }
+      updateGuide(0);
+
+      return function () {
+        gsap.set(boxes, { clearProps: "all" });
+      };
+    });
+
+    /* --- SP/タブレット: 2カラム解除→シンプルなフェードイン --- */
+    mm.add("(max-width: 900px)", function () {
+      boxes.forEach(function (box) {
+        gsap.set(box, { autoAlpha: 0, y: 36 });
+        gsap.to(box, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power2.out",
+          force3D: true,
+          scrollTrigger: {
+            trigger: box,
+            start: "top 90%",
+            once: true,
+          },
+        });
+      });
+
+      return function () {
+        gsap.set(boxes, { clearProps: "all" });
+      };
+    });
+  }
+
+  /* AIガイドのステップ一覧を .business-box から自動構築 */
+  function buildGuideSteps(section, boxes) {
+    var list = section.querySelector("[data-ai-steps]");
+    if (!list || list.children.length) return;
+
+    boxes.forEach(function (box, i) {
+      var titleEl = box.querySelector(".business-box__title");
+      var label = titleEl ? titleEl.textContent.trim() : "";
+      var li = document.createElement("li");
+      li.className = "ai-guide__step";
+      li.setAttribute("data-ai-step", "");
+
+      var num = document.createElement("span");
+      num.className = "ai-guide__step-num";
+      num.textContent = ("0" + (i + 1)).slice(-2);
+
+      var text = document.createElement("span");
+      text.className = "ai-guide__step-label";
+      text.textContent = label;
+
+      li.appendChild(num);
+      li.appendChild(text);
+      list.appendChild(li);
     });
   }
 
@@ -662,9 +782,9 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initScroll);
-  } else {
+  if (document.readyState === "complete") {
     initScroll();
+  } else {
+    document.addEventListener("DOMContentLoaded", initScroll);
   }
 })();

@@ -52,6 +52,10 @@
       businesses: {
         label: "Our Businesses",
         title: "事業内容",
+        guideEyebrow: "AI Navigator",
+        guideTitle: "事業をナビゲート",
+        guideLead:
+          "スクロールに合わせて、AIが現在の閲覧位置をリアルタイムに可視化します。",
         b1Title: "Beauty Business",
         b1Subtitle: "美容事業",
         b1Desc:
@@ -193,6 +197,10 @@
       businesses: {
         label: "Our Businesses",
         title: "What We Do",
+        guideEyebrow: "AI Navigator",
+        guideTitle: "Navigating Our Work",
+        guideLead:
+          "As you scroll, the AI visualizes your current position in real time.",
         b1Title: "Beauty Business",
         b1Subtitle: "Salon & Wellness",
         b1Desc:
@@ -333,6 +341,9 @@
       businesses: {
         label: "Our Businesses",
         title: "事业内容",
+        guideEyebrow: "AI Navigator",
+        guideTitle: "事业导航",
+        guideLead: "随着滚动，AI 实时可视化您当前的浏览位置。",
         b1Title: "Beauty Business",
         b1Subtitle: "美容事业",
         b1Desc:
