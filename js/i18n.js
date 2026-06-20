@@ -48,7 +48,7 @@
         vision: "テクノロジーとデザインが調和した、持続可能な事業の未来をつくる。",
         business:
           "Web及びショップのデザイン/美容卸及び店舗事業/不動産管理/AI連携店舗システム",
-        philosophy: "AIで広げ、人の手で仕上げる。余白を大切に、本質だけを残す。",
+        philosophy: "本質を見極め、複雑をシンプルに、人と心を通わせ幸せであること。",
       },
       businesses: {
         label: "Our Businesses",
@@ -188,7 +188,7 @@
         mission: "Creating businesses that make the future happier.",
         vision: "Build a sustainable future where technology and design work in harmony.",
         business:
-          "Web & Creative / Beauty / Real Estate / AI-Powered Store Systems",
+          "Web & Shop Design / Beauty Wholesale & Retail / Real Estate Management / AI-Powered Store Systems",
         philosophy: "Amplify with AI. Refine by hand. Keep only what matters.",
       },
       businesses: {
@@ -328,7 +328,7 @@
         englishName: "NIKKA Inc.",
         mission: "创造让未来更幸福的事业。",
         vision: "创造科技与设计和谐共存的可持续事业未来。",
-        business: "Web·设计创意 / 美容事业 / 不动产管理 / AI联动门店系统",
+        business: "Web及门店设计 / 美容批发及门店事业 / 不动产管理 / AI联动门店系统",
         philosophy: "以AI拓展，以人手打磨。珍视留白，只留本质。",
       },
       businesses: {
