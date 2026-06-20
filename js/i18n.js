@@ -11,7 +11,7 @@
         description:
           "有限会社NIKKA公式サイト。AIを駆使したWeb・デザインクリエイティブを核に、美容・不動産・店舗システムなど多様な事業を展開。",
       },
-      logo: { ariaHome: "有限会社NIKKA ホーム", tagline: "Designing Happy Futures" },
+      logo: { ariaHome: "有限会社NIKKA ホーム", tagline: "Creatively Designing Happy Futures" },
       lang: { switcher: "言語を選択" },
       nav: {
         main: "メインナビゲーション",
@@ -152,7 +152,7 @@
         description:
           "Official site of NIKKA Co., Ltd. — leveraging AI for web design, creative services, beauty, real estate, and next-generation retail platforms.",
       },
-      logo: { ariaHome: "NIKKA Co., Ltd. Home", tagline: "Designing Happy Futures" },
+      logo: { ariaHome: "NIKKA Co., Ltd. Home", tagline: "Creatively Designing Happy Futures" },
       nav: {
         main: "Main navigation",
         about: "About",
@@ -293,7 +293,7 @@
         description:
           "有限会社日华（NIKKA）官方网站。以AI驱动的网站与创意设计为核心，拓展美容、不动产及门店系统等多种事业。",
       },
-      logo: { ariaHome: "有限会社日华 首页", tagline: "Designing Happy Futures" },
+      logo: { ariaHome: "有限会社日华 首页", tagline: "Creatively Designing Happy Futures" },
       nav: {
         main: "主导航",
         about: "About",
