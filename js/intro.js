@@ -146,7 +146,7 @@
     finish(root);
   }
 
-  function play(root, reduced) {
+  function play(root, reduced, useImage) {
     var gsap = window.gsap;
     var stage = root.querySelector(".nk-intro__stage");
     var aura = root.querySelector(".nk-intro__aura");
@@ -159,8 +159,14 @@
     var latin = root.querySelector(".nk-intro__latin");
     var divider = root.querySelector(".nk-intro__divider");
     var logo = root.querySelector(".nk-intro__logo");
+    var logoImg = root.querySelector(".nk-intro__logo-img");
 
-    var rays = buildSunRays(raysGroup);
+    /* 実ロゴ画像を使うか、SVGフォールバックを使うか */
+    if (!useImage) {
+      logo.classList.add("is-fallback");
+    }
+
+    var rays = useImage ? [] : buildSunRays(raysGroup);
     var floats = reduced ? [] : buildFloats(stage);
 
     var cx = window.innerWidth / 2;
@@ -168,10 +174,14 @@
 
     /* 初期状態 */
     gsap.set(logo, { autoAlpha: 0, scale: 0.9 });
-    gsap.set(rays, { scale: 0, autoAlpha: 0 });
-    gsap.set([coreRing], { scale: 0, autoAlpha: 0 });
-    gsap.set([coreFill], { scale: 0, autoAlpha: 0 });
-    gsap.set([kanji, latin], { autoAlpha: 0 });
+    if (useImage) {
+      gsap.set(logoImg, { clipPath: "inset(0 100% 0 0)", scale: 0.92, autoAlpha: 1 });
+    } else {
+      gsap.set(rays, { scale: 0, autoAlpha: 0 });
+      gsap.set([coreRing], { scale: 0, autoAlpha: 0 });
+      gsap.set([coreFill], { scale: 0, autoAlpha: 0 });
+      gsap.set([kanji, latin], { autoAlpha: 0 });
+    }
 
     var tl = gsap.timeline({
       defaults: { ease: "power3.out" },
@@ -215,12 +225,6 @@
           },
           inAt + 0.6
         );
-
-        /* 写真枠のシマー */
-        if (el.classList.contains("nk-intro__photo")) {
-          var sweep = el.querySelector("::after");
-          void sweep;
-        }
       });
 
       /* ----- フェーズ2: 引力と太陽（中央へ凝縮） ----- */
@@ -282,52 +286,63 @@
       "<"
     );
 
-    /* コア（太陽の中心）→ 輪郭リング */
-    tl.to(
-      coreFill,
-      { scale: 1, autoAlpha: 1, duration: 0.55, ease: "back.out(1.7)" },
-      "<0.05"
-    );
-    tl.to(
-      coreRing,
-      { scale: 1, autoAlpha: 1, duration: 0.55, ease: "back.out(1.6)" },
-      "<0.04"
-    );
+    if (useImage) {
+      /* 実ロゴ: 左（シンボル）→右（日華/NIKKA CO.JP）へ光が走るように出現 */
+      tl.to(
+        logoImg,
+        {
+          clipPath: "inset(0 0% 0 0)",
+          scale: 1,
+          duration: 1.1,
+          ease: "power3.out"
+        },
+        "<0.05"
+      );
+      /* グローを落ち着かせる */
+      tl.to(glow, { autoAlpha: 0.55, scale: 0.95, duration: 0.8 }, ">-0.35");
+    } else {
+      /* フォールバック（SVG太陽）: コア→リング→光線→ロゴタイプ */
+      tl.to(
+        coreFill,
+        { scale: 1, autoAlpha: 1, duration: 0.55, ease: "back.out(1.7)" },
+        "<0.05"
+      );
+      tl.to(
+        coreRing,
+        { scale: 1, autoAlpha: 1, duration: 0.55, ease: "back.out(1.6)" },
+        "<0.04"
+      );
+      tl.to(
+        rays,
+        {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.6,
+          ease: "back.out(2)",
+          stagger: { each: 0.035, from: "random" }
+        },
+        "<0.05"
+      );
+      tl.to(glow, { autoAlpha: 0.5, scale: 0.92, duration: 0.8 }, ">-0.1");
 
-    /* 光線が放射状に伸びる */
-    tl.to(
-      rays,
-      {
-        scale: 1,
-        autoAlpha: 1,
-        duration: 0.6,
-        ease: "back.out(2)",
-        stagger: { each: 0.035, from: "random" }
-      },
-      "<0.05"
-    );
-
-    /* グローを落ち着かせる */
-    tl.to(glow, { autoAlpha: 0.5, scale: 0.92, duration: 0.8 }, ">-0.1");
-
-    /* 区切り線 → 日華 → NIKKA CO.JP */
-    if (divider) {
-      tl.to(divider, { scaleY: 1, duration: 0.5, ease: "power2.out" }, "<0.1");
+      if (divider) {
+        tl.to(divider, { scaleY: 1, duration: 0.5, ease: "power2.out" }, "<0.1");
+      }
+      tl.to(
+        kanji,
+        { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" },
+        "<0.05"
+      );
+      tl.fromTo(
+        latin,
+        { autoAlpha: 0, y: 6, letterSpacing: "0.6em" },
+        { autoAlpha: 1, y: 0, letterSpacing: "0.42em", duration: 0.8, ease: "power2.out" },
+        "<0.12"
+      );
     }
-    tl.to(
-      kanji,
-      { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" },
-      "<0.05"
-    );
-    tl.fromTo(
-      latin,
-      { autoAlpha: 0, y: 6, letterSpacing: "0.6em" },
-      { autoAlpha: 1, y: 0, letterSpacing: "0.42em", duration: 0.8, ease: "power2.out" },
-      "<0.12"
-    );
 
     /* やわらかな呼吸（太陽の脈動） */
-    tl.to(glow, { autoAlpha: 0.7, scale: 1, duration: 0.7, ease: "sine.inOut" }, ">");
+    tl.to(glow, { autoAlpha: 0.72, scale: 1, duration: 0.7, ease: "sine.inOut" }, ">");
 
     /* ----- フェーズ4: 本編への昇華（光に包まれ溶ける） ----- */
     var hold = reduced ? 0.35 : 0.8;
@@ -349,6 +364,42 @@
     return tl;
   }
 
+  function startPlayback(root, seen) {
+    var img = root.querySelector(".nk-intro__logo-img");
+    var started = false;
+
+    function begin(useImage) {
+      if (started) return;
+      started = true;
+      lockScroll();
+      play(root, seen, useImage);
+    }
+
+    /* 実ロゴ画像の読込可否を判定（成功→画像版 / 失敗→SVGフォールバック） */
+    if (!img) {
+      begin(false);
+      return;
+    }
+
+    if (img.complete) {
+      begin(img.naturalWidth > 0);
+      return;
+    }
+
+    var settle = function (ok) {
+      return function () {
+        begin(ok);
+      };
+    };
+    img.addEventListener("load", settle(true));
+    img.addEventListener("error", settle(false));
+
+    /* 取得が遅い場合の保険（800ms でフォールバック開始） */
+    setTimeout(function () {
+      begin(img.complete && img.naturalWidth > 0);
+    }, 800);
+  }
+
   function initIntro() {
     var root = document.getElementById(ROOT_ID);
     if (!root) return;
@@ -365,8 +416,7 @@
       seen = sessionStorage.getItem(SESSION_KEY) === "1";
     } catch (e) {}
 
-    lockScroll();
-    play(root, seen);
+    startPlayback(root, seen);
   }
 
   if (document.readyState === "complete") {

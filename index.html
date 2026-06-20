@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/nikka-hero-photo.jpg">
+  <link rel="preload" as="image" href="assets/logo-nikka.png">
   <link rel="stylesheet" href="css/intro.css">
   <link rel="stylesheet" href="css/style.css">
   <noscript><style>#nk-intro{display:none!important;}</style></noscript>
@@ -22,18 +23,30 @@
     <div class="nk-intro__stage" aria-hidden="true"></div>
 
     <div class="nk-intro__logo">
-      <div class="nk-intro__symbol">
-        <div class="nk-intro__glow" aria-hidden="true"></div>
-        <svg class="nk-intro__sun" viewBox="0 0 200 200" aria-hidden="true">
-          <g class="nk-intro__rays"></g>
-          <circle class="nk-intro__core-fill" cx="100" cy="100" r="30"></circle>
-          <circle class="nk-intro__core-ring" cx="100" cy="100" r="38"></circle>
-        </svg>
-      </div>
-      <span class="nk-intro__divider" aria-hidden="true"></span>
-      <div class="nk-intro__wordmark">
-        <span class="nk-intro__kanji">日華</span>
-        <span class="nk-intro__latin">NIKKA CO.JP</span>
+      <div class="nk-intro__glow" aria-hidden="true"></div>
+
+      <!-- 本物のロゴ画像（assets/logo-nikka.png）。未配置時は下のフォールバックを自動使用 -->
+      <img
+        class="nk-intro__logo-img"
+        src="assets/logo-nikka.png"
+        alt="日華 NIKKA CO.JP"
+        decoding="async"
+      />
+
+      <!-- フォールバック: SVG太陽シンボル＋ロゴタイプ -->
+      <div class="nk-intro__fallback" aria-hidden="true">
+        <div class="nk-intro__symbol">
+          <svg class="nk-intro__sun" viewBox="0 0 200 200" aria-hidden="true">
+            <g class="nk-intro__rays"></g>
+            <circle class="nk-intro__core-fill" cx="100" cy="100" r="30"></circle>
+            <circle class="nk-intro__core-ring" cx="100" cy="100" r="38"></circle>
+          </svg>
+        </div>
+        <span class="nk-intro__divider" aria-hidden="true"></span>
+        <div class="nk-intro__wordmark">
+          <span class="nk-intro__kanji">日華</span>
+          <span class="nk-intro__latin">NIKKA CO.JP</span>
+        </div>
       </div>
     </div>
 

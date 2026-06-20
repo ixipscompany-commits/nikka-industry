@@ -156,8 +156,37 @@ html.nk-intro-lock body {
   z-index: 3;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: clamp(1rem, 3vw, 2.25rem);
   opacity: 1;
+}
+
+/* 本物のロゴ画像 */
+.nk-intro__logo-img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: clamp(260px, 54vw, 600px);
+  max-width: 86vw;
+  height: auto;
+  /* 初期は左→右ワイプ用にクリップ（JSで展開） */
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path, transform, opacity;
+}
+
+/* フォールバック（画像未配置/読込失敗時のみ表示） */
+.nk-intro__fallback {
+  display: none;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.25rem);
+}
+
+.nk-intro__logo.is-fallback .nk-intro__logo-img {
+  display: none;
+}
+
+.nk-intro__logo.is-fallback .nk-intro__fallback {
+  display: flex;
 }
 
 .nk-intro__symbol {
@@ -169,14 +198,19 @@ html.nk-intro-lock body {
 
 .nk-intro__glow {
   position: absolute;
-  inset: -45%;
+  top: 50%;
+  left: 38%;
+  width: 70%;
+  height: 220%;
+  transform: translate(-50%, -50%);
   border-radius: 50%;
   opacity: 0;
   pointer-events: none;
+  z-index: 1;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(246, 235, 210, 0.9) 0%,
-    rgba(216, 178, 113, 0.35) 40%,
+    rgba(246, 235, 210, 0.92) 0%,
+    rgba(216, 178, 113, 0.32) 42%,
     rgba(246, 243, 239, 0) 72%
   );
   will-change: transform, opacity;
