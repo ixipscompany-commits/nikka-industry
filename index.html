@@ -9,9 +9,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/nikka-hero-photo.jpg">
+  <link rel="stylesheet" href="css/intro.css">
   <link rel="stylesheet" href="css/style.css">
+  <noscript><style>#nk-intro{display:none!important;}</style></noscript>
 </head>
 <body>
+
+  <!-- ▼ Opening Intro（黎明→引力→誕生→昇華）／完全独立・既存コード非干渉 -->
+  <div id="nk-intro" class="nk-intro" role="presentation" aria-hidden="true">
+    <div class="nk-intro__grain" aria-hidden="true"></div>
+    <div class="nk-intro__aura" aria-hidden="true"></div>
+    <div class="nk-intro__stage" aria-hidden="true"></div>
+
+    <div class="nk-intro__logo">
+      <div class="nk-intro__symbol">
+        <div class="nk-intro__glow" aria-hidden="true"></div>
+        <svg class="nk-intro__sun" viewBox="0 0 200 200" aria-hidden="true">
+          <g class="nk-intro__rays"></g>
+          <circle class="nk-intro__core-fill" cx="100" cy="100" r="30"></circle>
+          <circle class="nk-intro__core-ring" cx="100" cy="100" r="38"></circle>
+        </svg>
+      </div>
+      <span class="nk-intro__divider" aria-hidden="true"></span>
+      <div class="nk-intro__wordmark">
+        <span class="nk-intro__kanji">日華</span>
+        <span class="nk-intro__latin">NIKKA CO.JP</span>
+      </div>
+    </div>
+
+    <div class="nk-intro__flash" aria-hidden="true"></div>
+  </div>
+  <!-- ▲ Opening Intro -->
 
   <div class="scroll-bg" aria-hidden="true">
     <div class="scroll-bg__wash"></div>
@@ -369,6 +397,7 @@
   <script src="js/header-roll.js" defer></script>
   <script src="js/scroll.js" defer></script>
   <script src="js/instagram.js" defer></script>
+  <script src="js/intro.js" defer></script>
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
