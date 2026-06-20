@@ -139,7 +139,8 @@
       logo.classList.add("is-fallback");
     }
 
-    var floats = reduced ? [] : buildFloats(stage);
+    /* 短縮版でもワード・写真・集約は必ず見せる（速度だけ上げる） */
+    var floats = buildFloats(stage);
 
     var cx = window.innerWidth / 2;
     var cy = window.innerHeight / 2;
@@ -161,8 +162,13 @@
       }
     });
 
+    /* 再訪（同一セッション）は全フェーズを保ちつつ高速再生＝短縮 */
+    if (reduced) {
+      tl.timeScale(1.7);
+    }
+
     /* ----- フェーズ1: 黎明（浮遊して画面を満たす） ----- */
-    if (!reduced && floats.length) {
+    if (floats.length) {
       tl.to(aura, { autoAlpha: 0.45, scale: 0.7, duration: 1.8 }, 0);
 
       var n = floats.length;
@@ -236,7 +242,7 @@
     }
 
     /* ----- フェーズ3: 日下の誕生（光と共にシンボル出現） ----- */
-    var birth = reduced ? 0.1 : "-=0.15";
+    var birth = floats.length ? "-=0.15" : 0.1;
 
     /* 光のフラッシュ（凝縮の瞬間に弾ける） */
     tl.to(
@@ -327,7 +333,7 @@
     tl.to(glow, { autoAlpha: 0.72, scale: 1, duration: 0.7, ease: "sine.inOut" }, ">");
 
     /* ----- フェーズ4: 本編への昇華（光に包まれ溶ける） ----- */
-    var hold = reduced ? 0.35 : 0.8;
+    var hold = 0.8;
     tl.to({}, { duration: hold });
 
     /* 全体が光に包まれてから消える */
