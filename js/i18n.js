@@ -183,7 +183,7 @@
         dtVision: "Vision",
         dtBusiness: "Services",
         dtPhilosophy: "Philosophy",
-        companyName: "NIKKA Co., Ltd.",
+        companyName: "NIKKA Inc.",
         englishName: "NIKKA Inc.",
         mission: "Expand what business and experience can become — with AI.",
         vision: "Build a sustainable future where technology and design work in harmony.",
