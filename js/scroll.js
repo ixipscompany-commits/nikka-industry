@@ -442,137 +442,275 @@
 
   }
 
-  /* ==========================================================================
-     Our Businesses — scroll-synced interactive grid + AI navigation guide.
-     拡張性: .business-box を増やすだけで自動整列＆アニメ適用（コード変更不要）。
-     ========================================================================== */
+  /* --------------------------------------------------------------------------
+     Businesses — AIガイド固定 + スクロール100%連動のボックスグリッド
+     .business-box を HTML に増やすだけで自動的に列整列・演出が適用される。
+     -------------------------------------------------------------------------- */
   function initBusinessShowcase() {
-    var section = document.getElementById("businesses");
-    if (!section) return;
+    var stage = document.querySelector("[data-biz-stage]");
+    if (!stage) return;
 
-    /* 動的検知ループ: 現在の .business-box を全取得（増減に自動追従） */
     var boxes = Array.prototype.slice.call(
-      section.querySelectorAll("[data-biz-box]")
+      stage.querySelectorAll(".business-box")
     );
     if (!boxes.length) return;
 
-    /* ボックス数に応じて AI ガイドのステップを動的生成 */
-    buildGuideSteps(section, boxes);
+    var total = boxes.length;
+    var totalEl = stage.querySelector("[data-biz-total]");
+    var currentEl = stage.querySelector("[data-biz-current]");
+    var nameEl = stage.querySelector("[data-biz-name]");
+    var progressEl = stage.querySelector("[data-biz-progress]");
+    var pointerEl = stage.querySelector("[data-biz-pointer]");
+    var emblemEl = stage.querySelector("[data-biz-emblem]");
+    var fillEl = stage.querySelector("[data-biz-fill]");
+    var trackEl = stage.querySelector("[data-biz-track]");
 
-    var steps = Array.prototype.slice.call(
-      section.querySelectorAll("[data-ai-step]")
-    );
-    var fill = section.querySelector("[data-ai-fill]");
-    var dot = section.querySelector("[data-ai-dot]");
-    var ring = section.querySelector(".ai-guide__ring-progress");
-    var percentEl = section.querySelector("[data-ai-percent]");
-    var stack = section.querySelector(".biz__stack");
+    function pad(n) {
+      return (n < 10 ? "0" : "") + n;
+    }
 
-    function updateGuide(progress) {
-      var p = Math.max(0, Math.min(1, progress));
-      var pct = Math.round(p * 100);
-      if (percentEl) percentEl.textContent = pct;
-      if (ring) ring.style.strokeDashoffset = String(100 - pct);
-      if (fill) fill.style.height = pct + "%";
-      if (dot) dot.style.top = pct + "%";
-      if (steps.length) {
-        var current = Math.min(steps.length - 1, Math.floor(p * steps.length));
-        steps.forEach(function (s, i) {
-          s.classList.toggle("is-active", i <= current);
-          s.classList.toggle("is-current", i === current);
-        });
+    if (totalEl) totalEl.textContent = pad(total);
+
+    /* ボックス数に応じてガイドのティックを動的生成（増減に自動追従） */
+    var ticks = [];
+    if (trackEl) {
+      trackEl.querySelectorAll(".biz-guide__tick").forEach(function (t) {
+        t.remove();
+      });
+      boxes.forEach(function (_, i) {
+        var tick = document.createElement("span");
+        tick.className = "biz-guide__tick";
+        tick.style.top = total > 1 ? (i / (total - 1)) * 100 + "%" : "0%";
+        trackEl.appendChild(tick);
+        ticks.push(tick);
+      });
+    }
+
+    function boxName(i) {
+      var title = boxes[i] && boxes[i].querySelector(".business-box__title");
+      return title ? title.textContent.trim() : "";
+    }
+
+    var lastActive = -1;
+    function setActive(idx) {
+      if (idx === lastActive) return;
+      lastActive = idx;
+      if (currentEl) currentEl.textContent = pad(idx + 1);
+      if (nameEl) nameEl.textContent = boxName(idx);
+      ticks.forEach(function (tk, i) {
+        tk.classList.toggle("is-active", i === idx);
+      });
+    }
+
+    /* ===== ワイヤーフレーム球体（ネットワーク構造） =====
+       3D頂点を回転・透視投影してSVGの点（頂点）と線（エッジ）を描く。
+       スクロール進捗 + 常時のゆるやかなドリフトで宇宙空間のように自転する。 */
+    var SVGNS = "http://www.w3.org/2000/svg";
+    var netRoot = stage.querySelector("[data-biz-net]");
+
+    var reduceMotion =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var scrollP = 0;
+    var idle = 0;
+    var geo = null;
+    var edgeEls = [];
+    var vertEls = [];
+
+    function normalize3(v) {
+      var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]) || 1;
+      return [v[0] / l, v[1] / l, v[2] / l];
+    }
+
+    /* 正二十面体を周波数 v で分割した測地球を生成。
+       頂点数=10v²+2／エッジ数=30v²。v=2→42頂点,120エッジ／v=3→92頂点,270エッジ／v=4→162頂点,480エッジ。
+       4倍刻みのicosphereと違い任意の密度を細かく指定できる。 */
+    function buildGeodesic(v) {
+      var t = (1 + Math.sqrt(5)) / 2;
+      var base = [
+        [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
+        [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
+        [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]
+      ].map(normalize3);
+      var faces = [
+        [0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11],
+        [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8],
+        [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9],
+        [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]
+      ];
+
+      var verts = [];
+      var vmap = {};
+      function getVert(p) {
+        var n = normalize3(p);
+        var key =
+          n[0].toFixed(4) + "," + n[1].toFixed(4) + "," + n[2].toFixed(4);
+        if (vmap[key] != null) return vmap[key];
+        verts.push(n);
+        return (vmap[key] = verts.length - 1);
+      }
+
+      var eset = {}, edges = [];
+      function addEdge(a, b) {
+        if (a === b) return;
+        var k = a < b ? a + "_" + b : b + "_" + a;
+        if (!eset[k]) { eset[k] = 1; edges.push([a, b]); }
+      }
+
+      for (var f = 0; f < faces.length; f++) {
+        var A = base[faces[f][0]], B = base[faces[f][1]], C = base[faces[f][2]];
+        var grid = [];
+        for (var i = 0; i <= v; i++) {
+          grid[i] = [];
+          for (var j = 0; j <= v - i; j++) {
+            var k = v - i - j;
+            grid[i][j] = getVert([
+              (A[0] * k + B[0] * j + C[0] * i) / v,
+              (A[1] * k + B[1] * j + C[1] * i) / v,
+              (A[2] * k + B[2] * j + C[2] * i) / v
+            ]);
+          }
+        }
+        for (var i2 = 0; i2 < v; i2++) {
+          for (var j2 = 0; j2 < v - i2; j2++) {
+            addEdge(grid[i2][j2], grid[i2][j2 + 1]);
+            addEdge(grid[i2][j2], grid[i2 + 1][j2]);
+            addEdge(grid[i2][j2 + 1], grid[i2 + 1][j2]);
+          }
+        }
+      }
+      return { verts: verts, edges: edges };
+    }
+
+    if (netRoot) {
+      geo = buildGeodesic(3); /* 92頂点・270エッジ（v=2とv=4の中間の密度） */
+      for (var ei = 0; ei < geo.edges.length; ei++) {
+        var ln = document.createElementNS(SVGNS, "line");
+        ln.setAttribute("class", "biz-guide__edge");
+        netRoot.appendChild(ln);
+        edgeEls.push(ln);
+      }
+      for (var vi = 0; vi < geo.verts.length; vi++) {
+        var nd = document.createElementNS(SVGNS, "circle");
+        nd.setAttribute("class", "biz-guide__vertex");
+        netRoot.appendChild(nd);
+        vertEls.push(nd);
       }
     }
 
-    var mm = gsap.matchMedia();
+    var R = 38;     /* 球の半径（viewBox単位） */
+    var DIST = 4;   /* 視点距離（半径の倍数）／透視の強さ */
 
-    /* --- PC: 2カラム・スクロール100%連動（scrub）でカチッと積み上がる --- */
-    mm.add("(min-width: 901px)", function () {
-      boxes.forEach(function (box) {
-        gsap.set(box, { autoAlpha: 0, y: 64, scale: 0.96, force3D: true });
-        gsap.to(box, {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          ease: "power2.out",
-          force3D: true,
-          scrollTrigger: {
-            trigger: box,
-            start: "top 94%",
-            end: "top 62%",
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
-      });
+    function renderNet() {
+      if (!geo) return;
+      var ay = scrollP * Math.PI * 4 + idle;          /* 横回転（ヨー） */
+      var ax = 0.5 + scrollP * Math.PI * 1.2 + idle * 0.35; /* 縦回転（ピッチ／やや傾き） */
+      var cay = Math.cos(ay), say = Math.sin(ay);
+      var cax = Math.cos(ax), sax = Math.sin(ax);
 
-      /* AIガイド: 右スタックの進捗とスクロール量を完全シンク */
-      if (stack) {
-        ScrollTrigger.create({
-          trigger: stack,
-          start: "top 75%",
-          end: "bottom 70%",
-          scrub: true,
-          invalidateOnRefresh: true,
-          onUpdate: function (self) {
-            updateGuide(self.progress);
-          },
+      var P = [];
+      for (var i = 0; i < geo.verts.length; i++) {
+        var v = geo.verts[i];
+        var x = v[0] * cay + v[2] * say;
+        var z = -v[0] * say + v[2] * cay;
+        var y = v[1] * cax - z * sax;
+        var z2 = v[1] * sax + z * cax;        /* 奥行き(-1:奥 〜 1:手前) */
+        var persp = DIST / (DIST - z2);
+        P.push({
+          x: 60 + x * R * persp,
+          y: 60 + y * R * persp,
+          d: z2
         });
       }
-      updateGuide(0);
 
-      return function () {
-        gsap.set(boxes, { clearProps: "all" });
-      };
+      for (var e = 0; e < geo.edges.length; e++) {
+        var a = P[geo.edges[e][0]], b = P[geo.edges[e][1]];
+        var ln = edgeEls[e];
+        ln.setAttribute("x1", a.x.toFixed(2));
+        ln.setAttribute("y1", a.y.toFixed(2));
+        ln.setAttribute("x2", b.x.toFixed(2));
+        ln.setAttribute("y2", b.y.toFixed(2));
+        var td = ((a.d + b.d) / 2 + 1) / 2;   /* 0:奥 〜 1:手前 */
+        ln.style.opacity = (0.1 + td * 0.6).toFixed(3);
+      }
+
+      for (var n = 0; n < vertEls.length; n++) {
+        var pt = P[n];
+        var tn = (pt.d + 1) / 2;
+        vertEls[n].setAttribute("cx", pt.x.toFixed(2));
+        vertEls[n].setAttribute("cy", pt.y.toFixed(2));
+        vertEls[n].setAttribute("r", (0.5 + tn * 1.0).toFixed(2));
+        vertEls[n].style.opacity = (0.25 + tn * 0.75).toFixed(3);
+      }
+    }
+
+    /* スクロール進捗(0–1)を AIガイドの各要素へ反映（PC/SP共通） */
+    function drawGuide(p) {
+      p = Math.max(0, Math.min(1, p));
+      scrollP = p;
+      if (progressEl) {
+        progressEl.style.strokeDashoffset = (100 - p * 100).toFixed(2);
+      }
+      if (emblemEl) {
+        emblemEl.style.transform = "scale(" + (0.94 + p * 0.1).toFixed(3) + ")";
+      }
+      if (fillEl) {
+        fillEl.style.height = (p * 100).toFixed(2) + "%";
+      }
+      renderNet();
+      var idx = Math.max(0, Math.min(total - 1, Math.floor(p * total + 0.0001)));
+      setActive(idx);
+    }
+
+    drawGuide(0);
+
+    /* 常時のゆるやかな自転（reduced-motion時は停止）。
+       スクロールしていなくても“宇宙空間で漂う”感を出す。 */
+    if (!reduceMotion && geo) {
+      (function spin() {
+        idle += 0.004;
+        renderNet();
+        requestAnimationFrame(spin);
+      })();
+    }
+
+    var lastBox = boxes[boxes.length - 1];
+    var isMobileGuide = window.matchMedia("(max-width: 500px)").matches;
+
+    /* ガイドをスクロール進捗と連動（PC/SP共通）。
+       PC：sticky 親 (.biz-guide) をボックス列と同じ高さに伸ばし、最後のボックスが
+       流れ切るまでガイドが固定されるよう end を最終ボックス基準に合わせる。
+       SP：従来どおりステージ全体を基準。 */
+    ScrollTrigger.create({
+      trigger: stage,
+      start: isMobileGuide ? "top center" : "top 75%",
+      endTrigger: isMobileGuide ? stage : lastBox,
+      end: isMobileGuide ? "bottom center" : "bottom 85%",
+      scrub: true,
+      invalidateOnRefresh: true,
+      onUpdate: function (self) {
+        drawGuide(self.progress);
+      },
     });
 
-    /* --- SP/タブレット: 2カラム解除→シンプルなフェードイン --- */
-    mm.add("(max-width: 900px)", function () {
-      boxes.forEach(function (box) {
-        gsap.set(box, { autoAlpha: 0, y: 36 });
-        gsap.to(box, {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.9,
-          ease: "power2.out",
-          force3D: true,
-          scrollTrigger: {
-            trigger: box,
-            start: "top 90%",
-            once: true,
-          },
-        });
+    /* 各ボックスを scrub 連動で個別に演出（下から引力で吸い寄せられるように積み上がる）。
+       .business-box を増やすだけで自動的に同じ演出が適用される。 */
+    boxes.forEach(function (box) {
+      gsap.from(box, {
+        autoAlpha: 0,
+        yPercent: 24,
+        scale: 0.96,
+        ease: "power2.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: box,
+          start: "top 92%",
+          end: "top 62%",
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
       });
-
-      return function () {
-        gsap.set(boxes, { clearProps: "all" });
-      };
-    });
-  }
-
-  /* AIガイドのステップ一覧を .business-box から自動構築 */
-  function buildGuideSteps(section, boxes) {
-    var list = section.querySelector("[data-ai-steps]");
-    if (!list || list.children.length) return;
-
-    boxes.forEach(function (box, i) {
-      var titleEl = box.querySelector(".business-box__title");
-      var label = titleEl ? titleEl.textContent.trim() : "";
-      var li = document.createElement("li");
-      li.className = "ai-guide__step";
-      li.setAttribute("data-ai-step", "");
-
-      var num = document.createElement("span");
-      num.className = "ai-guide__step-num";
-      num.textContent = ("0" + (i + 1)).slice(-2);
-
-      var text = document.createElement("span");
-      text.className = "ai-guide__step-label";
-      text.textContent = label;
-
-      li.appendChild(num);
-      li.appendChild(text);
-      list.appendChild(li);
     });
   }
 
@@ -595,6 +733,28 @@
       },
     });
   }
+
+  /* Instagram フィードで .news-card が差し替わった後に再演出 */
+  window.refreshNewsGridReveal = function () {
+    if (typeof gsap === "undefined") return;
+    var cards = gsap.utils.toArray(".news-card");
+    if (!cards.length) return;
+
+    gsap.set(cards, { clearProps: "all" });
+    gsap.from(cards, {
+      opacity: 0,
+      scale: 0.97,
+      y: 24,
+      duration: 0.9,
+      stagger: 0.06,
+      ease: "power2.out",
+      force3D: true,
+    });
+
+    if (typeof ScrollTrigger !== "undefined") {
+      ScrollTrigger.refresh();
+    }
+  };
 
   function initLogoShine() {
     var mark = document.querySelector(".site-logo__mark");

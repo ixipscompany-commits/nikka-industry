@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ページが見つかりませんでした。有限会社日華（NIKKA）公式サイト">
-  <title>404 Not Found | 有限会社日華</title>
+  <meta name="description" content="ページが見つかりませんでした。有限会社NIKKA公式サイト">
+  <title>404 Not Found | 有限会社NIKKA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
@@ -22,22 +22,35 @@
     <div class="container site-header__inner">
       <a href="index.html" class="site-logo" data-i18n-attr="aria-label:logo.ariaHome">
         <span class="site-logo__mark">NIKKA</span>
-        <span class="site-logo__sub" data-i18n="common.companyName">有限会社日華</span>
+        <span class="site-logo__sub" data-i18n="logo.tagline">Designing Happy Futures</span>
       </a>
-      <div class="site-header__right">
-        <div class="lang-switcher" role="group" data-i18n-attr="aria-label:lang.switcher">
-          <button type="button" class="lang-switcher__btn is-active" data-lang="ja" aria-pressed="true">JA</button>
-          <button type="button" class="lang-switcher__btn" data-lang="en" aria-pressed="false">EN</button>
-          <button type="button" class="lang-switcher__btn" data-lang="zh" aria-pressed="false">中文</button>
-        </div>
-        <nav class="site-nav" data-i18n-attr="aria-label:nav.main">
-          <ul class="site-nav__list">
-            <li><a href="index.html#about" data-i18n="nav.about">About</a></li>
-            <li><a href="index.html#businesses" data-i18n="nav.businesses">Businesses</a></li>
-            <li><a href="index.html#news" data-i18n="nav.news">News</a></li>
-            <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
-          </ul>
-        </nav>
+    </div>
+    <nav class="site-nav" data-i18n-attr="aria-label:nav.main">
+      <ul class="site-nav__list">
+        <li><a href="index.html#about" data-i18n="nav.about">About</a></li>
+        <li><a href="index.html#businesses" data-i18n="nav.businesses">Businesses</a></li>
+        <li><a href="index.html#news" data-i18n="nav.news">News</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="site-header__aside">
+      <div class="site-header__rabbit" aria-hidden="true"></div>
+      <div class="lang-switcher" data-i18n-attr="aria-label:lang.switcher">
+        <button type="button" class="lang-switcher__toggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-switcher-menu">
+          <span class="lang-switcher__current">JA</span>
+          <span class="lang-switcher__chevron" aria-hidden="true"></span>
+        </button>
+        <ul class="lang-switcher__menu" id="lang-switcher-menu" role="listbox" hidden>
+          <li role="presentation">
+            <button type="button" class="lang-switcher__option is-active" data-lang="ja" role="option" aria-selected="true">JA</button>
+          </li>
+          <li role="presentation">
+            <button type="button" class="lang-switcher__option" data-lang="en" role="option" aria-selected="false">EN</button>
+          </li>
+          <li role="presentation">
+            <button type="button" class="lang-switcher__option" data-lang="zh" role="option" aria-selected="false">中文</button>
+          </li>
+        </ul>
       </div>
     </div>
   </header>
@@ -63,7 +76,7 @@
 
   <footer class="site-footer">
     <div class="container site-footer__inner">
-      <p class="site-footer__copy">&copy; <span id="year"></span> <span data-i18n="footer.copyright">有限会社日華 All Rights Reserved.</span></p>
+      <p class="site-footer__copy">&copy; <span id="year"></span> <span data-i18n="footer.copyright">有限会社NIKKA All Rights Reserved.</span></p>
     </div>
   </footer>
 

@@ -6,8 +6,8 @@
 
 .nk-intro {
   /* Self-contained palette (Nordic modern minimalism) */
-  --nk-bg: #f6f3ef;
-  --nk-bg-deep: #efeae3;
+  --nk-bg: #ffffff;
+  --nk-bg-deep: #ffffff;
   --nk-ink: #1c1b19;
   --nk-charcoal: #3a3835;
   --nk-muted: #8c857c;
@@ -26,12 +26,11 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background:
-    radial-gradient(
-      120% 120% at 50% 42%,
-      var(--nk-bg) 0%,
-      var(--nk-bg-deep) 100%
-    );
+  background-color: #ffffff;
+  background: #ffffff;
+  width: 100%;
+  min-height: 100dvh;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   contain: layout style paint;
   will-change: opacity;
@@ -42,6 +41,7 @@ html.nk-intro-lock,
 html.nk-intro-lock body {
   overflow: hidden !important;
   height: 100% !important;
+  background-color: #ffffff !important;
 }
 
 /* 一瞬の素のHTML露出を防ぐ初期状態（JS未実行でも背景でカバー） */
@@ -75,7 +75,7 @@ html.nk-intro-lock body {
     circle at 50% 50%,
     rgba(240, 220, 182, 0.55) 0%,
     rgba(216, 178, 113, 0.18) 38%,
-    rgba(246, 243, 239, 0) 70%
+    rgba(255, 255, 255, 0) 70%
   );
   filter: blur(6px);
   will-change: transform, opacity;
@@ -211,7 +211,7 @@ html.nk-intro-lock body {
     circle at 50% 50%,
     rgba(246, 235, 210, 0.92) 0%,
     rgba(216, 178, 113, 0.32) 42%,
-    rgba(246, 243, 239, 0) 72%
+    rgba(255, 255, 255, 0) 72%
   );
   will-change: transform, opacity;
 }
@@ -312,7 +312,7 @@ html.nk-intro-lock body {
     circle at 50% 50%,
     rgba(255, 252, 245, 1) 0%,
     rgba(246, 235, 210, 0.85) 45%,
-    rgba(246, 243, 239, 0) 78%
+    rgba(255, 255, 255, 0) 78%
   );
   will-change: opacity;
 }
@@ -327,5 +327,28 @@ html.nk-intro-lock body {
 @media (prefers-reduced-motion: reduce) {
   .nk-intro__grain {
     display: none;
+  }
+}
+
+/* PC：背景を純白に保つ（オーラ・グロー・ノイズがベージュに見えるのを防ぐ） */
+@media (min-width: 501px) {
+  .nk-intro {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+  }
+
+  .nk-intro__grain,
+  .nk-intro__aura,
+  .nk-intro__glow {
+    display: none !important;
+  }
+
+  .nk-intro__flash {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.92) 45%,
+      rgba(255, 255, 255, 0) 78%
+    );
   }
 }

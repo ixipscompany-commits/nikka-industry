@@ -7,11 +7,12 @@
   var t = {
     ja: {
       meta: {
-        title: "有限会社日華 | NIKKA",
+        title: "有限会社NIKKA",
         description:
-          "有限会社日華（NIKKA）公式サイト。AIを駆使したWeb・デザインクリエイティブを核に、美容・不動産・店舗システムなど多様な事業を展開。",
+          "有限会社NIKKA公式サイト。AIを駆使したWeb・デザインクリエイティブを核に、美容・不動産・店舗システムなど多様な事業を展開。",
       },
-      logo: { ariaHome: "有限会社日華 ホーム" },
+      logo: { ariaHome: "有限会社NIKKA ホーム", tagline: "Designing Happy Futures" },
+      lang: { switcher: "言語を選択" },
       nav: {
         main: "メインナビゲーション",
         about: "About",
@@ -20,7 +21,7 @@
         contact: "Contact",
       },
       hero: {
-        eyebrow: "有限会社日華",
+        eyebrow: "有限会社NIKKA",
         catchcopy:
           'AIと感性で、<br class="u-sp-only">次の価値を設計する。',
         lead:
@@ -32,7 +33,7 @@
         label: "About Us",
         title: "会社概要",
         lead:
-          "有限会社日華（NIKKA）は、AIを核とした事業創造カンパニーです。Web・デザイン・店舗体験まで、テクノロジーの力でブランドと暮らしに新しい価値を届けます。",
+          "有限会社NIKKAは、AIを核とした事業創造カンパニーです。Web・デザイン・店舗体験まで、テクノロジーの力でブランドと暮らしに新しい価値を届けます。",
         text:
           "美容、クリエイティブ制作、不動産管理、次世代店舗プラットフォーム——異なる領域を横断しながら事業を育てています。AIは効率と発想の両方を高め、人が向き合うべき本質的な仕事に集中できる環境をつくるパートナーです。北欧的な美学を骨格に、すべてのプロジェクトに一貫した品質を求めます。",
         dtCompany: "会社名",
@@ -41,13 +42,13 @@
         dtVision: "ビジョン",
         dtBusiness: "事業内容",
         dtPhilosophy: "理念",
-        companyName: "有限会社日華",
-        englishName: "NIKKA Co., Ltd.",
-        mission: "AIの力で、事業と体験の可能性を広げる。",
+        companyName: "有限会社NIKKA",
+        englishName: "NIKKA Inc.",
+        mission: "未来を幸せにするための事業を創造する。",
         vision: "テクノロジーとデザインが調和した、持続可能な事業の未来をつくる。",
         business:
-          "Web・デザインクリエイティブ / 美容事業 / 不動産管理 / AI連携店舗システム",
-        philosophy: "AIで広げ、人の手で仕上げる。余白を大切に、本質だけを残す。",
+          "Web及びショップのデザイン/美容卸及び店舗事業/不動産管理/AI連携店舗システム",
+        philosophy: "本質を見極め、複雑をシンプルに、人と心を通わせ幸せであること。",
       },
       businesses: {
         label: "Our Businesses",
@@ -80,25 +81,28 @@
           "AIを組み込んだ次世代店舗プラットフォーム。スタッフ、お客様、経営をひとつの体験としてつなぎ、店舗運営の未来を再定義します。",
         b4Status: "Coming Soon",
         visitSite: "サイトを見る",
+        guideLabel: "AI ガイド",
+        guideHint: "スクロールで事業を巡る",
       },
       news: {
         label: "News & Press",
         title: "最新情報",
-        note: 'Instagram <span class="hashtag">#nikka_official_news</span> から自動取得予定',
-        feedAria: "Instagram ニュースフィード（プレースホルダー）",
+        note: 'Instagram <span class="hashtag">@nikka_official</span> の投稿を自動表示',
+        feedAria: "Instagram ニュースフィード",
         caption:
-          "写真と日付が整然と並ぶミニマルグリッド。API 連携後はここに Instagram 投稿が自動表示されます。",
+          "最新の投稿は Instagram から自動で表示されます。タップすると投稿ページが開きます。",
+        follow: "Instagram でフォロー",
       },
       footer: {
         groupSites: "グループサイト",
-        copyright: "有限会社日華 All Rights Reserved.",
+        copyright: "有限会社NIKKA All Rights Reserved.",
       },
-      common: { companyName: "有限会社日華" },
+      common: { companyName: "有限会社NIKKA" },
       contact: {
         meta: {
-          title: "お問い合わせ | 有限会社日華",
+          title: "お問い合わせ | 有限会社NIKKA",
           description:
-            "有限会社日華（NIKKA）へのお問い合わせ。Web・デザイン・事業提携など、お気軽にご連絡ください。",
+            "有限会社NIKKAへのお問い合わせ。Web・デザイン・事業提携など、お気軽にご連絡ください。",
         },
         label: "Contact",
         title: "お問い合わせ",
@@ -110,7 +114,7 @@
           email: "メールアドレス",
           emailPlaceholder: "example@email.com",
           company: "会社名・団体名",
-          companyPlaceholder: "有限会社日華",
+          companyPlaceholder: "有限会社NIKKA",
           category: "お問い合わせ種別",
           categoryDefault: "選択してください",
           catGeneral: "一般的なお問い合わせ",
@@ -138,8 +142,8 @@
       },
       error404: {
         meta: {
-          title: "404 Not Found | 有限会社日華",
-          description: "ページが見つかりませんでした。有限会社日華（NIKKA）公式サイト",
+          title: "404 Not Found | 有限会社NIKKA",
+          description: "ページが見つかりませんでした。有限会社NIKKA公式サイト",
         },
         code: "404",
         title: "ページが見つかりません",
@@ -155,7 +159,7 @@
         description:
           "Official site of NIKKA Co., Ltd. — leveraging AI for web design, creative services, beauty, real estate, and next-generation retail platforms.",
       },
-      logo: { ariaHome: "NIKKA Co., Ltd. Home" },
+      logo: { ariaHome: "NIKKA Co., Ltd. Home", tagline: "Designing Happy Futures" },
       nav: {
         main: "Main navigation",
         about: "About",
@@ -186,13 +190,13 @@
         dtVision: "Vision",
         dtBusiness: "Services",
         dtPhilosophy: "Philosophy",
-        companyName: "NIKKA Co., Ltd.",
-        englishName: "NIKKA Co., Ltd.",
-        mission: "Expand what business and experience can become — with AI.",
+        companyName: "NIKKA Inc.",
+        englishName: "NIKKA Inc.",
+        mission: "Creating businesses that make the future happier.",
         vision: "Build a sustainable future where technology and design work in harmony.",
         business:
-          "Web & Creative / Beauty / Real Estate / AI-Powered Store Systems",
-        philosophy: "Amplify with AI. Refine by hand. Keep only what matters.",
+          "Web & Shop Design / Beauty Wholesale & Retail / Real Estate Management / AI-Powered Store Systems",
+        philosophy: "See what matters. Simplify the complex. Connect hearts—and choose happiness.",
       },
       businesses: {
         label: "Our Businesses",
@@ -225,14 +229,17 @@
           "A next-generation store platform built with AI — connecting staff, customers, and management into one seamless experience.",
         b4Status: "Coming Soon",
         visitSite: "Visit Site",
+        guideLabel: "AI Guide",
+        guideHint: "Scroll to explore",
       },
       news: {
         label: "News & Press",
         title: "Latest Updates",
-        note: 'Auto-import from Instagram <span class="hashtag">#nikka_official_news</span> planned',
-        feedAria: "Instagram news feed (placeholder)",
+        note: 'Live posts from Instagram <span class="hashtag">@nikka_official</span>',
+        feedAria: "Instagram news feed",
         caption:
-          "A minimal grid of photos and dates. Instagram posts will appear here after API integration.",
+          "The latest posts are pulled automatically from Instagram. Tap any post to open it.",
+        follow: "Follow on Instagram",
       },
       footer: {
         groupSites: "Group Sites",
@@ -300,7 +307,7 @@
         description:
           "有限会社日华（NIKKA）官方网站。以AI驱动的网站与创意设计为核心，拓展美容、不动产及门店系统等多种事业。",
       },
-      logo: { ariaHome: "有限会社日华 首页" },
+      logo: { ariaHome: "有限会社日华 首页", tagline: "Designing Happy Futures" },
       nav: {
         main: "主导航",
         about: "About",
@@ -332,11 +339,11 @@
         dtBusiness: "业务范围",
         dtPhilosophy: "理念",
         companyName: "有限会社日华",
-        englishName: "NIKKA Co., Ltd.",
-        mission: "以AI之力，拓展事业与体验的可能性。",
+        englishName: "NIKKA Inc.",
+        mission: "创造让未来更幸福的事业。",
         vision: "创造科技与设计和谐共存的可持续事业未来。",
-        business: "Web·设计创意 / 美容事业 / 不动产管理 / AI联动门店系统",
-        philosophy: "以AI拓展，以人手打磨。珍视留白，只留本质。",
+        business: "Web及门店设计 / 美容批发及门店事业 / 不动产管理 / AI联动门店系统",
+        philosophy: "见本质，化繁为简，以心相通，追求幸福。",
       },
       businesses: {
         label: "Our Businesses",
@@ -368,14 +375,17 @@
           "融入AI的下一代门店平台。将员工、顾客与经营连接为一体化体验，重新定义门店运营的未来。",
         b4Status: "Coming Soon",
         visitSite: "访问网站",
+        guideLabel: "AI 向导",
+        guideHint: "滚动浏览事业",
       },
       news: {
         label: "News & Press",
         title: "最新资讯",
-        note: '计划从 Instagram <span class="hashtag">#nikka_official_news</span> 自动获取',
-        feedAria: "Instagram 资讯动态（占位）",
+        note: '自动展示 Instagram <span class="hashtag">@nikka_official</span> 的投稿',
+        feedAria: "Instagram 资讯动态",
         caption:
-          "照片与日期整齐排列的极简网格。API 对接后将在此自动显示 Instagram 投稿。",
+          "最新投稿将自动从 Instagram 同步显示。点击任意投稿即可打开。",
+        follow: "关注 Instagram",
       },
       footer: {
         groupSites: "集团网站",
@@ -452,6 +462,73 @@
     return "ja";
   }
 
+  var LANG_LABELS = { ja: "JA", en: "EN", zh: "中文" };
+
+  function closeLangMenu() {
+    var menu = document.querySelector(".lang-switcher__menu");
+    var toggle = document.querySelector(".lang-switcher__toggle");
+    if (menu) menu.hidden = true;
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function openLangMenu() {
+    var menu = document.querySelector(".lang-switcher__menu");
+    var toggle = document.querySelector(".lang-switcher__toggle");
+    if (menu) menu.hidden = false;
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
+  }
+
+  function toggleLangMenu() {
+    var menu = document.querySelector(".lang-switcher__menu");
+    if (!menu) return;
+    if (menu.hidden) openLangMenu();
+    else closeLangMenu();
+  }
+
+  function updateLangSwitcherUI(lang) {
+    var current = document.querySelector(".lang-switcher__current");
+    if (current) current.textContent = LANG_LABELS[lang] || lang.toUpperCase();
+
+    document.querySelectorAll(".lang-switcher__option").forEach(function (btn) {
+      var isActive = btn.getAttribute("data-lang") === lang;
+      btn.classList.toggle("is-active", isActive);
+      btn.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+
+    closeLangMenu();
+  }
+
+  function initLangSwitcher() {
+    var toggle = document.querySelector(".lang-switcher__toggle");
+    var switcher = document.querySelector(".lang-switcher");
+
+    if (toggle) {
+      toggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        toggleLangMenu();
+      });
+    }
+
+    document.querySelectorAll(".lang-switcher__option").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var next = btn.getAttribute("data-lang");
+        if (SUPPORTED.indexOf(next) !== -1) applyLang(next);
+      });
+    });
+
+    if (switcher) {
+      switcher.addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+    }
+
+    document.addEventListener("click", closeLangMenu);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeLangMenu();
+    });
+  }
+
   function applyLang(lang) {
     var strings = t[lang];
     if (!strings) return;
@@ -493,11 +570,7 @@
         });
     });
 
-    document.querySelectorAll(".lang-switcher__btn").forEach(function (btn) {
-      var isActive = btn.getAttribute("data-lang") === lang;
-      btn.classList.toggle("is-active", isActive);
-      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
-    });
+    updateLangSwitcherUI(lang);
 
     localStorage.setItem(STORAGE_KEY, lang);
 
@@ -511,18 +584,14 @@
   function init() {
     var lang = detectLang();
     applyLang(lang);
-
-    document.querySelectorAll(".lang-switcher__btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var next = btn.getAttribute("data-lang");
-        if (SUPPORTED.indexOf(next) !== -1) applyLang(next);
-      });
-    });
+    initLangSwitcher();
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
+  /* defer スクリプトは interactive の段階で順次実行されるため、
+     後続の header-roll.js より先に init するとロール演出が初期化されない */
+  if (document.readyState === "complete") {
     init();
+  } else {
+    document.addEventListener("DOMContentLoaded", init);
   }
 })();
