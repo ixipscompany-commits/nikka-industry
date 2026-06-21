@@ -783,8 +783,8 @@
     boxes.forEach(function (box) {
       gsap.from(box, {
         autoAlpha: 0,
-        yPercent: 24,
-        scale: 0.96,
+        yPercent: 14,
+        scale: 0.97,
         ease: "power2.out",
         force3D: true,
         scrollTrigger: {

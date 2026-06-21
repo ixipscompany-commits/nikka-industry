@@ -18,7 +18,7 @@
   var GRAPH_FIELDS =
     "id,caption,media_type,media_url,permalink,thumbnail_url,timestamp";
   var CACHE_KEY = "nikka-ig-feed";
-  var CACHE_TTL = 30 * 60 * 1000; /* 30 分 */
+  var CACHE_TTL = 5 * 60 * 1000; /* 5 分（短めにして新投稿を早く反映） */
 
   function getConfig(grid) {
     var global = window.NIKKA_INSTAGRAM || {};
@@ -123,7 +123,11 @@
   }
 
   function fetchFromJson(cfg) {
-    return fetch(cfg.jsonUrl)
+    var url = cfg.jsonUrl;
+    var sep = url.indexOf("?") >= 0 ? "&" : "?";
+    url = url + sep + "_=" + Date.now();
+
+    return fetch(url, { cache: "no-store" })
       .then(function (res) {
         if (!res.ok) throw new Error("Feed JSON " + res.status);
         return res.json();
