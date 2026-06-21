@@ -1298,6 +1298,149 @@ ul {
   color: var(--color-text-light);
 }
 
+/* ==========================================================================
+   Businesses — 宇宙空間（ディープスペース）テーマ
+   .section--businesses だけをダークな宇宙背景にし、星空＋星雲グローを敷く。
+   ボックスはガラスパネル化、見出し・ガイドの文字色を反転して可読性を確保。
+   ========================================================================== */
+.section--businesses {
+  background-color: #060814;
+  background-image:
+    radial-gradient(1100px 720px at 80% 8%, rgba(26, 127, 140, 0.22) 0%, transparent 60%),
+    radial-gradient(900px 640px at 10% 92%, rgba(86, 70, 158, 0.22) 0%, transparent 60%),
+    radial-gradient(760px 560px at 50% 45%, rgba(18, 44, 78, 0.4) 0%, transparent 72%);
+}
+
+/* 白系の幾何SVGは宇宙背景では使わない */
+.section-visual--businesses .section-visual__geo {
+  display: none;
+}
+
+/* ベールを星空に置き換え（2層で奥行き） */
+.section-visual--businesses .section-visual__veil {
+  background-color: transparent;
+  background-image:
+    radial-gradient(1.3px 1.3px at 30px 40px, rgba(255, 255, 255, 0.95), transparent),
+    radial-gradient(1.1px 1.1px at 130px 90px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.6px 1.6px at 200px 50px, rgba(190, 240, 255, 0.95), transparent),
+    radial-gradient(1px 1px at 90px 180px, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1.2px 1.2px at 230px 200px, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1px 1px at 170px 240px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(0.9px 0.9px at 60px 110px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(0.8px 0.8px at 110px 30px, rgba(200, 230, 255, 0.6), transparent);
+  background-size: 270px 270px, 270px 270px, 270px 270px, 270px 270px, 270px 270px, 270px 270px, 170px 170px, 170px 170px;
+  background-repeat: repeat;
+  opacity: 0.9;
+}
+
+/* 見出し（宇宙背景の上） */
+.section--businesses .section-header__title {
+  color: #eef4f8;
+}
+
+.section--businesses .section-header__label {
+  color: #6fd0dd;
+}
+
+.section--businesses .section-header__line {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* AIガイドの読み取り表示（宇宙背景の上） */
+.section--businesses .biz-guide__label,
+.section--businesses .biz-guide__name {
+  color: #6fd0dd;
+}
+
+.section--businesses .biz-guide__count {
+  color: #eef4f8;
+}
+
+.section--businesses .biz-guide__count-sep,
+.section--businesses .biz-guide__count [data-biz-total] {
+  color: rgba(220, 232, 242, 0.5);
+}
+
+.section--businesses .biz-guide__hint {
+  color: rgba(220, 232, 242, 0.55);
+}
+
+/* 事業ボックス＝宇宙に浮かぶガラスパネル */
+.section--businesses .business-box {
+  background-color: rgba(15, 23, 43, 0.55);
+  border: 1.5px solid rgba(140, 205, 225, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(140, 205, 225, 0.08);
+}
+
+.section--businesses .business-box:hover {
+  border-color: rgba(111, 208, 221, 0.45);
+  box-shadow: 0 22px 60px rgba(26, 127, 140, 0.25);
+  transform: translateY(-4px);
+}
+
+.section--businesses .business-box--featured {
+  background-color: rgba(26, 127, 140, 0.18);
+  border-color: rgba(111, 208, 221, 0.3);
+}
+
+.section--businesses .business-box__index,
+.section--businesses .business-box__link-arrow,
+.section--businesses .business-box__badge {
+  color: #6fd0dd;
+}
+
+.section--businesses .business-box__title {
+  color: #eef4f8;
+}
+
+.section--businesses .business-box__desc,
+.section--businesses .business-box__tag,
+.section--businesses .business-box__status {
+  color: rgba(220, 232, 242, 0.66);
+}
+
+.section--businesses .business-box__link {
+  color: rgba(232, 240, 248, 0.9);
+}
+
+.section--businesses .business-box__link:hover {
+  color: #6fd0dd;
+}
+
+.section--businesses .business-box__links {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+/* 文字を 1px ずつ拡大（読みやすさ向上） */
+.section--businesses .business-box__title {
+  font-size: clamp(1.3125rem, 1.9vw, 1.6875rem);
+}
+
+.section--businesses .business-box__desc,
+.section--businesses .business-box__link {
+  font-size: 0.875rem; /* 13px → 14px */
+}
+
+.section--businesses .business-box__index {
+  font-size: 0.9375rem; /* 14px → 15px */
+}
+
+.section--businesses .business-box__tag {
+  font-size: 0.6875rem; /* 10px → 11px */
+}
+
+.section--businesses .business-box__status {
+  font-size: 0.75rem; /* 11px → 12px */
+}
+
+.section--businesses .business-box__badge {
+  font-size: 0.625rem; /* 9px → 10px */
+}
+
 /* --------------------------------------------------------------------------
    News & Press — Instagram placeholder grid
    -------------------------------------------------------------------------- */
@@ -1555,38 +1698,38 @@ ul {
   }
 }
 
-/* スマホ（≤500px）：1カラム縦積み。AIガイドは sticky 追従をやめ通常配置
-   （スクロールで画面から消える挙動を解消）。カラム（球体／数値）を等間隔に並べる。 */
+/* スマホ（≤500px）：1カラム縦積み。AIガイドは事業内容セクションの間だけ
+   ヘッダー下に sticky 固定（スクロールと連動して画面に留まる）。
+   .biz-guide を display:contents 化して .biz-guide__inner を .biz-stage 直下の
+   sticky 要素にすることで、ステージ全体を可動域として固定が効くようにする。 */
 @media (max-width: 500px) {
   .biz-stage {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    display: block;
     margin-top: clamp(2rem, 6vw, 3rem);
   }
 
   .biz-guide {
-    order: -1;
-    width: 100%;
-    max-width: none;
+    display: contents;
   }
 
   .biz-guide__inner {
-    position: relative;
-    top: auto;
+    position: sticky;
+    top: 7.25rem;
+    z-index: 5;
     max-width: none;
     width: 100%;
     box-sizing: border-box;
+    margin-bottom: 1.5rem;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
     padding: 0.95rem 1.2rem;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(10, 16, 32, 0.82);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--color-border-subtle);
+    border: 1px solid rgba(140, 200, 220, 0.18);
   }
 
   .biz-guide__label,
