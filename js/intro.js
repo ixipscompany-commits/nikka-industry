@@ -10,8 +10,10 @@
   var ROOT_ID = "nk-intro";
   var SESSION_KEY = "nk-intro-seen";
 
-  /* 事業を連想させるコンセプトワード（serif表示） */
-  var WORDS = [
+  var CONFIG = window.NIKKA_INTRO_CONFIG || {};
+
+  /* 事業を連想させるコンセプトワード（serif表示）— intro.config.js で編集 */
+  var WORDS = CONFIG.words || [
     { text: "Beauty", sub: "美", accent: true },
     { text: "Design", sub: "意匠" },
     { text: "Space", sub: "空間", accent: true },
@@ -23,6 +25,8 @@
     { text: "Craft", sub: "匠" },
     { text: "Light", sub: "光", accent: true }
   ];
+
+  var PHOTO_PATHS = (CONFIG.photos && CONFIG.photos.paths) || [];
 
   /* 画面を満たす浮遊要素の配置（中央はロゴ用に空ける） */
   var SLOTS = [
@@ -38,6 +42,17 @@
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
+  }
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i];
+      a[i] = a[j];
+      a[j] = tmp;
+    }
+    return a;
   }
 
   function rand(min, max) {
@@ -65,6 +80,19 @@
 
     var vw = window.innerWidth;
     var baseFont = vw < 640 ? 26 : vw < 1024 ? 38 : 52;
+    var photoIndex = 0;
+
+    /* 全画像が必ず1回は登場するよう、写真枠を画像枚数ぶん確保（シャッフルして配置） */
+    var shuffledPhotos = shuffle(PHOTO_PATHS);
+    var photoSlotCount = Math.max(
+      4,
+      Math.min(SLOTS.length - 3, shuffledPhotos.length)
+    );
+    var photoSlots = {};
+    var step = SLOTS.length / photoSlotCount;
+    for (var p = 0; p < photoSlotCount; p++) {
+      photoSlots[Math.floor(p * step)] = true;
+    }
 
     SLOTS.forEach(function (slot, i) {
       var el = document.createElement("div");
@@ -72,17 +100,46 @@
       el.style.left = slot.x + "%";
       el.style.top = slot.y + "%";
 
-      /* ワードと写真枠を交互気味に配置 */
-      var isPhoto = i % 3 === 2;
+      var isPhoto = !!photoSlots[i];
 
       if (isPhoto) {
-        var size = rand(0.7, 1.15);
-        var w = Math.round(baseFont * 2.6 * size);
-        var h = Math.round(w * rand(0.72, 1.05));
+        /* 立方体ボックス: 辺長 s の3D箱として表示 */
+        var size = rand(0.72, 1.12);
+        var s = Math.round(baseFont * 2.4 * size);
         el.classList.add("nk-intro__photo");
-        el.style.width = w + "px";
-        el.style.height = h + "px";
+        el.style.width = s + "px";
+        el.style.height = s + "px";
         el.style.position = "absolute";
+
+        var photoPath =
+          shuffledPhotos.length > 0
+            ? shuffledPhotos[photoIndex++ % shuffledPhotos.length]
+            : "";
+
+        var box = document.createElement("div");
+        box.className = "nk-intro__box";
+        box.style.setProperty("--nk-d", s / 2 + "px");
+        /* 箱ごとに回転速度・開始位相をずらして単調さを防ぐ */
+        box.style.animationDuration = rand(13, 22).toFixed(2) + "s";
+        box.style.animationDelay = (-rand(0, 16)).toFixed(2) + "s";
+
+        ["front", "back", "right", "left", "top", "bottom"].forEach(function (
+          name
+        ) {
+          var face = document.createElement("div");
+          face.className = "nk-intro__face nk-intro__face--" + name;
+          /* 上下面以外（前後左右）に写真を貼る */
+          if (photoPath && name !== "top" && name !== "bottom") {
+            var faceImg = document.createElement("img");
+            faceImg.src = photoPath;
+            faceImg.alt = "";
+            faceImg.decoding = "async";
+            face.appendChild(faceImg);
+          }
+          box.appendChild(face);
+        });
+
+        el.appendChild(box);
       } else {
         var word = WORDS[i % WORDS.length];
         el.classList.add("nk-intro__word");
@@ -390,9 +447,37 @@
     );
   }
 
+  function applyConfig(root) {
+    var logo = CONFIG.logo || {};
+    var fallback = CONFIG.fallback || {};
+    var logoImg = root.querySelector(".nk-intro__logo-img");
+
+    if (logoImg && logo.src) {
+      logoImg.src = logo.src;
+    }
+    if (logoImg && logo.alt) {
+      logoImg.alt = logo.alt;
+    }
+
+    if (fallback.symbolText) {
+      var iixii = root.querySelector(".nk-intro__iixii");
+      if (iixii) iixii.textContent = fallback.symbolText;
+    }
+    if (fallback.kanji) {
+      var kanji = root.querySelector(".nk-intro__kanji");
+      if (kanji) kanji.textContent = fallback.kanji;
+    }
+    if (fallback.latin) {
+      var latin = root.querySelector(".nk-intro__latin");
+      if (latin) latin.textContent = fallback.latin;
+    }
+  }
+
   function initIntro() {
     var root = document.getElementById(ROOT_ID);
     if (!root) return;
+
+    applyConfig(root);
 
     /* prefers-reduced-motion または GSAP 不在: 即スキップ */
     if (prefersReduced() || typeof window.gsap === "undefined") {

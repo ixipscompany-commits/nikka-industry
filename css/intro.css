@@ -123,29 +123,94 @@ html.nk-intro-lock body {
   color: var(--nk-muted);
 }
 
+/* 写真は3Dの立体ボックス（回転する箱）として表示 */
 .nk-intro__photo {
-  border: 1px solid var(--nk-line);
-  background:
-    linear-gradient(
-      135deg,
-      var(--nk-bg-deep) 0%,
-      #e6ddd0 48%,
-      #d9cdbb 100%
-    );
-  box-shadow: 0 18px 40px rgba(28, 27, 25, 0.06);
+  background: none;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+  perspective: 900px;
 }
 
-.nk-intro__photo::after {
-  content: "";
+.nk-intro__box {
   position: absolute;
   inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  animation: nk-box-spin 16s linear infinite;
+  /* --nk-d（半辺長）は JS で設定 */
+}
+
+.nk-intro__face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid var(--nk-line);
   background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.35) 50%,
-    transparent 100%
+    135deg,
+    var(--nk-bg-deep) 0%,
+    #e6ddd0 48%,
+    #d9cdbb 100%
   );
-  transform: translateX(-110%);
+}
+
+.nk-intro__face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 6面の配置（立方体） */
+.nk-intro__face--front {
+  transform: translateZ(var(--nk-d));
+}
+.nk-intro__face--back {
+  transform: rotateY(180deg) translateZ(var(--nk-d));
+}
+.nk-intro__face--right {
+  transform: rotateY(90deg) translateZ(var(--nk-d));
+}
+.nk-intro__face--left {
+  transform: rotateY(-90deg) translateZ(var(--nk-d));
+}
+.nk-intro__face--top {
+  transform: rotateX(90deg) translateZ(var(--nk-d));
+}
+.nk-intro__face--bottom {
+  transform: rotateX(-90deg) translateZ(var(--nk-d));
+}
+
+/* 側面は陰影で立体感を補強 */
+.nk-intro__face--right,
+.nk-intro__face--left {
+  filter: brightness(0.9);
+}
+.nk-intro__face--top {
+  filter: brightness(1.08);
+}
+.nk-intro__face--bottom,
+.nk-intro__face--back {
+  filter: brightness(0.78);
+}
+
+@keyframes nk-box-spin {
+  0% {
+    transform: rotateX(-14deg) rotateY(0deg);
+  }
+  50% {
+    transform: rotateX(8deg) rotateY(180deg);
+  }
+  100% {
+    transform: rotateX(-14deg) rotateY(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nk-intro__box {
+    animation: none;
+    transform: rotateX(-14deg) rotateY(-28deg);
+  }
 }
 
 /* --------------------------------------------------------------------------

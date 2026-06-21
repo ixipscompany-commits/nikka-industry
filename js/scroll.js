@@ -778,23 +778,29 @@
       },
     });
 
-    /* 各ボックスを scrub 連動で個別に演出（下から引力で吸い寄せられるように積み上がる）。
+    /* 各ボックスを scrub 連動で個別に演出。
+       縦移動(yPercent)はボックスごとの位置ズレ＝間隔バラつきの原因になるため使わず、
+       透明度＋中心スケールのみで「止めると止まる」感を維持しつつ整列を崩さない。
        .business-box を増やすだけで自動的に同じ演出が適用される。 */
     boxes.forEach(function (box) {
-      gsap.from(box, {
-        autoAlpha: 0,
-        yPercent: 14,
-        scale: 0.97,
-        ease: "power2.out",
-        force3D: true,
-        scrollTrigger: {
-          trigger: box,
-          start: "top 92%",
-          end: "top 62%",
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      });
+      gsap.fromTo(
+        box,
+        { autoAlpha: 0, scale: 0.985 },
+        {
+          autoAlpha: 1,
+          scale: 1,
+          ease: "power2.out",
+          force3D: true,
+          transformOrigin: "50% 50%",
+          scrollTrigger: {
+            trigger: box,
+            start: "top 90%",
+            end: "top 66%",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
     });
   }
 

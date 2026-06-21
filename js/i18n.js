@@ -22,10 +22,9 @@
       },
       hero: {
         eyebrow: "有限会社NIKKA",
-        catchcopy:
-          'AIと感性で、<br class="u-sp-only">次の価値を設計する。',
+        catchcopy: "光と彩を、大切な人の心に届く事業へ。",
         lead:
-          'NIKKAは人工知能を駆使し、Webサイト・デザインクリエイティブをはじめ、<br class="u-pc-only">美容から店舗システムまで多様な事業を展開。テクノロジーと北欧的ミニマリズムで、未来のビジネスを形にします。',
+          "太陽の光が世界を華やかに彩るような、温かさと輝きをすべてのプロジェクトに宿すこと。事業のブランドポリシーと商品の本当の価値を見いだし、持続可能な最新テクノロジーのAI技術を融合させ、大切な人の未来を幸せにするビジネスを共に育むクリエイティブカンパニーです。",
         ctaBusinesses: "事業を見る",
         ctaAbout: "会社概要",
       },
@@ -35,20 +34,19 @@
         lead:
           "有限会社NIKKAは、AIを核とした事業創造カンパニーです。Web・デザイン・店舗体験まで、テクノロジーの力でブランドと暮らしに新しい価値を届けます。",
         text:
-          "美容、クリエイティブ制作、不動産管理、次世代店舗プラットフォーム——異なる領域を横断しながら事業を育てています。AIは効率と発想の両方を高め、人が向き合うべき本質的な仕事に集中できる環境をつくるパートナーです。北欧的な美学を骨格に、すべてのプロジェクトに一貫した品質を求めます。",
+          "私たちは、美容サービスからデザイン制作、開業サポート、不動産管理、そして次世代店舗向けプラットフォームまで、異なる領域を横断しながら多彩な事業を育てています。私たちの役割は、AIを駆使して「効率」と「発想」を最大化し、人が向き合うべき本質的なクリエイティビティに集中できる環境をつくるパートナーであることです。太陽の光が万物を照らし、華やかな彩りをもたらすように。すべてのプロジェクトに一貫した信念を宿し、確かなブランド品質を追求します。テクノロジーと持続可能なデザインを調和させ、大切な人の未来を幸せにする事業のロードマップを、私たちは共に描きます。",
         dtCompany: "会社名",
         dtEnglish: "英文名",
-        dtMission: "ミッション",
-        dtVision: "ビジョン",
+        dtMission: "オフィスアドレス",
+        dtVision: "お問合せ",
         dtBusiness: "事業内容",
-        dtPhilosophy: "理念",
         companyName: "有限会社NIKKA",
         englishName: "NIKKA Inc.",
-        mission: "未来を幸せにするための事業を創造する。",
-        vision: "テクノロジーとデザインが調和した、持続可能な事業の未来をつくる。",
+        mission:
+          '〒610-0334\u3000京都府京田辺市田辺中央1丁目1-10-102<br><a href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E7%94%B0%E8%BE%BA%E5%B8%82%E7%94%B0%E8%BE%BA%E4%B8%AD%E5%A4%AE1%E4%B8%81%E7%9B%AE1-10-102" target="_blank" rel="noopener noreferrer">Googleマップ</a>',
+        vision: '<a href="contact.html">CONTACTフォームへ</a>',
         business:
-          "Web及びショップのデザイン/美容卸及び店舗事業/不動産管理/AI連携店舗システム",
-        philosophy: "本質を見極め、複雑をシンプルに、人と心を通わせ幸せであること。",
+          "・Web及びショップのデザイン制作<br>・美容卸及び店舗事業<br>・不動産仲介及び管理事業<br>・AIクリエイティブ企画開発",
       },
       businesses: {
         label: "Our Businesses",
@@ -186,17 +184,16 @@
           "From beauty and creative production to property management and next-gen store platforms, we grow businesses across diverse fields. AI elevates both efficiency and imagination, freeing people to focus on work that truly matters. Guided by Nordic aesthetics, we pursue consistent quality in every project.",
         dtCompany: "Company",
         dtEnglish: "English Name",
-        dtMission: "Mission",
-        dtVision: "Vision",
+        dtMission: "Office Address",
+        dtVision: "Contact",
         dtBusiness: "Services",
-        dtPhilosophy: "Philosophy",
         companyName: "NIKKA Inc.",
         englishName: "NIKKA Inc.",
-        mission: "Creating businesses that make the future happier.",
-        vision: "Build a sustainable future where technology and design work in harmony.",
+        mission:
+          '〒610-0334\u3000京都府京田辺市田辺中央1丁目1-10-102<br><a href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E7%94%B0%E8%BE%BA%E5%B8%82%E7%94%B0%E8%BE%BA%E4%B8%AD%E5%A4%AE1%E4%B8%81%E7%9B%AE1-10-102" target="_blank" rel="noopener noreferrer">Google Maps</a>',
+        vision: '<a href="contact.html">Contact Form</a>',
         business:
-          "Web & Shop Design / Beauty Wholesale & Retail / Real Estate Management / AI-Powered Store Systems",
-        philosophy: "See what matters. Simplify the complex. Connect hearts—and choose happiness.",
+          "・Web & Shop Design Production<br>・Beauty Wholesale & Retail Business<br>・Real Estate Brokerage & Management<br>・AI Creative Planning & Development",
       },
       businesses: {
         label: "Our Businesses",
@@ -334,16 +331,16 @@
           "跨越美容、创意制作、不动产管理与下一代门店平台等领域培育事业。AI同时提升效率与创意，助力人们专注于真正重要的工作。以北欧美学为骨架，在所有项目中追求一贯的品质。",
         dtCompany: "公司名称",
         dtEnglish: "英文名称",
-        dtMission: "使命",
-        dtVision: "愿景",
+        dtMission: "办公地址",
+        dtVision: "联系我们",
         dtBusiness: "业务范围",
-        dtPhilosophy: "理念",
         companyName: "有限会社日华",
         englishName: "NIKKA Inc.",
-        mission: "创造让未来更幸福的事业。",
-        vision: "创造科技与设计和谐共存的可持续事业未来。",
-        business: "Web及门店设计 / 美容批发及门店事业 / 不动产管理 / AI联动门店系统",
-        philosophy: "见本质，化繁为简，以心相通，追求幸福。",
+        mission:
+          '〒610-0334\u3000京都府京田辺市田辺中央1丁目1-10-102<br><a href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E7%94%B0%E8%BE%BA%E5%B8%82%E7%94%B0%E8%BE%BA%E4%B8%AD%E5%A4%AE1%E4%B8%81%E7%9B%AE1-10-102" target="_blank" rel="noopener noreferrer">Google地图</a>',
+        vision: '<a href="contact.html">联系表单</a>',
+        business:
+          "・Web及门店设计制作<br>・美容批发及门店事业<br>・不动产中介及管理事业<br>・AI创意企划开发",
       },
       businesses: {
         label: "Our Businesses",

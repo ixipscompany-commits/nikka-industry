@@ -1,0 +1,20 @@
+{
+  "archivedAt": "2026-06-21",
+  "reason": "about-table row removed per site content update",
+  "location": "main > section#about > dl.about-table > div.about-table__row (理念)",
+  "html": "<div class=\"about-table__row\">\n  <dt data-i18n=\"about.dtPhilosophy\">理念</dt>\n  <dd data-i18n=\"about.philosophy\">本質を見極め、複雑をシンプルに、人と心を通わせ幸せであること。</dd>\n</div>",
+  "i18n": {
+    "ja": {
+      "dtPhilosophy": "理念",
+      "philosophy": "本質を見極め、複雑をシンプルに、人と心を通わせ幸せであること。"
+    },
+    "en": {
+      "dtPhilosophy": "Philosophy",
+      "philosophy": "See what matters. Simplify the complex. Connect hearts—and choose happiness."
+    },
+    "zh": {
+      "dtPhilosophy": "理念",
+      "philosophy": "见本质，化繁为简，以心相通，追求幸福。"
+    }
+  }
+}
