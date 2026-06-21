@@ -343,8 +343,7 @@
         { opacity: 0, scale: 0.94, duration: 1, stagger: 0.1 },
         "-=1"
       )
-      .from(".hero__eyebrow", { opacity: 0, y: 20, duration: 0.8 }, "-=0.7")
-      .from(".hero__logo", { opacity: 0, y: 28, duration: 1 }, "-=0.6")
+      .from(".hero__logo", { opacity: 0, y: 28, duration: 1 }, "-=0.7")
       .from(".hero__catchcopy", { opacity: 0, y: 22, duration: 0.8 }, "-=0.5")
       .from(".hero__lead", { opacity: 0, y: 18, duration: 0.75 }, "-=0.4")
       .from(

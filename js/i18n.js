@@ -41,7 +41,7 @@
         dtVision: "お問合せ",
         dtBusiness: "事業内容",
         companyName: "有限会社NIKKA",
-        englishName: "NIKKA Inc.",
+        englishName: "NIKKA co.jp",
         mission:
           '〒610-0334\u3000京都府京田辺市田辺中央1丁目1-10-102<br><a href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E7%94%B0%E8%BE%BA%E5%B8%82%E7%94%B0%E8%BE%BA%E4%B8%AD%E5%A4%AE1%E4%B8%81%E7%9B%AE1-10-102" target="_blank" rel="noopener noreferrer">Googleマップ</a>',
         vision: '<a href="contact.html">CONTACTフォームへ</a>',
@@ -169,9 +169,9 @@
       hero: {
         eyebrow: "NIKKA Co., Ltd.",
         catchcopy:
-          'Designing tomorrow\'s value<br class="u-sp-only">with AI and craft.',
+          "Turning light and color into businesses that reach the hearts of those you care about.",
         lead:
-          'NIKKA harnesses artificial intelligence across web design, creative production, beauty, and store systems.<br class="u-pc-only">We blend technology with Nordic minimalism to shape the next generation of business.',
+          "Like sunlight bringing warmth and vivid color to the world, we bring that same warmth and brilliance to every project. We discover the true value of each brand policy and product, combine it with sustainable, cutting-edge AI technology, and work alongside our partners to grow businesses that make the future happier for the people they care about.",
         ctaBusinesses: "Our Businesses",
         ctaAbout: "About Us",
       },
@@ -179,16 +179,16 @@
         label: "About Us",
         title: "Company Overview",
         lead:
-          "NIKKA Co., Ltd. is a venture studio powered by AI — delivering new value to brands and daily life through web, design, and retail experiences.",
+          "NIKKA Co., Ltd. is a business creation company with AI at its core. From web and design to store experiences, we use technology to deliver new value to brands and everyday life.",
         text:
-          "From beauty and creative production to property management and next-gen store platforms, we grow businesses across diverse fields. AI elevates both efficiency and imagination, freeing people to focus on work that truly matters. Guided by Nordic aesthetics, we pursue consistent quality in every project.",
+          "We cultivate a wide range of businesses across different fields, from beauty services and design production to business launch support, real estate management, and next-generation platforms for stores. Our role is to be a partner that uses AI to maximize both efficiency and imagination, creating an environment where people can focus on the essential creativity only humans can bring. Just as sunlight illuminates everything and fills the world with vibrant color, we bring a consistent belief to every project and pursue dependable brand quality. By harmonizing technology with sustainable design, we work together with our partners to draw a roadmap for businesses that make the future happier for the people they care about.",
         dtCompany: "Company",
         dtEnglish: "English Name",
         dtMission: "Office Address",
         dtVision: "Contact",
         dtBusiness: "Services",
-        companyName: "NIKKA Inc.",
-        englishName: "NIKKA Inc.",
+        companyName: "NIKKA co.jp",
+        englishName: "NIKKA co.jp",
         mission:
           '〒610-0334\u3000京都府京田辺市田辺中央1丁目1-10-102<br><a href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E7%94%B0%E8%BE%BA%E5%B8%82%E7%94%B0%E8%BE%BA%E4%B8%AD%E5%A4%AE1%E4%B8%81%E7%9B%AE1-10-102" target="_blank" rel="noopener noreferrer">Google Maps</a>',
         vision: '<a href="contact.html">Contact Form</a>',
@@ -316,9 +316,9 @@
       hero: {
         eyebrow: "有限会社日华",
         catchcopy:
-          '以AI与感性，<br class="u-sp-only">设计下一代价值。',
+          "将光与色彩，化为能够触达重要之人内心的事业。",
         lead:
-          'NIKKA运用人工智能，从网站与创意设计到美容、门店系统，<br class="u-pc-only">拓展多元事业。融合科技与北欧极简主义，塑造未来的商业形态。',
+          "就像太阳的光芒为世界带来温暖与华彩一样，我们也希望让每一个项目都承载这样的温度与光辉。我们发掘事业品牌方针与商品真正的价值，并融合可持续的最新 AI 技术，与伙伴共同培育能够让重要之人的未来更加幸福的事业。",
         ctaBusinesses: "了解业务",
         ctaAbout: "公司概况",
       },
@@ -326,16 +326,16 @@
         label: "About Us",
         title: "公司概况",
         lead:
-          "有限会社日华（NIKKA）是以AI为核心的事业创造公司。从Web、设计到门店体验，以科技之力为品牌与生活带来新价值。",
+          "有限会社日华（NIKKA）是一家以 AI 为核心的事业创造公司。从 Web、设计到门店体验，我们运用科技的力量，为品牌与生活带来新的价值。",
         text:
-          "跨越美容、创意制作、不动产管理与下一代门店平台等领域培育事业。AI同时提升效率与创意，助力人们专注于真正重要的工作。以北欧美学为骨架，在所有项目中追求一贯的品质。",
+          "我们跨越多个领域培育多样化事业，包括美容服务、设计制作、开业支持、不动产管理，以及面向下一代门店的平台。我们的角色，是成为善用 AI 最大化“效率”与“创意”，并创造环境让人们能够专注于真正本质性创造力的伙伴。就像太阳的光芒照亮万物、带来绚丽色彩一样，我们让每一个项目都承载一致的信念，并追求可靠的品牌品质。通过调和科技与可持续设计，我们与伙伴一起描绘让重要之人的未来更加幸福的事业路线图。",
         dtCompany: "公司名称",
         dtEnglish: "英文名称",
         dtMission: "办公地址",
         dtVision: "联系我们",
         dtBusiness: "业务范围",
-        companyName: "有限会社日华",
-        englishName: "NIKKA Inc.",
+        companyName: "有限公司日華",
+        englishName: "NIKKA co.jp",
         mission:
           '〒610-0334\u3000京都府京田辺市田辺中央1丁目1-10-102<br><a href="https://www.google.com/maps/search/?api=1&query=%E4%BA%AC%E9%83%BD%E5%BA%9C%E4%BA%AC%E7%94%B0%E8%BE%BA%E5%B8%82%E7%94%B0%E8%BE%BA%E4%B8%AD%E5%A4%AE1%E4%B8%81%E7%9B%AE1-10-102" target="_blank" rel="noopener noreferrer">Google地图</a>',
         vision: '<a href="contact.html">联系表单</a>',
