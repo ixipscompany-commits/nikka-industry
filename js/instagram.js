@@ -177,6 +177,16 @@
       link.appendChild(time);
     }
 
+    if (post.caption) {
+      var cap = document.createElement("p");
+      cap.className = "news-card__caption";
+      /* 1行目（ハッシュタグ前）を中心に抜粋し、長文は省略 */
+      var text = post.caption.split(/\r?\n/)[0] || post.caption;
+      if (text.length > 90) text = text.slice(0, 90).trim() + "…";
+      cap.textContent = text;
+      link.appendChild(cap);
+    }
+
     article.appendChild(link);
     return article;
   }

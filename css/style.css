@@ -1360,6 +1360,20 @@ ul {
   padding-left: 0.15rem;
 }
 
+.news-card__caption {
+  margin: -0.35rem 0 0;
+  padding-left: 0.15rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .news-grid__caption {
   margin-top: clamp(2rem, 4vw, 3rem);
   font-size: 0.75rem;
