@@ -79,6 +79,11 @@
           "AIを組み込んだ次世代店舗プラットフォーム。スタッフ、お客様、経営をひとつの体験としてつなぎ、店舗運営の未来を再定義します。",
         b4Status: "Coming Soon",
         visitSite: "サイトを見る",
+        clientSubtitle: "クライアント実績",
+        b5Title: "近江牛焼肉 松よう",
+        b5Desc: "特選の近江牛を取り扱う焼肉屋さんのホームページ制作",
+        b6Title: "新規プロジェクト",
+        b6Desc: "説明テキスト。",
         guideLabel: "AI ガイド",
         guideHint: "スクロールで事業を巡る",
       },
@@ -126,7 +131,9 @@
           required: "必須",
           optional: "任意",
           submit: "送信する",
+          sending: "送信中…",
           error: "入力内容をご確認ください。",
+          sendError: "送信に失敗しました。時間をおいて再度お試しください。",
         },
         aside: {
           title: "ご連絡について",
@@ -226,6 +233,12 @@
           "A next-generation store platform built with AI — connecting staff, customers, and management into one seamless experience.",
         b4Status: "Coming Soon",
         visitSite: "Visit Site",
+        clientSubtitle: "Client Work",
+        b5Title: "Omi Beef Yakiniku Matsuyo",
+        b5Desc:
+          "Website design for a yakiniku restaurant specializing in premium Omi beef.",
+        b6Title: "New Project",
+        b6Desc: "Description text.",
         guideLabel: "AI Guide",
         guideHint: "Scroll to explore",
       },
@@ -273,7 +286,9 @@
           required: "Required",
           optional: "Optional",
           submit: "Send Message",
+          sending: "Sending…",
           error: "Please check your input.",
+          sendError: "Failed to send. Please try again later.",
         },
         aside: {
           title: "Response Time",
@@ -372,6 +387,11 @@
           "融入AI的下一代门店平台。将员工、顾客与经营连接为一体化体验，重新定义门店运营的未来。",
         b4Status: "Coming Soon",
         visitSite: "访问网站",
+        clientSubtitle: "客户案例",
+        b5Title: "近江牛烧肉 松よう",
+        b5Desc: "为经营精选近江牛的烧肉店制作官方网站。",
+        b6Title: "新项目",
+        b6Desc: "说明文本。",
         guideLabel: "AI 向导",
         guideHint: "滚动浏览事业",
       },
@@ -417,7 +437,9 @@
           required: "必填",
           optional: "选填",
           submit: "发送",
+          sending: "发送中…",
           error: "请确认输入内容。",
+          sendError: "发送失败，请稍后重试。",
         },
         aside: {
           title: "回复时间",
@@ -577,6 +599,12 @@
       window.initHeaderRollScroll();
     }
   }
+
+  window.nikkaTranslate = function (path) {
+    var lang = localStorage.getItem(STORAGE_KEY);
+    if (!lang || SUPPORTED.indexOf(lang) === -1) lang = detectLang();
+    return resolve(t[lang], path) || resolve(t.ja, path) || "";
+  };
 
   function init() {
     var lang = detectLang();
