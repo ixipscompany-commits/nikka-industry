@@ -1059,7 +1059,7 @@ ul {
   filter: drop-shadow(0 0 2px rgba(26, 127, 140, 0.7));
 }
 
-/* スクロール進捗アーク（球体を囲む細い軌道） */
+/* スクロール進捗アーク（球体を囲む細い軌道：スクロール連動） */
 .biz-guide__progress {
   fill: none;
   stroke: var(--color-trust-teal);
@@ -1072,6 +1072,26 @@ ul {
   transform-origin: center;
   opacity: 0.55;
   filter: drop-shadow(0 0 4px rgba(26, 127, 140, 0.5));
+}
+
+/* 衛星の軌道パス（傾いた楕円） */
+.biz-guide__orbit-path {
+  fill: none;
+  stroke: var(--color-trust-teal);
+  stroke-width: 0.5;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.22;
+}
+
+/* 軌道上を回り続ける衛星（ノード） */
+.biz-guide__satellite {
+  fill: #aef0f5;
+  filter: drop-shadow(0 0 5px rgba(26, 127, 140, 0.9));
+}
+
+/* 衛星の軌跡（コメットトレイル） */
+.biz-guide__sat-trail {
+  fill: var(--color-trust-teal);
 }
 
 /* 中心コア（球体の核） */

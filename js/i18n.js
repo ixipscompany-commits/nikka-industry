@@ -87,7 +87,7 @@
       news: {
         label: "News & Press",
         title: "最新情報",
-        note: 'Instagram <span class="hashtag">@nikka_official</span> の投稿を自動表示',
+        note: 'Instagram <span class="hashtag">@nikka_co.jp</span> の投稿を自動表示',
         feedAria: "Instagram ニュースフィード",
         caption:
           "最新の投稿は Instagram から自動で表示されます。タップすると投稿ページが開きます。",
@@ -235,7 +235,7 @@
       news: {
         label: "News & Press",
         title: "Latest Updates",
-        note: 'Live posts from Instagram <span class="hashtag">@nikka_official</span>',
+        note: 'Live posts from Instagram <span class="hashtag">@nikka_co.jp</span>',
         feedAria: "Instagram news feed",
         caption:
           "The latest posts are pulled automatically from Instagram. Tap any post to open it.",
@@ -381,7 +381,7 @@
       news: {
         label: "News & Press",
         title: "最新资讯",
-        note: '自动展示 Instagram <span class="hashtag">@nikka_official</span> 的投稿',
+        note: '自动展示 Instagram <span class="hashtag">@nikka_co.jp</span> 的投稿',
         feedAria: "Instagram 资讯动态",
         caption:
           "最新投稿将自动从 Instagram 同步显示。点击任意投稿即可打开。",

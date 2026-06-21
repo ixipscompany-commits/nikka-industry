@@ -66,23 +66,36 @@
     return y + "." + m + "." + day;
   }
 
+  /* Behold.so 等が返す sizes から適切な画像URLを選ぶ */
+  function pickSized(item) {
+    var s = item.sizes;
+    if (s) {
+      var pref = s.medium || s.large || s.small || s.full || s.thumbnail;
+      if (pref && (pref.mediaUrl || pref.url)) return pref.mediaUrl || pref.url;
+    }
+    return "";
+  }
+
+  /* Graph API(snake_case) / Behold(camelCase) 双方のフィールド名に対応 */
   function normalize(items) {
     return (items || [])
-      .filter(function (item) {
-        return item && (item.media_url || item.thumbnail_url);
-      })
       .map(function (item) {
-        var isVideo = item.media_type === "VIDEO";
+        var type = (item.media_type || item.mediaType || "").toUpperCase();
+        var isVideo = type === "VIDEO";
+        var thumb = item.thumbnail_url || item.thumbnailUrl || "";
+        var full = item.media_url || item.mediaUrl || pickSized(item) || "";
+        var image = isVideo ? thumb || full : pickSized(item) || full || thumb;
         return {
           id: item.id,
-          image: isVideo
-            ? item.thumbnail_url || item.media_url
-            : item.media_url,
+          image: image,
           permalink: item.permalink || "",
-          caption: (item.caption || "").trim(),
+          caption: (item.caption || item.prunedCaption || "").trim(),
           timestamp: item.timestamp || "",
           isVideo: isVideo,
         };
+      })
+      .filter(function (post) {
+        return post && post.image;
       });
   }
 
@@ -116,7 +129,9 @@
         return res.json();
       })
       .then(function (json) {
-        var data = Array.isArray(json) ? json : json && json.data;
+        var data = Array.isArray(json)
+          ? json
+          : json && (json.data || json.posts || json.media);
         return normalize(data);
       });
   }

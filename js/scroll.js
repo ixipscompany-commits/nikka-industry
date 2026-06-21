@@ -459,9 +459,10 @@
     var totalEl = stage.querySelector("[data-biz-total]");
     var currentEl = stage.querySelector("[data-biz-current]");
     var nameEl = stage.querySelector("[data-biz-name]");
-    var progressEl = stage.querySelector("[data-biz-progress]");
-    var pointerEl = stage.querySelector("[data-biz-pointer]");
     var emblemEl = stage.querySelector("[data-biz-emblem]");
+    var progressEl = stage.querySelector("[data-biz-progress]");
+    var orbitPathsRoot = stage.querySelector("[data-biz-orbit-paths]");
+    var orbitsRoot = stage.querySelector("[data-biz-orbits]");
     var fillEl = stage.querySelector("[data-biz-fill]");
     var trackEl = stage.querySelector("[data-biz-track]");
 
@@ -663,15 +664,98 @@
       setActive(idx);
     }
 
-    drawGuide(0);
+    /* ===== 衛星（3基）：それぞれ独立した軌道を“回り続ける” =====
+       スクロール量に関係なく一定の角速度で公転（衛星のように）。
+       軌道ごとに半径・傾き・速度・向きを変えて立体的に見せる。
+       手前で大きく明るく／奥で小さく淡く描画。 */
+    var ORBITS = [
+      { rx: 52, ry: 17, tilt: -18, speed: 0.020, phase: 0.4, trail: 4 },
+      { rx: 44, ry: 40, tilt: 32, speed: -0.015, phase: 2.3, trail: 3 },
+      { rx: 50, ry: 30, tilt: 74, speed: 0.024, phase: 4.1, trail: 3 },
+    ];
 
-    /* 常時のゆるやかな自転（reduced-motion時は停止）。
-       スクロールしていなくても“宇宙空間で漂う”感を出す。 */
-    if (!reduceMotion && geo) {
-      (function spin() {
+    var orbits = [];
+    ORBITS.forEach(function (cfg) {
+      var tiltRad = cfg.tilt * (Math.PI / 180);
+
+      if (orbitPathsRoot) {
+        var path = document.createElementNS(SVGNS, "ellipse");
+        path.setAttribute("class", "biz-guide__orbit-path");
+        path.setAttribute("cx", "60");
+        path.setAttribute("cy", "60");
+        path.setAttribute("rx", String(cfg.rx));
+        path.setAttribute("ry", String(cfg.ry));
+        path.setAttribute("transform", "rotate(" + cfg.tilt + " 60 60)");
+        orbitPathsRoot.appendChild(path);
+      }
+
+      var grp = document.createElementNS(SVGNS, "g");
+      var trail = [];
+      for (var i = 0; i < cfg.trail; i++) {
+        var t = document.createElementNS(SVGNS, "circle");
+        t.setAttribute("class", "biz-guide__sat-trail");
+        grp.appendChild(t);
+        trail.push(t);
+      }
+      var sat = document.createElementNS(SVGNS, "circle");
+      sat.setAttribute("class", "biz-guide__satellite");
+      grp.appendChild(sat);
+      if (orbitsRoot) orbitsRoot.appendChild(grp);
+
+      orbits.push({
+        cfg: cfg,
+        angle: cfg.phase,
+        dir: cfg.speed >= 0 ? 1 : -1,
+        ct: Math.cos(tiltRad),
+        st: Math.sin(tiltRad),
+        sat: sat,
+        trail: trail,
+      });
+    });
+
+    function orbitPoint(o, a) {
+      var lx = o.cfg.rx * Math.cos(a);
+      var ly = o.cfg.ry * Math.sin(a);
+      return {
+        x: 60 + lx * o.ct - ly * o.st,
+        y: 60 + lx * o.st + ly * o.ct,
+        near: (Math.sin(a) + 1) / 2, /* 0:奥 〜 1:手前 */
+      };
+    }
+
+    function renderSatellites() {
+      for (var k = 0; k < orbits.length; k++) {
+        var o = orbits[k];
+        var p0 = orbitPoint(o, o.angle);
+        o.sat.setAttribute("cx", p0.x.toFixed(2));
+        o.sat.setAttribute("cy", p0.y.toFixed(2));
+        o.sat.setAttribute("r", (1.7 + p0.near * 1.7).toFixed(2));
+        o.sat.style.opacity = (0.4 + p0.near * 0.6).toFixed(3);
+        for (var i = 0; i < o.trail.length; i++) {
+          var pt = orbitPoint(o, o.angle - (i + 1) * 0.16 * o.dir);
+          var fade = 1 - (i + 1) / (o.trail.length + 1);
+          o.trail[i].setAttribute("cx", pt.x.toFixed(2));
+          o.trail[i].setAttribute("cy", pt.y.toFixed(2));
+          o.trail[i].setAttribute("r", (0.5 + pt.near * 1.0 * fade).toFixed(2));
+          o.trail[i].style.opacity = (pt.near * 0.5 * fade).toFixed(3);
+        }
+      }
+    }
+
+    drawGuide(0);
+    renderSatellites();
+
+    /* 常時アニメーション（reduced-motion時は停止）。
+       球体はゆるやかに自転し、3基の衛星は一定速度で公転し続ける。 */
+    if (!reduceMotion) {
+      (function loop() {
         idle += 0.004;
-        renderNet();
-        requestAnimationFrame(spin);
+        for (var k = 0; k < orbits.length; k++) {
+          orbits[k].angle += orbits[k].cfg.speed;
+        }
+        if (geo) renderNet();
+        renderSatellites();
+        requestAnimationFrame(loop);
       })();
     }
 
