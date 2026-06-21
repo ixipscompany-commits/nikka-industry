@@ -8,7 +8,68 @@
      ========================================================================== */
 
   var ROOT_ID = "nk-intro";
-  var SESSION_KEY = "nk-intro-seen";
+  /* このセッション（タブ）で再生済みかを記録。新しいセッション＝サイトに入った初回。 */
+  var SEEN_KEY = "nk-intro-seen";
+  /* NIKKAロゴクリックによる「もう一度再生」要求（次の遷移先で一度だけ消費） */
+  var REPLAY_KEY = "nk-intro-replay";
+
+  function hasSeen() {
+    try {
+      return sessionStorage.getItem(SEEN_KEY) === "1";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function markSeen() {
+    try {
+      sessionStorage.setItem(SEEN_KEY, "1");
+    } catch (e) {}
+  }
+
+  /* このページ表示がリロード（更新）によるものか判定 */
+  function isReloadNavigation() {
+    try {
+      var entries =
+        performance && performance.getEntriesByType
+          ? performance.getEntriesByType("navigation")
+          : null;
+      if (entries && entries.length && entries[0].type) {
+        return entries[0].type === "reload";
+      }
+      if (performance && performance.navigation) {
+        return performance.navigation.type === 1; /* TYPE_RELOAD */
+      }
+    } catch (e) {}
+    return false;
+  }
+
+  function wantsReplay() {
+    try {
+      return sessionStorage.getItem(REPLAY_KEY) === "1";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function clearReplay() {
+    try {
+      sessionStorage.removeItem(REPLAY_KEY);
+    } catch (e) {}
+  }
+
+  /* NIKKAロゴ（.site-logo）クリックで再生要求をセット。
+     遷移先（index.html）でイントロが再生される。全ページ共通で動作。 */
+  function attachLogoReplay() {
+    var logos = document.querySelectorAll(".site-logo");
+    Array.prototype.forEach.call(logos, function (logo) {
+      logo.addEventListener("click", function () {
+        try {
+          sessionStorage.setItem(REPLAY_KEY, "1");
+        } catch (e) {}
+      });
+    });
+  }
 
   var CONFIG = window.NIKKA_INTRO_CONFIG || {};
 
@@ -164,9 +225,8 @@
     if (root && root.parentNode) {
       root.parentNode.removeChild(root);
     }
-    try {
-      sessionStorage.setItem(SESSION_KEY, "1");
-    } catch (e) {}
+    markSeen();
+    clearReplay();
   }
 
   /* GSAP 不在 / reduced motion: 即時スキップ */
@@ -474,6 +534,9 @@
   }
 
   function initIntro() {
+    /* ロゴクリックの再生要求ハンドラは全ページで有効化（contactページ含む） */
+    attachLogoReplay();
+
     var root = document.getElementById(ROOT_ID);
     if (!root) return;
 
@@ -485,13 +548,21 @@
       return;
     }
 
-    /* 2回目以降（同一セッション）: 短縮版 */
-    var seen = false;
-    try {
-      seen = sessionStorage.getItem(SESSION_KEY) === "1";
-    } catch (e) {}
+    var replay = wantsReplay();
+    var reload = isReloadNavigation();
 
-    startPlayback(root, seen);
+    /* 再生する条件:
+         - このセッションでまだ見ていない（＝サイトに入った初回）
+         - ページを更新（リロード）した
+         - NIKKAロゴから明示的に再生要求した
+       それ以外（contactから戻る等のセッション内移動）は出さずにスキップ。 */
+    if (hasSeen() && !reload && !replay) {
+      instantSkip(root);
+      return;
+    }
+
+    /* 常にフル再生（短縮版は廃止） */
+    startPlayback(root, false);
   }
 
   if (document.readyState === "complete") {
