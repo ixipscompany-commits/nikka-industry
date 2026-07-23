@@ -22,9 +22,20 @@
 
   function getConfig(grid) {
     var global = window.NIKKA_INSTAGRAM || {};
+    var jsonUrls = [];
+    var multi = global.jsonUrls;
+    var single =
+      grid.getAttribute("data-ig-json") || global.jsonUrl || "";
+
+    if (Array.isArray(multi) && multi.length) {
+      jsonUrls = multi.filter(Boolean);
+    } else if (single) {
+      jsonUrls = [single];
+    }
+
     return {
       token: grid.getAttribute("data-ig-token") || global.token || "",
-      jsonUrl: grid.getAttribute("data-ig-json") || global.jsonUrl || "",
+      jsonUrls: jsonUrls,
       limit:
         parseInt(grid.getAttribute("data-ig-limit"), 10) ||
         global.limit ||
@@ -122,12 +133,11 @@
       });
   }
 
-  function fetchFromJson(cfg) {
-    var url = cfg.jsonUrl;
+  function fetchFromJsonUrl(url) {
     var sep = url.indexOf("?") >= 0 ? "&" : "?";
-    url = url + sep + "_=" + Date.now();
+    var bust = url + sep + "_=" + Date.now();
 
-    return fetch(url, { cache: "no-store" })
+    return fetch(bust, { cache: "no-store" })
       .then(function (res) {
         if (!res.ok) throw new Error("Feed JSON " + res.status);
         return res.json();
@@ -138,6 +148,28 @@
           : json && (json.data || json.posts || json.media);
         return normalize(data);
       });
+  }
+
+  function fetchFromJson(cfg) {
+    return Promise.all(
+      cfg.jsonUrls.map(function (url) {
+        return fetchFromJsonUrl(url).catch(function (err) {
+          if (window.console && console.warn) {
+            console.warn("[NIKKA] Feed skipped:", url, err.message);
+          }
+          return [];
+        });
+      })
+    ).then(function (groups) {
+      var merged = [];
+      groups.forEach(function (posts) {
+        merged = merged.concat(posts);
+      });
+      merged.sort(function (a, b) {
+        return String(b.timestamp).localeCompare(String(a.timestamp));
+      });
+      return merged;
+    });
   }
 
   function buildCard(post) {
@@ -218,9 +250,11 @@
     if (!grid) return;
 
     var cfg = getConfig(grid);
-    if (!cfg.token && !cfg.jsonUrl) return; /* 未設定: プレースホルダー維持 */
+    if (!cfg.token && !cfg.jsonUrls.length) return; /* 未設定: プレースホルダー維持 */
 
-    var cacheKey = cfg.token ? "graph" : "json:" + cfg.jsonUrl;
+    var cacheKey = cfg.token
+      ? "graph"
+      : "json:" + cfg.jsonUrls.join("|");
     var cached = readCache(cacheKey);
     if (cached) {
       render(grid, cached, cfg);

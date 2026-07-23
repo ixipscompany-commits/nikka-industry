@@ -346,22 +346,7 @@
               <h3 class="business-box__title" data-i18n="businesses.b5Title">近江牛焼肉 松よう</h3>
               <p class="business-box__desc" data-i18n="businesses.b5Desc">特選の近江牛を取り扱う焼肉屋さんのホームページ制作</p>
               <div class="business-box__links">
-                <a class="business-box__link" href="#" target="_blank" rel="noopener noreferrer">
-                  <span class="business-box__link-label" data-i18n="businesses.visitSite">サイトを見る</span>
-                  <span class="business-box__link-arrow" aria-hidden="true">→</span>
-                </a>
-              </div>
-            </article>
-
-            <article class="business-box" data-biz-box>
-              <div class="business-box__head">
-                <span class="business-box__index">06</span>
-                <span class="business-box__tag" data-i18n="businesses.clientSubtitle">クライアント実績</span>
-              </div>
-              <h3 class="business-box__title" data-i18n="businesses.b6Title">新規プロジェクト</h3>
-              <p class="business-box__desc" data-i18n="businesses.b6Desc">説明テキスト。</p>
-              <div class="business-box__links">
-                <a class="business-box__link" href="#" target="_blank" rel="noopener noreferrer">
+                <a class="business-box__link" href="https://matsuyo-yakiniku.vercel.app/" target="_blank" rel="noopener noreferrer">
                   <span class="business-box__link-label" data-i18n="businesses.visitSite">サイトを見る</span>
                   <span class="business-box__link-arrow" aria-hidden="true">→</span>
                 </a>
@@ -472,18 +457,21 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" defer></script>
-  <!-- ▼ Instagram 連携設定（@nikka_co.jp）
-       いずれか一方を設定すると News セクションに実投稿が自動表示されます。
+  <!-- ▼ Instagram 連携設定（@nikka_co.jp + @matsuyo_yakiniku）
+       jsonUrls に複数フィードを指定すると News グリッドへマージ表示されます。
        未設定の間はプレースホルダー＋フォローボタンのまま安全に動作します。
 
-       ・方法A（推奨：フィードJSON）… Behold.so 等で発行した JSON フィードURLを jsonUrl に設定
+       ・方法A（推奨：フィードJSON）… Behold.so 等で発行した JSON フィードURLを jsonUrls に設定
        ・方法B（Graph APIトークン）… Meta で取得した長期アクセストークンを token に設定
   -->
   <script>
     window.NIKKA_INSTAGRAM = {
       profile: "nikka_co.jp",
       limit: 6,
-      jsonUrl: "https://feeds.behold.so/zIPvL5rYKHCmhebphleo", // Behold.so フィード（@nikka_co.jp）
+      jsonUrls: [
+        "https://feeds.behold.so/zIPvL5rYKHCmhebphleo", // @nikka_co.jp
+        "assets/instagram/matsuyo-feed.json" // @matsuyo_yakiniku
+      ],
       token: ""    // Graph APIトークンは未使用（Behold経由で安全に取得）
     };
   </script>
