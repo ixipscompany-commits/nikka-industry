@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var SCRUB = 0.9;
+  var SCRUB = 0.35;
   var lenis = null;
 
   var prefersReduced =
@@ -20,75 +20,21 @@
 
     ScrollTrigger.config({
       limitCallbacks: true,
-      syncInterval: 120,
+      syncInterval: 200,
     });
 
-    initLenis();
-    if (typeof window.initHeaderRollScroll === "function") {
-      window.initHeaderRollScroll();
-    }
-    initSectionVisuals();
+    /* Lenis は重さの主因のため無効。ネイティブスクロールで軽快に。 */
     initHeader();
     initHeroEntrance();
     initScrollReveals();
     initBusinessShowcase();
     initNewsGrid();
-    initParallaxOrbs();
-    initLogoShine();
 
     ScrollTrigger.refresh();
   }
 
   function initLenis() {
-    if (typeof Lenis === "undefined") return;
-
-    lenis = new Lenis({
-      duration: 0.85,
-      easing: function (t) {
-        return 1 - Math.pow(1 - t, 3);
-      },
-      smoothWheel: true,
-      wheelMultiplier: 1.08,
-      touchMultiplier: 1.25,
-    });
-
-    lenis.on("scroll", function (e) {
-      ScrollTrigger.update();
-      if (typeof window.onLenisHeaderRoll === "function") {
-        window.onLenisHeaderRoll(e);
-      }
-      if (typeof window.onLenisLogoShine === "function") {
-        window.onLenisLogoShine(e);
-      }
-    });
-
-    ScrollTrigger.scrollerProxy(document.documentElement, {
-      scrollTop: function (value) {
-        if (arguments.length) {
-          lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis.scroll;
-      },
-      getBoundingClientRect: function () {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-      pinType: document.documentElement.style.transform ? "transform" : "fixed",
-    });
-
-    ScrollTrigger.defaults({ scroller: document.documentElement });
-
-    ScrollTrigger.addEventListener("refresh", function () {
-      lenis.resize();
-    });
-
-    gsap.ticker.add(function (time) {
-      lenis.raf(time * 1000);
-    });
+    /* 互換のため残置。現在は未使用。 */
   }
 
   function revealAll() {
@@ -352,11 +298,16 @@
       .from(".scroll-hint", { opacity: 0, y: 4, duration: 0.35 }, "-=0.15");
 
     gsap.to(".hero .container", {
-      y: -16,
-      opacity: 0.72,
+      y: -8,
+      opacity: 0.85,
       ease: "none",
       force3D: true,
-      scrollTrigger: scrubTrigger(document.getElementById("hero"), "bottom top", SCRUB),
+      scrollTrigger: {
+        trigger: document.getElementById("hero"),
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
     });
   }
 
@@ -402,7 +353,7 @@
           title,
           {
             opacity: 0,
-            y: 18,
+            y: 14,
             "--title-underline-scale": 0,
             force3D: true,
           },
@@ -410,14 +361,13 @@
             opacity: 1,
             y: 0,
             "--title-underline-scale": 1,
-            ease: "none",
+            duration: 0.5,
+            ease: "power2.out",
             force3D: true,
             scrollTrigger: {
               trigger: header,
-              start: "top 88%",
-              end: "top 60%",
-              scrub: 0.55,
-              invalidateOnRefresh: true,
+              start: "top 90%",
+              once: true,
             },
           }
         );
@@ -743,62 +693,76 @@
     drawGuide(0);
     renderSatellites();
 
-    /* 常時アニメーション（reduced-motion時は停止）。
-       球体はゆるやかに自転し、3基の衛星は一定速度で公転し続ける。 */
-    if (!reduceMotion) {
-      (function loop() {
-        idle += 0.004;
+    /* 画面内にいるときだけ低頻度で回し、スクロール負荷を抑える */
+    var rafId = 0;
+    var frame = 0;
+    var guideVisible = false;
+
+    function idleLoop() {
+      if (!guideVisible) {
+        rafId = 0;
+        return;
+      }
+      frame += 1;
+      if (frame % 2 === 0) {
+        idle += 0.006;
         for (var k = 0; k < orbits.length; k++) {
-          orbits[k].angle += orbits[k].cfg.speed;
+          orbits[k].angle += orbits[k].cfg.speed * 1.4;
         }
         if (geo) renderNet();
         renderSatellites();
-        requestAnimationFrame(loop);
-      })();
+      }
+      rafId = requestAnimationFrame(idleLoop);
+    }
+
+    if (!reduceMotion && typeof IntersectionObserver !== "undefined") {
+      var io = new IntersectionObserver(
+        function (entries) {
+          guideVisible = entries.some(function (e) {
+            return e.isIntersecting;
+          });
+          if (guideVisible && !rafId) {
+            rafId = requestAnimationFrame(idleLoop);
+          }
+        },
+        { rootMargin: "80px", threshold: 0 }
+      );
+      io.observe(stage);
+    } else if (!reduceMotion) {
+      guideVisible = true;
+      rafId = requestAnimationFrame(idleLoop);
     }
 
     var lastBox = boxes[boxes.length - 1];
     var isMobileGuide = window.matchMedia("(max-width: 500px)").matches;
 
-    /* ガイドをスクロール進捗と連動（PC/SP共通）。
-       PC：sticky 親 (.biz-guide) をボックス列と同じ高さに伸ばし、最後のボックスが
-       流れ切るまでガイドが固定されるよう end を最終ボックス基準に合わせる。
-       SP：従来どおりステージ全体を基準。 */
+    /* ガイドをスクロール進捗と連動（PC/SP共通）。 */
     ScrollTrigger.create({
       trigger: stage,
       start: isMobileGuide ? "top center" : "top 75%",
       endTrigger: isMobileGuide ? stage : lastBox,
       end: isMobileGuide ? "bottom center" : "bottom 85%",
-      scrub: 0.45,
+      scrub: 0.2,
       invalidateOnRefresh: true,
       onUpdate: function (self) {
         drawGuide(self.progress);
       },
     });
 
-    /* 各ボックスを scrub 連動で個別に演出。
-       縦移動(yPercent)はボックスごとの位置ズレ＝間隔バラつきの原因になるため使わず、
-       透明度＋中心スケールのみで「止めると止まる」感を維持しつつ整列を崩さない。
-       .business-box を増やすだけで自動的に同じ演出が適用される。 */
+    /* 各ボックスは一度きりの軽いフェードイン（scrub連動は負荷が高いため廃止） */
     boxes.forEach(function (box) {
-      gsap.fromTo(
-        box,
-        { autoAlpha: 0, scale: 0.99 },
-        {
-          autoAlpha: 1,
-          scale: 1,
-          ease: "power2.out",
-          force3D: true,
-          transformOrigin: "50% 50%",
-          scrollTrigger: {
-            trigger: box,
-            start: "top 92%",
-            end: "top 70%",
-            scrub: 0.45,
-            invalidateOnRefresh: true,
-          },
-        }
-      );
+      gsap.from(box, {
+        autoAlpha: 0,
+        y: 14,
+        duration: 0.45,
+        ease: "power2.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: box,
+          start: "top 92%",
+          once: true,
+        },
+      });
     });
   }
 
