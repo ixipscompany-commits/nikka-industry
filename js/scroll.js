@@ -804,6 +804,9 @@
   }
 
   function initNewsGrid() {
+    var grid = document.querySelector(".news-grid");
+    if (grid && grid.classList.contains("news-grid--live")) return;
+
     var cards = gsap.utils.toArray(".news-card");
     if (!cards.length) return;
 
@@ -826,19 +829,34 @@
   /* Instagram フィードで .news-card が差し替わった後に再演出 */
   window.refreshNewsGridReveal = function () {
     if (typeof gsap === "undefined") return;
-    var cards = gsap.utils.toArray(".news-card");
+    var grid = document.querySelector(".news-grid--live");
+    if (!grid) return;
+    var cards = gsap.utils.toArray(grid.querySelectorAll(".news-card"));
     if (!cards.length) return;
 
-    gsap.set(cards, { clearProps: "all" });
-    gsap.from(cards, {
-      opacity: 0,
-      scale: 0.97,
-      y: 24,
-      duration: 0.9,
-      stagger: 0.06,
-      ease: "power2.out",
-      force3D: true,
-    });
+    if (typeof ScrollTrigger !== "undefined") {
+      ScrollTrigger.getAll().forEach(function (st) {
+        if (st.trigger === grid) st.kill();
+      });
+    }
+
+    gsap.fromTo(
+      cards,
+      { opacity: 0, scale: 0.97, y: 24 },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.06,
+        ease: "power2.out",
+        force3D: true,
+        overwrite: true,
+        onComplete: function () {
+          gsap.set(cards, { clearProps: "opacity,visibility,transform" });
+        },
+      }
+    );
 
     if (typeof ScrollTrigger !== "undefined") {
       ScrollTrigger.refresh();

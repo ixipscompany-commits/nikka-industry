@@ -17,7 +17,7 @@
   var GRAPH_ENDPOINT = "https://graph.instagram.com/me/media";
   var GRAPH_FIELDS =
     "id,caption,media_type,media_url,permalink,thumbnail_url,timestamp";
-  var CACHE_KEY = "nikka-ig-feed";
+  var CACHE_KEY = "nikka-ig-feed-v2";
   var CACHE_TTL = 5 * 60 * 1000; /* 5 分（短めにして新投稿を早く反映） */
 
   function getConfig(grid) {
@@ -29,7 +29,8 @@
 
     if (Array.isArray(multi) && multi.length) {
       jsonUrls = multi.filter(Boolean);
-    } else if (single) {
+    }
+    if (!jsonUrls.length && single) {
       jsonUrls = [single];
     }
 
@@ -239,6 +240,13 @@
     grid.innerHTML = "";
     grid.appendChild(fragment);
     grid.classList.add("news-grid--live");
+
+    /* GSAP 演出失敗時でも必ず見えるようにする */
+    var cards = grid.querySelectorAll(".news-card");
+    for (var i = 0; i < cards.length; i++) {
+      cards[i].style.opacity = "1";
+      cards[i].style.visibility = "visible";
+    }
 
     if (typeof window.refreshNewsGridReveal === "function") {
       window.refreshNewsGridReveal();

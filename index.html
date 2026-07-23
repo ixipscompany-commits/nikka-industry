@@ -468,17 +468,19 @@
     window.NIKKA_INSTAGRAM = {
       profile: "nikka_co.jp",
       limit: 6,
+      // jsonUrl: 旧クライアント互換 / jsonUrls: 複数フィードマージ
+      jsonUrl: "https://feeds.behold.so/zIPvL5rYKHCmhebphleo",
       jsonUrls: [
-        "https://feeds.behold.so/zIPvL5rYKHCmhebphleo", // @nikka_co.jp
-        "assets/instagram/matsuyo-feed.json" // @matsuyo_yakiniku
+        "https://feeds.behold.so/zIPvL5rYKHCmhebphleo",
+        "/assets/instagram/matsuyo-feed.json"
       ],
-      token: ""    // Graph APIトークンは未使用（Behold経由で安全に取得）
+      token: ""
     };
   </script>
-  <script src="js/i18n.js" defer></script>
-  <script src="js/header-roll.js" defer></script>
-  <script src="js/scroll.js" defer></script>
-  <script src="js/instagram.js" defer></script>
+  <script src="js/i18n.js?v=20260723" defer></script>
+  <script src="js/header-roll.js?v=20260723" defer></script>
+  <script src="js/scroll.js?v=20260723" defer></script>
+  <script src="js/instagram.js?v=20260723b" defer></script>
   <script src="js/intro.config.js"></script>
   <script src="js/intro.js" defer></script>
   <script>
