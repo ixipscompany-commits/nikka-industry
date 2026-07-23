@@ -23,7 +23,8 @@
       syncInterval: 200,
     });
 
-    /* Lenis は無効のまま。背景パララックス・ヘッダー回転・ロゴ光彩は復帰。 */
+    /* 軽めの設定で Lenis を復帰 */
+    initLenis();
     if (typeof window.initHeaderRollScroll === "function") {
       window.initHeaderRollScroll();
     }
@@ -39,7 +40,55 @@
   }
 
   function initLenis() {
-    /* 互換のため残置。現在は未使用。 */
+    if (typeof Lenis === "undefined") return;
+
+    lenis = new Lenis({
+      duration: 0.85,
+      easing: function (t) {
+        return 1 - Math.pow(1 - t, 3);
+      },
+      smoothWheel: true,
+      wheelMultiplier: 1.08,
+      touchMultiplier: 1.25,
+    });
+
+    lenis.on("scroll", function (e) {
+      ScrollTrigger.update();
+      if (typeof window.onLenisHeaderRoll === "function") {
+        window.onLenisHeaderRoll(e);
+      }
+      if (typeof window.onLenisLogoShine === "function") {
+        window.onLenisLogoShine(e);
+      }
+    });
+
+    ScrollTrigger.scrollerProxy(document.documentElement, {
+      scrollTop: function (value) {
+        if (arguments.length) {
+          lenis.scrollTo(value, { immediate: true });
+        }
+        return lenis.scroll;
+      },
+      getBoundingClientRect: function () {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+      },
+      pinType: document.documentElement.style.transform ? "transform" : "fixed",
+    });
+
+    ScrollTrigger.defaults({ scroller: document.documentElement });
+
+    ScrollTrigger.addEventListener("refresh", function () {
+      lenis.resize();
+    });
+
+    gsap.ticker.add(function (time) {
+      lenis.raf(time * 1000);
+    });
   }
 
   function revealAll() {
