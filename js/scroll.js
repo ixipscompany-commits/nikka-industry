@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var SCRUB = 3.2;
+  var SCRUB = 0.9;
   var lenis = null;
 
   var prefersReduced =
@@ -16,11 +16,11 @@
     }
 
     gsap.registerPlugin(ScrollTrigger);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(500, 33);
 
     ScrollTrigger.config({
       limitCallbacks: true,
-      syncInterval: 150,
+      syncInterval: 120,
     });
 
     initLenis();
@@ -43,13 +43,13 @@
     if (typeof Lenis === "undefined") return;
 
     lenis = new Lenis({
-      duration: 1.35,
+      duration: 0.85,
       easing: function (t) {
-        return Math.min(1, 1.001 - Math.pow(2, -10 * t));
+        return 1 - Math.pow(1 - t, 3);
       },
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.1,
+      wheelMultiplier: 1.08,
+      touchMultiplier: 1.25,
     });
 
     lenis.on("scroll", function (e) {
@@ -89,8 +89,6 @@
     gsap.ticker.add(function (time) {
       lenis.raf(time * 1000);
     });
-
-    gsap.ticker.lagSmoothing(0);
   }
 
   function revealAll() {
@@ -141,10 +139,10 @@
     if (photo) {
       gsap.fromTo(
         photo,
-        { scale: 1.12, yPercent: 6, opacity: 0.3, force3D: true },
+        { scale: 1.06, yPercent: 3, opacity: 0.35, force3D: true },
         {
           scale: 1.02,
-          yPercent: -12,
+          yPercent: -6,
           opacity: 0.5,
           ease: "none",
           force3D: true,
@@ -156,15 +154,15 @@
     if (geoA) {
       gsap.fromTo(
         geoA,
-        { x: -20, y: 30, rotate: -4, scale: 0.95, force3D: true },
+        { x: -10, y: 14, rotate: -2, scale: 0.98, force3D: true },
         {
-          x: 35,
-          y: -50,
-          rotate: 6,
-          scale: 1.04,
+          x: 16,
+          y: -22,
+          rotate: 3,
+          scale: 1.02,
           ease: "none",
           force3D: true,
-          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 0.6),
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 0.15),
         }
       );
     }
@@ -172,25 +170,25 @@
     if (geoB) {
       gsap.fromTo(
         geoB,
-        { x: 15, y: -15, rotate: 3, opacity: 0.2, force3D: true },
+        { x: 8, y: -8, rotate: 2, opacity: 0.22, force3D: true },
         {
-          x: -25,
-          y: 40,
-          rotate: -5,
-          opacity: 0.35,
+          x: -12,
+          y: 18,
+          rotate: -2,
+          opacity: 0.32,
           ease: "none",
           force3D: true,
-          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB - 0.4),
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB),
         }
       );
     }
 
     if (frame) {
       gsap.to(frame, {
-        yPercent: 8,
+        yPercent: 4,
         ease: "none",
         force3D: true,
-        scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 1),
+        scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 0.2),
       });
     }
   }
@@ -206,11 +204,11 @@
     if (photo) {
       gsap.fromTo(
         photo,
-        { xPercent: -8, scale: 1.08, opacity: 0.18, force3D: true },
+        { xPercent: -4, scale: 1.04, opacity: 0.22, force3D: true },
         {
-          xPercent: 10,
+          xPercent: 5,
           scale: 1,
-          opacity: 0.38,
+          opacity: 0.36,
           ease: "none",
           force3D: true,
           scrollTrigger: st,
@@ -221,15 +219,15 @@
     if (geo) {
       gsap.fromTo(
         geo,
-        { xPercent: 6, yPercent: 4, scale: 0.94, rotate: 0, force3D: true },
+        { xPercent: 3, yPercent: 2, scale: 0.97, rotate: 0, force3D: true },
         {
-          xPercent: -5,
-          yPercent: -8,
-          scale: 1.06,
-          rotate: 4,
+          xPercent: -3,
+          yPercent: -4,
+          scale: 1.03,
+          rotate: 2,
           ease: "none",
           force3D: true,
-          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 0.5),
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 0.15),
         }
       );
     }
@@ -245,11 +243,11 @@
     if (geoA) {
       gsap.fromTo(
         geoA,
-        { xPercent: -5, scale: 0.94, yPercent: 4, force3D: true },
+        { xPercent: -3, scale: 0.97, yPercent: 2, force3D: true },
         {
-          xPercent: 5,
-          scale: 1.03,
-          yPercent: -5,
+          xPercent: 3,
+          scale: 1.02,
+          yPercent: -3,
           ease: "none",
           force3D: true,
           scrollTrigger: scrubTrigger(section, "bottom top", SCRUB),
@@ -260,14 +258,14 @@
     if (geoB) {
       gsap.fromTo(
         geoB,
-        { xPercent: 10, yPercent: 6, opacity: 0.12, force3D: true },
+        { xPercent: 5, yPercent: 3, opacity: 0.14, force3D: true },
         {
-          xPercent: -12,
-          yPercent: -10,
-          opacity: 0.28,
+          xPercent: -6,
+          yPercent: -5,
+          opacity: 0.26,
           ease: "none",
           force3D: true,
-          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB - 0.3),
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB),
         }
       );
     }
@@ -283,12 +281,12 @@
     if (geoA) {
       gsap.fromTo(
         geoA,
-        { x: 25, y: 20, rotate: -3, scale: 0.97, force3D: true },
+        { x: 12, y: 10, rotate: -2, scale: 0.98, force3D: true },
         {
-          x: -35,
-          y: -30,
-          rotate: 5,
-          scale: 1.05,
+          x: -16,
+          y: -14,
+          rotate: 2,
+          scale: 1.02,
           ease: "none",
           force3D: true,
           scrollTrigger: scrubTrigger(section, "bottom top", SCRUB),
@@ -299,14 +297,14 @@
     if (geoB) {
       gsap.fromTo(
         geoB,
-        { x: -20, y: -15, opacity: 0.15, force3D: true },
+        { x: -10, y: -8, opacity: 0.16, force3D: true },
         {
-          x: 30,
-          y: 25,
-          opacity: 0.3,
+          x: 14,
+          y: 12,
+          opacity: 0.28,
           ease: "none",
           force3D: true,
-          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB + 0.4),
+          scrollTrigger: scrubTrigger(section, "bottom top", SCRUB),
         }
       );
     }
@@ -325,37 +323,37 @@
   }
 
   function initHeroEntrance() {
-    var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    var tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
     tl.from(".scroll-bg__orb", {
       opacity: 0,
-      scale: 0.92,
-      duration: 1.2,
-      stagger: 0.1,
+      scale: 0.96,
+      duration: 0.7,
+      stagger: 0.06,
     })
       .from(
         "#hero .section-visual__photo",
-        { opacity: 0, scale: 1.05, duration: 1.4 },
-        "-=0.9"
+        { opacity: 0, scale: 1.03, duration: 0.85 },
+        "-=0.5"
       )
       .from(
         "#hero .section-visual__geo",
-        { opacity: 0, scale: 0.94, duration: 1, stagger: 0.1 },
-        "-=1"
+        { opacity: 0, scale: 0.97, duration: 0.65, stagger: 0.06 },
+        "-=0.55"
       )
-      .from(".hero__logo", { opacity: 0, y: 28, duration: 1 }, "-=0.7")
-      .from(".hero__catchcopy", { opacity: 0, y: 22, duration: 0.8 }, "-=0.5")
-      .from(".hero__lead", { opacity: 0, y: 18, duration: 0.75 }, "-=0.4")
+      .from(".hero__logo", { opacity: 0, y: 16, duration: 0.6 }, "-=0.4")
+      .from(".hero__catchcopy", { opacity: 0, y: 12, duration: 0.5 }, "-=0.3")
+      .from(".hero__lead", { opacity: 0, y: 10, duration: 0.45 }, "-=0.25")
       .from(
         ".hero__actions .btn",
-        { opacity: 0, y: 16, duration: 0.65, stagger: 0.1 },
-        "-=0.3"
+        { opacity: 0, y: 8, duration: 0.4, stagger: 0.06 },
+        "-=0.2"
       )
-      .from(".scroll-hint", { opacity: 0, y: 8, duration: 0.6 }, "-=0.2");
+      .from(".scroll-hint", { opacity: 0, y: 4, duration: 0.35 }, "-=0.15");
 
     gsap.to(".hero .container", {
-      y: -32,
-      opacity: 0.5,
+      y: -16,
+      opacity: 0.72,
       ease: "none",
       force3D: true,
       scrollTrigger: scrubTrigger(document.getElementById("hero"), "bottom top", SCRUB),
@@ -365,13 +363,13 @@
   function fadeUp(el, opts) {
     gsap.from(el, {
       opacity: 0,
-      y: opts.y || 40,
-      duration: opts.duration || 1.2,
+      y: opts.y || 18,
+      duration: opts.duration || 0.65,
       ease: "power2.out",
       force3D: true,
       scrollTrigger: {
         trigger: el,
-        start: opts.start || "top 88%",
+        start: opts.start || "top 90%",
         once: true,
       },
     });
@@ -387,7 +385,7 @@
       ) {
         return;
       }
-      fadeUp(el, { y: 36 });
+      fadeUp(el, { y: 16 });
     });
 
     gsap.utils.toArray(".section-header").forEach(function (header) {
@@ -396,7 +394,7 @@
       var title = header.querySelector(".section-header__title");
 
       if (label) {
-        fadeUp(label, { y: 16, start: "top 86%" });
+        fadeUp(label, { y: 10, start: "top 90%" });
       }
 
       if (title) {
@@ -404,7 +402,7 @@
           title,
           {
             opacity: 0,
-            y: 36,
+            y: 18,
             "--title-underline-scale": 0,
             force3D: true,
           },
@@ -416,9 +414,9 @@
             force3D: true,
             scrollTrigger: {
               trigger: header,
-              start: "top 86%",
-              end: "top 58%",
-              scrub: 1.4,
+              start: "top 88%",
+              end: "top 60%",
+              scrub: 0.55,
               invalidateOnRefresh: true,
             },
           }
@@ -428,11 +426,12 @@
       if (line) {
         gsap.from(line, {
           scaleX: 0,
-          duration: 1.4,
-          ease: "power2.inOut",
+          transformOrigin: "left center",
+          duration: 0.55,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: header,
-            start: "top 84%",
+            start: "top 88%",
             once: true,
           },
         });
@@ -770,7 +769,7 @@
       start: isMobileGuide ? "top center" : "top 75%",
       endTrigger: isMobileGuide ? stage : lastBox,
       end: isMobileGuide ? "bottom center" : "bottom 85%",
-      scrub: true,
+      scrub: 0.45,
       invalidateOnRefresh: true,
       onUpdate: function (self) {
         drawGuide(self.progress);
@@ -784,7 +783,7 @@
     boxes.forEach(function (box) {
       gsap.fromTo(
         box,
-        { autoAlpha: 0, scale: 0.985 },
+        { autoAlpha: 0, scale: 0.99 },
         {
           autoAlpha: 1,
           scale: 1,
@@ -793,9 +792,9 @@
           transformOrigin: "50% 50%",
           scrollTrigger: {
             trigger: box,
-            start: "top 90%",
-            end: "top 66%",
-            scrub: true,
+            start: "top 92%",
+            end: "top 70%",
+            scrub: 0.45,
             invalidateOnRefresh: true,
           },
         }
@@ -812,15 +811,15 @@
 
     gsap.from(cards, {
       opacity: 0,
-      scale: 0.97,
-      y: 24,
-      duration: 1,
-      stagger: 0.06,
+      scale: 0.99,
+      y: 12,
+      duration: 0.55,
+      stagger: 0.04,
       ease: "power2.out",
       force3D: true,
       scrollTrigger: {
         trigger: ".news-grid",
-        start: "top 86%",
+        start: "top 90%",
         once: true,
       },
     });
@@ -842,13 +841,13 @@
 
     gsap.fromTo(
       cards,
-      { opacity: 0, scale: 0.97, y: 24 },
+      { opacity: 0, scale: 0.99, y: 12 },
       {
         opacity: 1,
         scale: 1,
         y: 0,
-        duration: 0.9,
-        stagger: 0.06,
+        duration: 0.5,
+        stagger: 0.04,
         ease: "power2.out",
         force3D: true,
         overwrite: true,
@@ -1002,50 +1001,50 @@
       trigger: "main",
       start: "top top",
       end: "bottom bottom",
-      scrub: SCRUB + 0.8,
+      scrub: SCRUB,
       invalidateOnRefresh: true,
     };
 
     gsap.to(".scroll-bg__wash", {
-      y: 80,
-      opacity: 0.94,
+      y: 36,
+      opacity: 0.96,
       ease: "none",
       force3D: true,
       scrollTrigger: mainSt,
     });
 
     gsap.to(".scroll-bg__orb--1", {
-      y: 140,
-      x: -40,
-      scale: 1.12,
+      y: 56,
+      x: -18,
+      scale: 1.05,
       ease: "none",
       force3D: true,
-      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 1.1 }),
+      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 0.15 }),
     });
 
     gsap.to(".scroll-bg__orb--2", {
-      y: -110,
-      x: 55,
-      scale: 1.08,
+      y: -44,
+      x: 22,
+      scale: 1.04,
       ease: "none",
       force3D: true,
-      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 0.4 }),
+      scrollTrigger: mainSt,
     });
 
     gsap.to(".scroll-bg__orb--3", {
-      y: 160,
-      x: 30,
-      scale: 1.1,
+      y: 60,
+      x: 14,
+      scale: 1.04,
       ease: "none",
       force3D: true,
-      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 1.4 }),
+      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 0.1 }),
     });
 
     gsap.to(".scroll-bg__grain", {
-      y: 40,
+      y: 16,
       ease: "none",
       force3D: true,
-      scrollTrigger: Object.assign({}, mainSt, { scrub: SCRUB + 2 }),
+      scrollTrigger: mainSt,
     });
   }
 

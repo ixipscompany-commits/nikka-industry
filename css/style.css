@@ -161,8 +161,8 @@ ul {
 .scroll-bg__orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.5;
+  filter: blur(48px);
+  opacity: 0.45;
   will-change: transform;
 }
 
