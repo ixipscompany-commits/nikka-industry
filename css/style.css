@@ -163,6 +163,7 @@ ul {
   border-radius: 50%;
   filter: blur(36px);
   opacity: 0.4;
+  will-change: transform;
 }
 
 .scroll-bg__orb--1 {

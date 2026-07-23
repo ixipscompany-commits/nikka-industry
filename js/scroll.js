@@ -23,12 +23,17 @@
       syncInterval: 200,
     });
 
-    /* Lenis は重さの主因のため無効。ネイティブスクロールで軽快に。 */
+    /* Lenis は無効のまま。背景パララックス・ヘッダー回転・ロゴ光彩は復帰。 */
+    if (typeof window.initHeaderRollScroll === "function") {
+      window.initHeaderRollScroll();
+    }
     initHeader();
     initHeroEntrance();
     initScrollReveals();
     initBusinessShowcase();
     initNewsGrid();
+    initParallaxOrbs();
+    initLogoShine();
 
     ScrollTrigger.refresh();
   }

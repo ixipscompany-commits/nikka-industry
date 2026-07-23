@@ -589,7 +589,8 @@
 
     if (typeof window.initHeaderRoll === "function") {
       window.initHeaderRoll();
-    } else if (typeof window.initHeaderRollScroll === "function") {
+    }
+    if (typeof window.initHeaderRollScroll === "function") {
       window.initHeaderRollScroll();
     }
   }
