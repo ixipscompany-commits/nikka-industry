@@ -43,7 +43,7 @@
     if (typeof Lenis === "undefined") return;
 
     lenis = new Lenis({
-      duration: 0.3,
+      duration: 0.5,
       easing: function (t) {
         return 1 - Math.pow(1 - t, 3);
       },
